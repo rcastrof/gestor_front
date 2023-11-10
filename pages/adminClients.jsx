@@ -1,3 +1,4 @@
+import Layout from '@components/Layout/Layout'
 import React from 'react'
 
 const adminClients = () => {
@@ -10,6 +11,7 @@ const adminClients = () => {
                     <input className="bg-white/20 rounded-[10px] h-[45px] w-full px-10 text-white" type="text" placeholder="Buscar" />
                 </div>
             </div>
+            
 
         </Layout>)
 }

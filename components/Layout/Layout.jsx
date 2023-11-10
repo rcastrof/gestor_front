@@ -7,15 +7,11 @@ import { useRouter } from 'next/router';
 const Layout = (props) => {
     const { children } = props
     const { push } = useRouter();
-
-
     const [burgerMenuOpen, setBurgerMenuOpen] = useState(false)
-
 
     const navigate = (url) => {
         push(url);
     }
-
 
     return (
         <>
@@ -26,7 +22,7 @@ const Layout = (props) => {
 
                     <div
                         onClick={() => navigate('/adminSells')}
-                        className="text-[#ffffff] text-2xl font-bold cursor-pointer">Ventas</div>
+                        className="text-[#ffffff] text-2xl font-bold cursor-pointer">Cotizaciones</div>
 
                     <div
                         onClick={() => navigate('/adminProducts')}
@@ -37,7 +33,12 @@ const Layout = (props) => {
                         onClick={() => navigate('/adminClients')}
                         className="text-[#ffffff] text-2xl font-bold cursor-pointer">Clientes</div>
 
+                    <div
+                        onClick={() => navigate('/adminWorkers')}
+                        className="text-[#ffffff] text-2xl font-bold cursor-pointer">Empleados</div>
+
                 </div>
+
 
                 <div
                     onClick={() => setBurgerMenuOpen(!burgerMenuOpen)}
@@ -70,7 +71,7 @@ const Layout = (props) => {
 
             </div>
             {/* contenido */}
-            <div className="bg-gradient-to-b from-[#333333] to-[#000000] h-screen">
+            <div className="bg-gradient-to-b from-[#333333] to-[#000000] min-h-screen">
                 <div className='mx-8'>
                     {children}
                 </div>
