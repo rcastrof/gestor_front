@@ -95,7 +95,7 @@ const ClientsCard = (props) => {
                     onClick={() => setShowModalContacts(true)}
                     className='bg-gray-200 text-black cursor-pointer rounded-[10px] h-[40px] w-[105px] font-bold border-2  '>
                     <div className='flex justify-center p-1'>
-                        <FaUserCircle className='self-center h-4 w-6' />  Contactos
+                        <FaUserCircle className='self-center h-4 w-6' />  Contacto
                     </div>
                 </div>
                 <ModalContacts
@@ -116,4 +116,5 @@ const ClientsCard = (props) => {
 
         </div>)
 }
+
 export default ClientsCard
