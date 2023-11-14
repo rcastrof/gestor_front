@@ -27,6 +27,7 @@ const ModalCreateWorker = (props) => {
             const phone = event.phone
             const address = event.address
             const email = event.email
+            const salary = event.salary
 
 
             const data = {
@@ -36,6 +37,7 @@ const ModalCreateWorker = (props) => {
                 phone: phone,
                 address: address,
                 email: email,
+                salary: salary
             }
 
             console.log(data)
@@ -53,6 +55,8 @@ const ModalCreateWorker = (props) => {
         setValue('phone', "")
         setValue('address', "")
         setValue('email', "")
+        setValue('salary', "")
+
 
         clearErrors()
 
@@ -146,6 +150,18 @@ const ModalCreateWorker = (props) => {
                                         />
                                         {errors.profession && <span className='text-[#FF5757] text-[12px] ml-[24px]'>{errors.profession.message}</span>}
 
+                                        <label className='text-white text-[14px] font-bold ml-[24px] mt-[24px]'>Sueldo</label>
+                                        <input
+                                            {...register('salary', {
+                                                required: { value: true, message: "* Campo Requerido" },
+                                            })}
+                                            type='number'
+                                            name='salary'
+                                            autoComplete='off'
+                                            className='h-[48px] w-[279px] border-[2px] border-white/[0.20] bg-transparent rounded-[10px] ml-[24px] mt-[8px] text-[16px] leading-[22px] tracking-[-1px] text-white'
+                                        />
+                                        {errors.salary && <span className='text-[#FF5757] text-[12px] ml-[24px]'>{errors.salary.message}</span>}
+                                        
                                         <label className='text-white text-[14px] font-bold ml-[24px] mt-[24px]'>Fono</label>
                                         <input
                                             {...register('phone', {

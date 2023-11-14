@@ -5,7 +5,7 @@ import ModalDeleteWorker from './ModalDeleteWorker';
 
 const WorkersCard = (props) => {
 
-    const { name, profession, phone, address, email, id, last_name } = props
+    const { name, profession, phone, address, email, id, last_name, salary } = props
 
     const [showModalEdit, setShowModalEdit] = useState(false);
     const [showModalDelete, setShowModalDelete] = useState(false);
@@ -53,6 +53,7 @@ const WorkersCard = (props) => {
                     address={address}
                     email={email}
                     id={id}
+                    salary={salary}
                 />
 
             </div>

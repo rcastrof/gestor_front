@@ -42,21 +42,21 @@ const adminWorkers = () => {
                 <div
                     onClick={() => setShowModalCreate(true)}
                     className='flex  mt-8 mr-10'>
-                    <button className='bg-[#FFD600] text-[#000000] rounded-[10px] h-[45px] w-[160px] font-bold'>Agregar Empleado</button>
+                    <button className='bg-gray-200 text-[#000000] rounded-[10px] h-[45px] w-[160px] font-bold'>Agregar Empleado</button>
                 </div>
                 <ModalCreateWorker
                     show={showModalCreate}
                     onClose={() => setShowModalCreate(false)}
                 />
                 {/* barra de busqueda */}
-                <div className='mx-10 mt-10'>
+                <div className=' mt-10'>
                     <input className="bg-white/20 rounded-[10px] h-[45px] w-full px-10 text-white" type="text" placeholder="Buscar" />
                 </div>
 
                 {/* tarjeta de productos */}
 
                 {!loading && (
-                    <div className='m:flex m:flex-wrap m:ml-[24px] mt-5 gap-4'>
+                    <div className='m:flex m:flex-wrap m:ml-[24px] mt-5 gap-4 self-center'>
                         {workers.map((worker, index) => (
                             <WorkersCard
                                 key={index}
@@ -66,6 +66,7 @@ const adminWorkers = () => {
                                 phone={worker.phone}
                                 address={worker.address}
                                 email={worker.email}
+                                salary={worker.salary}
                                 id={worker.id}
                             />
                         ))}

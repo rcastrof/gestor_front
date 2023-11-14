@@ -6,20 +6,17 @@ import { BsCheck } from 'react-icons/bs'
 import { FaEdit } from "react-icons/fa";
 import { useForm } from 'react-hook-form'
 
-
-
-
 const ModalEditWorker = (props) => {
 
-    const { show, onClose, name, profession, phone, address, email, id , last_name} = props
+    const { show, onClose, name, profession, phone, address, email, id , last_name, salary} = props
     const cancelButtonRef = useRef(null);
     const [saveForm, setSaveForm] = useState(true)
 
     let { register, handleSubmit, formState: { errors }, clearErrors, reset, setValue } = useForm();
 
-
     const onSubmit = async (event) => {
         if (saveForm) {
+
             setSaveForm(false)
 
             const name = event.name
@@ -28,7 +25,7 @@ const ModalEditWorker = (props) => {
             const phone = event.phone
             const address = event.address
             const email = event.email
-
+            const salary = event.salary
 
             const data = {
                 name: name,
@@ -37,6 +34,7 @@ const ModalEditWorker = (props) => {
                 phone: phone,
                 address: address,
                 email: email,                
+                salary: salary
             }
 
             console.log(data)
@@ -44,8 +42,6 @@ const ModalEditWorker = (props) => {
             console.log('Modifacando datos del id', id)
             onClose();
         }
-
-
     }
     const closeModal = () => {
 
@@ -55,9 +51,8 @@ const ModalEditWorker = (props) => {
         setValue('phone', phone)
         setValue('address', address)
         setValue('email', email)
-
+        setValue('salary', salary)
         clearErrors()
-
         onClose();
     }
 
@@ -151,6 +146,19 @@ const ModalEditWorker = (props) => {
                                             className='h-[48px] w-[279px] border-[2px] border-white/[0.20] bg-transparent rounded-[10px] ml-[24px] mt-[8px] text-[16px] leading-[22px] tracking-[-1px] text-white'
                                         />
                                         {errors.profession && <span className='text-[#FF5757] text-[12px] ml-[24px]'>{errors.profession.message}</span>}
+
+                                        <label className='text-white text-[14px] font-bold ml-[24px] mt-[24px]'>Sueldo</label>
+                                        <input
+                                            {...register('salary', {
+                                                required: { value: true, message: "* Campo Requerido" },
+                                            })}
+                                            type='number'
+                                            name='salary'
+                                            autoComplete='off'
+                                            defaultValue={salary}
+                                            className='h-[48px] w-[279px] border-[2px] border-white/[0.20] bg-transparent rounded-[10px] ml-[24px] mt-[8px] text-[16px] leading-[22px] tracking-[-1px] text-white'
+                                        />
+                                        {errors.salary && <span className='text-[#FF5757] text-[12px] ml-[24px]'>{errors.salary.message}</span>}
 
                                         <label className='text-white text-[14px] font-bold ml-[24px] mt-[24px]'>Fono</label>
                                         <input

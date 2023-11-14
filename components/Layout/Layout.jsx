@@ -55,7 +55,7 @@ const Layout = (props) => {
                         <div className="flex flex-col gap-6 p-6">
                             <div
                                 onClick={() => navigate('/adminSells')}
-                                className="text-[#ffffff] text-2xl font-bold cursor-pointer">Ventas
+                                className="text-[#ffffff] text-2xl font-bold cursor-pointer">Cotizaciones
                             </div>
                             <div
                                 onClick={() => navigate('/adminProducts')}
@@ -65,6 +65,10 @@ const Layout = (props) => {
                                 onClick={() => navigate('/adminClients')}
                                 className="text-[#ffffff] text-2xl font-bold cursor-pointer">Clientes
                             </div>
+                            <div
+                                onClick={() => navigate('/adminWorkers')}
+                                className="text-[#ffffff] text-2xl font-bold cursor-pointer">Empleados
+                            </div>
                         </div>
                     </div>
                 )}
@@ -72,7 +76,7 @@ const Layout = (props) => {
             </div>
             {/* contenido */}
             <div className="bg-gradient-to-b from-[#333333] to-[#000000] min-h-screen">
-                <div className='mx-8'>
+                <div className='flex flex-col mx-10 m:mx-20 '>
                     {children}
                 </div>
             </div>
