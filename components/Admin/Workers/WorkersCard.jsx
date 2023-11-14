@@ -5,7 +5,7 @@ import ModalDeleteWorker from './ModalDeleteWorker';
 
 const WorkersCard = (props) => {
 
-    const { name, profession, phone, address, email, id, last_name, salary } = props
+    const { name, profession, phone, address, email, id,  salary } = props
 
     const [showModalEdit, setShowModalEdit] = useState(false);
     const [showModalDelete, setShowModalDelete] = useState(false);
@@ -22,12 +22,12 @@ const WorkersCard = (props) => {
             <ModalDeleteWorker 
                 show = {showModalDelete}
                 onClose = {() => setShowModalDelete(false)}
-                name = {name + ' ' + last_name}
+                name = {name}
                 id = {id}
 
             />
             <div className='flex flex-col mx-5 h-[180px]'>
-                <p className='text-white text-xl font-bold'>{name} {last_name}</p>
+                <p className='text-white text-xl font-bold'>{name} </p>
                 <p className='text-white mt-2'>Cargo: {profession}</p>
                 <p className='text-white mt-2'>Fono: {phone}</p>
                 <p className='text-white mt-2'>Mail: {email}</p>
@@ -47,7 +47,6 @@ const WorkersCard = (props) => {
                     show={showModalEdit}
                     onClose={() => setShowModalEdit(false)}
                     name={name}
-                    last_name={last_name}
                     profession={profession}
                     phone={phone}
                     address={address}

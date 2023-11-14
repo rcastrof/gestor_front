@@ -1,0 +1,127 @@
+{
+    "clients": [
+        {
+            "id": 1,
+            "name": "Welding Supplies Inc.",
+            "address": "123 Main St",
+            "phone": "555-1234",
+            "email": "welding@gmail.com",
+            "contact": 
+                {
+                    "id": 1,
+                    "name": "John Doe",
+                    "phone": "555-5678",
+                    "email": "john.doe@example.com"
+                }
+            
+        },
+        {
+            "id": 2,
+            "name": "Industrial Equipment Ltd.",
+            "address": "456 Oak Ave",
+            "phone": "555-4321",
+            "email": "welding@gmail.com",
+            "contact": {}
+        },
+        {
+            "id": 3,
+            "name": "Industrial Equipment Ltd.",
+            "address": "789 Pine St",
+            "phone": "555-9876",
+            "email": "welding@gmail.com",
+            "contact": {
+                "id": 1,
+                "name": "Ana Lopez",
+                "phone": "555-3456",
+                "email": "ana.lopez@example.com"
+            }
+        },
+        {
+            "id": 4,
+            "name": "Welding Supplies Inc 2.",
+            "address": "101 Cedar Ln",
+            "phone": "555-2345",
+            "email": "welding@gmail.com",
+            "contact": {
+                "id": 1,
+                "name": "Pedro Sanchez",
+                "phone": "555-6789",
+                "email": "pedro.sanchez@example.com"
+            }
+        },
+        {
+            "id": 5,
+            "name": "Industrial Equipment Ltd 2.",
+            "address": "202 Maple Dr",
+            "phone": "555-3456",
+            "email": "welding@gmail.com",
+            "contact": {
+                "id": 1,
+                "name": "Sofia Torres",
+                "phone": "555-7890",
+                "email": "sofia.torres@example.com"
+            }
+        },
+        {
+            "id": 6,
+            "name": "Welding Supplies Inc 3.",
+            "address": "303 Elm Rd",
+            "phone": "555-6789",
+            "email": "welding@gmail.com",
+            "contact": {
+                "id": 1,
+                "name": "Daniel Martinez",
+                "phone": "555-1234",
+                "email": "daniel.martinez@example.com"
+            }
+        },
+        {
+            "id": 7,
+            "name": "Industrial Equipment Ltd 3.",
+            "address": "404 Oak Dr",
+            "phone": "555-1234",
+            "email": "welding@gmail.com",
+            "contact": {
+                "name": "Luis Ramirez",
+                "phone": "555-5678",
+                "email": "luis.ramirez@example.com"
+            }
+        },
+        {
+            "id": 8,
+            "name": "Welding Supplies Inc 4.",
+            "address": "505 Cedar Ln",
+            "phone": "555-4321",
+            "email": "welding@gmail.com",
+            "contact": {
+                "name": "Julia Lopez",
+                "phone": "555-8765",
+                "email": "julia.lopez@example.com"
+            }
+        },
+        {
+            "id": 9,
+            "name": "Industrial Equipment Ltd 4.",
+            "address": "606 Maple Dr",
+            "phone": "555-9876",
+            "email": "welding@gmail.com",
+            "contact": {
+                "name": "Lucas Martinez",
+                "phone": "555-3456",
+                "email": "lucas.martinez@example.com"
+            }
+        },
+        {
+            "id": 10,
+            "name": "Welding Supplies Inc 5.",
+            "address": "707 Oak Dr",
+            "phone": "555-2345",
+            "email": "welding@gmail.com",
+            "contact": {
+                "name": "Elena Ramirez",
+                "phone": "555-6789",
+                "email": "elena.ramirez@example.com"
+            }
+        }
+    ]
+}

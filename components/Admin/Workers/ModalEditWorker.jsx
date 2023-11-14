@@ -8,7 +8,7 @@ import { useForm } from 'react-hook-form'
 
 const ModalEditWorker = (props) => {
 
-    const { show, onClose, name, profession, phone, address, email, id , last_name, salary} = props
+    const { show, onClose, name, profession, phone, address, email, id , , salary} = props
     const cancelButtonRef = useRef(null);
     const [saveForm, setSaveForm] = useState(true)
 
@@ -20,7 +20,6 @@ const ModalEditWorker = (props) => {
             setSaveForm(false)
 
             const name = event.name
-            const last_name = event.last_name
             const profession = event.profession
             const phone = event.phone
             const address = event.address
@@ -29,7 +28,6 @@ const ModalEditWorker = (props) => {
 
             const data = {
                 name: name,
-                last_name: last_name,
                 profession: profession,
                 phone: phone,
                 address: address,
@@ -46,7 +44,6 @@ const ModalEditWorker = (props) => {
     const closeModal = () => {
 
         setValue('name', name)
-        setValue('last_name', last_name)
         setValue('profession', profession)
         setValue('phone', phone)
         setValue('address', address)
@@ -108,7 +105,7 @@ const ModalEditWorker = (props) => {
 
 
                                     <div className='h-fit flex flex-col'>
-                                        <label className='text-white text-[14px] font-bold ml-[24px] mt-[24px]'>Nombres</label>
+                                        <label className='text-white text-[14px] font-bold ml-[24px] mt-[24px]'>Nombre completo</label>
                                         <input
                                             {...register('name', {
                                                 required: { value: true, message: "* Campo Requerido" },
@@ -120,19 +117,6 @@ const ModalEditWorker = (props) => {
                                             className='h-[48px] w-[279px] border-[2px] border-white/[0.20] bg-transparent rounded-[10px] ml-[24px] mt-[8px] text-[16px] leading-[22px] tracking-[-1px] text-white'
                                         />
                                         {errors.name && <span className='text-[#FF5757] text-[12px] ml-[24px]'>{errors.name.message}</span>}
-
-                                        <label className='text-white text-[14px] font-bold ml-[24px] mt-[24px]'>Apellidos</label>
-                                        <input
-                                            {...register('last_name', {
-                                                required: { value: true, message: "* Campo Requerido" },
-                                            })}
-                                            type='text'
-                                            name='last_name'
-                                            autoComplete='off'
-                                            defaultValue={last_name}
-                                            className='h-[48px] w-[279px] border-[2px] border-white/[0.20] bg-transparent rounded-[10px] ml-[24px] mt-[8px] text-[16px] leading-[22px] tracking-[-1px] text-white'
-                                        />
-                                        {errors.last_name && <span className='text-[#FF5757] text-[12px] ml-[24px]'>{errors.last_name.message}</span>}
 
                                         <label className='text-white text-[14px] font-bold ml-[24px] mt-[24px]'>Cargo</label>
                                         <input

@@ -22,7 +22,6 @@ const ModalCreateWorker = (props) => {
             setSaveForm(false)
 
             const name = event.name
-            const last_name = event.last_name
             const profession = event.profession
             const phone = event.phone
             const address = event.address
@@ -32,7 +31,6 @@ const ModalCreateWorker = (props) => {
 
             const data = {
                 name: name,
-                last_name: last_name,
                 profession: profession,
                 phone: phone,
                 address: address,
@@ -50,7 +48,6 @@ const ModalCreateWorker = (props) => {
     const closeModal = () => {
 
         setValue('name', '')
-        setValue('last_name', "")
         setValue('profession', "")
         setValue('phone', "")
         setValue('address', "")
@@ -125,18 +122,6 @@ const ModalCreateWorker = (props) => {
                                             className='h-[48px] w-[279px] border-[2px] border-white/[0.20] bg-transparent rounded-[10px] ml-[24px] mt-[8px] text-[16px] leading-[22px] tracking-[-1px] text-white'
                                         />
                                         {errors.name && <span className='text-[#FF5757] text-[12px] ml-[24px]'>{errors.name.message}</span>}
-
-                                        <label className='text-white text-[14px] font-bold ml-[24px] mt-[24px]'>Apellidos</label>
-                                        <input
-                                            {...register('last_name', {
-                                                required: { value: true, message: "* Campo Requerido" },
-                                            })}
-                                            type='text'
-                                            name='last_name'
-                                            autoComplete='off'
-                                            className='h-[48px] w-[279px] border-[2px] border-white/[0.20] bg-transparent rounded-[10px] ml-[24px] mt-[8px] text-[16px] leading-[22px] tracking-[-1px] text-white'
-                                        />
-                                        {errors.last_name && <span className='text-[#FF5757] text-[12px] ml-[24px]'>{errors.last_name.message}</span>}
 
                                         <label className='text-white text-[14px] font-bold ml-[24px] mt-[24px]'>Cargo</label>
                                         <input

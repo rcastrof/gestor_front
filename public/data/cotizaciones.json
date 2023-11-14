@@ -1,0 +1,73 @@
+{
+    "sells": [
+        {
+            "id": 1,
+            "name": "Sale 1",
+            "client": {
+                "id": 1,
+                "name": "Welding Supplies inc"
+            },
+            "selectedProducts": [
+                {
+                    "id": 1,
+                    "name": "Product A",
+                    "price": 100,
+                    "quantity": 2
+                },
+                {
+                    "id": 2,
+                    "name": "Product B",
+                    "price": 50,
+                    "quantity": 3
+
+                }
+            ],
+            "selectedWorkers": [
+                {
+                    "id": 1,
+                    "name": "Worker A",
+                    "profession": "Salesperson",
+                    "salary": 50000
+                }
+            ],
+            "created": "2018-01-01"
+        },
+        {
+            "id": 2,
+            "name": "Sale 2",
+            "client": {
+                "id": 2,
+                "name": "Welding Supplies inc 2"
+            },
+            "selectedProducts": [
+                {
+                    "id": 3,
+                    "name": "Product C",
+                    "price": 75,
+                    "quantity": 1
+                },
+                {
+                    "id": 4,
+                    "name": "Product D",
+                    "price": 120,
+                    "quantity": 2
+                }
+            ],
+            "selectedWorkers": [
+                {
+                    "id": 2,
+                    "name": "Worker B",
+                    "profession": "Consultant",
+                    "salary": 60000
+                },
+                {
+                    "id": 3,
+                    "name": "Worker C",
+                    "profession": "Technician",
+                    "salary": 55000
+                }
+            ],
+            "created": "2018-01-02"
+        }
+    ]
+}

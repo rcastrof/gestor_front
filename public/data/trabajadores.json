@@ -1,0 +1,94 @@
+{
+  "workers": [
+    {
+      "id": 1,
+      "name": "dummy John",
+      "profession": "Engineer",
+      "phone": "123-456-7890",
+      "address": "123 Main Street, City",
+      "email": "john.smith@email.com",
+      "salary" : 100000
+    },
+    {
+      "id": 2,
+      "name": "dummy Mary",
+      "profession": "Accountant",
+      "phone": "987-654-3210",
+      "address": "456 Second Avenue, City",
+      "email": "mary.johnson@email.com",
+      "salary" : 100000
+    },
+    {
+      "id": 3,
+      "name": "dummy Peter",
+      "profession": "Graphic Designer",
+      "phone": "555-123-4567",
+      "address": "789 Third Street, City",
+      "email": "peter.brown@email.com",
+      "salary" : 100000
+    },
+    {
+      "id": 4,
+      "name": "dummy Laura",
+      "profession": "Nurse",
+      "phone": "321-789-4560",
+      "address": "321 Fourth Avenue, City",
+      "email": "laura.martinez@email.com",
+      "salary" : 100000
+    },
+    {
+      "id": 5,
+      "name": "dummy Carlos",
+      "profession": "Programmer",
+      "phone": "777-888-9999",
+      "address": "555 Fifth Street, City",
+      "email": "carlos.sanchez@email.com",
+      "salary" : 100000
+    },
+    {
+      "id": 6,
+      "name": "dummy Anna",
+      "profession": "Doctor",
+      "phone": "999-555-4444",
+      "address": "888 Sixth Avenue, City",
+      "email": "anna.ramirez@email.com",
+      "salary" : 100000
+    },
+    {
+      "id": 7,
+      "name": "dummy Daniel",
+      "profession": "Lawyer",
+      "phone": "111-222-3333",
+      "address": "444 Seventh Street, City",
+      "email": "daniel.garcia@email.com",
+      "salary" : 100000
+    },
+    {
+      "id": 8,
+      "name": "dummy Sophia",
+      "profession": "Teacher",
+      "phone": "666-333-2222",
+      "address": "222 Eighth Avenue, City",
+      "email": "sophia.lopez@email.com",
+      "salary" : 100000
+    },
+    {
+      "id": 9,
+      "name": "dummy Alexander",
+      "profession": "Chef",
+      "phone": "444-555-6666",
+      "address": "777 Ninth Street, City",
+      "email": "alexander.torres@email.com",
+      "salary" : 100000
+    },
+    {
+      "id": 10,
+      "name": "dummy Isabel",
+      "profession": "Architect",
+      "phone": "888-777-6665",
+      "address": "999 Tenth Avenue, City",
+      "email": "isabel.gomez@email.com",
+      "salary" : 100000
+    }
+  ]
+}

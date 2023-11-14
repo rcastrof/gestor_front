@@ -60,8 +60,7 @@ const adminWorkers = () => {
                         {workers.map((worker, index) => (
                             <WorkersCard
                                 key={index}
-                                name={worker.first_name}
-                                last_name={worker.last_name}
+                                name={worker.name}
                                 profession={worker.profession}
                                 phone={worker.phone}
                                 address={worker.address}
