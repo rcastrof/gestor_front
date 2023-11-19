@@ -1,5 +1,5 @@
 import React from 'react'
-import { Fragment, useRef, useState, useEffect } from 'react'
+import { Fragment, useRef, useState } from 'react'
 import { Dialog, Transition } from '@headlessui/react'
 import { RiCloseFill } from 'react-icons/ri'
 import { BsCheck } from 'react-icons/bs'

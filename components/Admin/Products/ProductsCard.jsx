@@ -4,7 +4,7 @@ import ModalEditProduct from './ModalEditProduct';
 import ModalDeleteProduct from './ModalDeleteProduct';
 
 const ProductsCard = (props) => {
-    const { name, id, price  } = props
+    const { name, id, price , note } = props
 
     const [showModalEdit, setShowModalEdit] = useState(false);
     const [showModalDelete, setShowModalDelete] = useState(false);
@@ -28,6 +28,8 @@ const ProductsCard = (props) => {
             <div className='flex flex-col mx-5 h-[80px]'>
                 <p className='text-white text-xl font-bold'>{name}</p>
                 <p className='text-white mt-2'>Precio: {price}</p>
+                <p className='text-white mt-2'>Nota: {note}</p>
+                
                
             </div>
             {/* button */}
@@ -46,6 +48,7 @@ const ProductsCard = (props) => {
                     name={name}
                     price={price}
                     id={id}
+                    note={note}
                 />
 
             </div>

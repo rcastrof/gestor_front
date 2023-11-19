@@ -22,11 +22,13 @@ const ModalCreateProduct = (props) => {
 
             const name = event.name
             const price = event.price
+            const note = event.note
 
 
             const data = {
                 name: name,
                 price: price,
+                note: note,
             }
 
             console.log(data)
@@ -40,7 +42,7 @@ const ModalCreateProduct = (props) => {
 
         setValue('name', '')
         setValue('price', '')
-
+        setValue('note', '')
 
         clearErrors()
 
@@ -121,6 +123,19 @@ const ModalCreateProduct = (props) => {
                                             className='h-[48px] w-[279px] border-[2px] border-white/[0.20] bg-transparent rounded-[10px] ml-[24px] mt-[8px] text-[16px] leading-[22px] tracking-[-1px] text-white'
                                         />
                                         {errors.price && <span className='text-[#FF5757] text-[12px] ml-[24px]'>{errors.price.message}</span>}
+
+                                        <label className='text-white text-[14px] font-bold ml-[24px] mt-[24px]'>Nota</label>
+                                        <input
+                                            {...register('note', {
+                                                required: { value: true, message: "* Campo Requerido" },
+                                            })}
+                                            type='text'
+                                            name='note'
+                                            autoComplete='off'
+                                            className='h-[48px] w-[279px] border-[2px] border-white/[0.20] bg-transparent rounded-[10px] ml-[24px] mt-[8px] text-[16px] leading-[22px] tracking-[-1px] text-white'
+                                        />
+                                        {errors.note && <span className='text-[#FF5757] text-[12px] ml-[24px]'>{errors.note.message}</span>}
+
                                     </div>
                                 </div>
                                 {/* botones de cancelar y guardar */}

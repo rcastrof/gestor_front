@@ -8,7 +8,7 @@ import { useForm } from 'react-hook-form'
 
 const ModalEditWorker = (props) => {
 
-    const { show, onClose, name, profession, phone, address, email, id , , salary} = props
+    const { show, onClose, name, profession, phone, address, email, id ,  salary} = props
     const cancelButtonRef = useRef(null);
     const [saveForm, setSaveForm] = useState(true)
 

@@ -7,23 +7,28 @@ import { FaEdit } from "react-icons/fa";
 import { useForm } from 'react-hook-form'
 
 const ModalEditProduct = (props) => {
-    const { show, onClose, name, id, price} = props
+    const { show, onClose, name, id, price , note} = props
     const cancelButtonRef = useRef(null);
     const [saveForm, setSaveForm] = useState(true)
 
     let { register, handleSubmit, formState: { errors }, clearErrors, reset, setValue } = useForm();
 
     const onSubmit = async (event) => {
+
         if (saveForm) {
 
             setSaveForm(false)
 
             const name = event.name
             const price = event.price
+            const note = event.note
+
+
 
             const data = {
                 name: name,
                 price: price,
+                note: note
             }
 
             console.log(data)
@@ -36,6 +41,7 @@ const ModalEditProduct = (props) => {
 
         setValue('name', name)
         setValue('price', price)
+        setValue('note', note)
         clearErrors()
         onClose();
     }
@@ -117,6 +123,21 @@ const ModalEditProduct = (props) => {
                                             className='h-[48px] w-[279px] border-[2px] border-white/[0.20] bg-transparent rounded-[10px] ml-[24px] mt-[8px] text-[16px] leading-[22px] tracking-[-1px] text-white'
                                         />
                                         {errors.price && <span className='text-[#FF5757] text-[12px] ml-[24px]'>{errors.price.message}</span>}
+
+                                        <label className='text-white text-[14px] font-bold ml-[24px] mt-[24px]'>Nota</label>
+                                        <input
+                                            {...register('note', {
+                                                required: { value: true, message: "* Campo Requerido" },
+                                            })}
+                                            type='text'
+                                            name='note'
+                                            autoComplete='off'
+                                            defaultValue={note}
+                                            className='h-[48px] w-[279px] border-[2px] border-white/[0.20] bg-transparent rounded-[10px] ml-[24px] mt-[8px] text-[16px] leading-[22px] tracking-[-1px] text-white'
+                                        />
+                                        {errors.note && <span className='text-[#FF5757] text-[12px] ml-[24px]'>{errors.note.message}</span>}
+                                        
+                                        
 
                                     </div>
                                 </div>

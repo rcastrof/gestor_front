@@ -3,6 +3,7 @@ import WorkersCard from '@components/Admin/Workers/WorkersCard'
 import Layout from '@components/Layout/Layout'
 import React, { useEffect, useState } from 'react'
 import { Bars } from 'react-loader-spinner';
+import axios from 'axios';
 
 
 const adminWorkers = () => {
@@ -11,25 +12,49 @@ const adminWorkers = () => {
     const [showModalCreate, setShowModalCreate] = useState(false);
 
     useEffect(() => {
-        const fetchData = async () => {
-            try {
-                setLoading(true);
-                const response = await fetch('/data/trabajadores.json');
-                if (!response.ok) {
-                    throw new Error('No se pudieron cargar los datos');
-                }
-                const data = await response.json();
-                setWorkers(data.workers);
-                console.log(data.workers)
-            } catch (error) {
-                console.error('Error al cargar los datos de trabajadores:', error);
-            }
+        async function fetchData() {
+            await getWorkers();
+
         };
 
+        // Call the fetchData function inside the useEffect
         fetchData();
-        setLoading(false);
 
     }, []);
+
+    const getWorkers = async () => {
+        try {
+            setLoading(true);
+
+            const response = await new Promise((resolve, reject) => {
+                axios.get(`${process.env.REACT_APP_API_URL}personal/all`, {
+                    withCredentials: true,
+                    headers: {
+                        'Access-Control-Allow-Origin': '*',
+                        'Content-Type': 'application/json',
+                    },
+                })
+                    .then(response => {
+                        resolve(response.data);
+                    })
+                    .catch(error => {
+                        reject(error);
+                    });
+            });
+
+            if (!response) {
+                throw new Error('No se pudieron cargar los datos');
+            }
+
+            setWorkers(response.workers);
+            console.log(response.workers);
+        } catch (error) {
+            console.error('Error al cargar los datos de trabajadores:', error);
+        } finally {
+            setLoading(false);
+        }
+    }
+
 
     return (
         <Layout>

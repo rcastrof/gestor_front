@@ -187,9 +187,9 @@ const ModalCreateSell = (props) => {
                                             })}
                                             name='client'
                                             list='clients'
-                                            className='h-[48px] w-[279px] border-[2px] border-white/[0.20] bg-transparent rounded-[10px] ml-[24px] mt-[8px] text-[16px] leading-[22px] tracking-[-1px] text-white'
+                                            className='h-[48px] w-[279px] border-[2px] border-white/[0.20] bg-transparent rounded-[10px] ml-[24px] mt-[8px] text-[16px] leading-[22px] tracking-[-1px]'
                                         >
-                                            <option value=''>Selecciona un cliente</option>
+                                            <option value='' className='text-3xl'>Selecciona un cliente</option>
                                             {clients.map((client, index) => (
                                                 <option key={index} value={client.name}>{client.name}</option>
                                             ))}
@@ -209,7 +209,7 @@ const ModalCreateSell = (props) => {
                                                 autoComplete='off'
                                                 type='text'
                                                 onChange={(event) => setSelectedWorkerId(event.target.value)}
-                                                className='h-[48px] w-[279px] border-[2px] border-white/[0.20] bg-transparent rounded-[10px] ml-[24px] mt-[8px] text-[16px] leading-[22px] tracking-[-1px] text-white'
+                                                className=' h-[48px] w-[279px] border-[2px] border-white/[0.20] bg-transparent rounded-[10px] ml-[24px] mt-[8px] text-[16px] leading-[22px] tracking-[-1px]'
                                             >
                                                 <option value=''>Selecciona un trabajador</option>
                                                 {workers.map((worker, index) => (

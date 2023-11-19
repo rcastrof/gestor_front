@@ -61,6 +61,7 @@ const adminProducts = () => {
                                 key={index}
                                 name={product.name}
                                 price={product.price}                                
+                                note={product.note}
                                 id={product.id}
                             />
                         ))}
