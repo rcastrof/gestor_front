@@ -1,6 +1,6 @@
 export default async function handler(req, res) {
     try {
-        const response = await fetch('https://localhost:7233/v1/personal/all', {
+        const response = await fetch('https://localhost:7233/v1/cliente/all', {
             method: 'GET',
             headers: {
                 'Content-Type': 'application/json',

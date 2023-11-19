@@ -32,10 +32,19 @@ const ModalCreateClient = (props) => {
         email: email,
       }
 
-      console.log(data)
-      setSaveForm(true)
-      console.log("creando")
-      onClose();
+      try {
+        const Options = {
+          method: 'POST',
+          body: JSON.stringify({ data })
+        };
+        const response = await fetch(`http://localhost:3000/api/clients/create`, Options);
+        setSaveForm(true)
+        closeModal();
+        props.parentCallback({ state: true, status: response.status });
+      }
+      catch (error) {
+        console.error('Error al crear el producto:', error);
+      }
     }
   }
 

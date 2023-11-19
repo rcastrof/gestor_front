@@ -32,7 +32,13 @@ const adminWorkers = () => {
                 },
             });
             const data = await response.json();
-            setWorkers(data);
+            if (data === undefined || data.length == 0) {
+                setWorkers([]);
+            }
+            else {
+                setWorkers(data);
+            }
+
         } catch (error) {
             console.error('Error al cargar los datos de trabajadores:', error);
         } finally {

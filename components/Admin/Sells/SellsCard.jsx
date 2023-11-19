@@ -33,6 +33,13 @@ const SellsCard = (props) => {
 
     }, [products, workers])
 
+    const handleCallback = (childData) => {
+        if (childData && childData.state) {
+
+            props.parentCallback(childData);
+        }
+    }
+    
     return (
         <div className='bg-white/5 w-60 h-[220px] rounded-[10px] flex flex-col mb-2 '>
             {/* All data from workers */}
@@ -46,6 +53,7 @@ const SellsCard = (props) => {
                 onClose={() => setShowModalDelete(false)}
                 name={name}
                 id={id}
+                parentCallback={handleCallback}
             />
             <div className='flex flex-col mx-5 h-[80px]'>
                 <p className='text-white text-xl font-bold'>{name}</p>
@@ -76,6 +84,7 @@ const SellsCard = (props) => {
                     workers={workers}
                     clients={clients}
                     sell={sell}
+                    parentCallback={handleCallback}
                 />
                 <div
                     className='bg-gray-200 text-black cursor-pointer rounded-[10px] h-[40px] w-[80px] font-bold border-2 border-opacity-10 border-black ml-2'

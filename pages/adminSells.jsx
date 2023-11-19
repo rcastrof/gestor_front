@@ -2,6 +2,7 @@ import ModalCreateSell from '@components/Admin/Sells/ModalCreateSell'
 import SellsCard from '@components/Admin/Sells/SellsCard'
 import Layout from '@components/Layout/Layout'
 import React, { useEffect, useState } from 'react'
+import { Bars } from 'react-loader-spinner'
 
 
 const adminSells = () => {
@@ -12,59 +13,121 @@ const adminSells = () => {
     const [sells, setSells] = useState([])
 
     const [loading, setLoading] = useState(false);
-    const [showModalCreate, setShowModalCreate] = useState(false);
+    const [searchTerm, setSearchTerm] = useState("");
 
+    const [showModalCreate, setShowModalCreate] = useState(false);
 
     useEffect(() => {
         const fetchData = async () => {
             setLoading(true);
-
-            try {
-                const response = await fetch('/data/productos.json');
-                if (!response.ok) {
-                    throw new Error('No se pudieron cargar los datos');
-                }
-                const data = await response.json();
-                setProducts(data.products);
-            } catch (error) {
-                console.error('Error al cargar los datos de productos:', error);
-            }
-            try {
-                const response = await fetch('/data/clientes.json');
-                if (!response.ok) {
-                    throw new Error('No se pudieron cargar los datos');
-                }
-                const data = await response.json();
-                setClients(data.clients);
-            } catch (error) {
-                console.error('Error al cargar los datos de trabajadores:', error);
-            }
-            try {
-                const response = await fetch('/data/trabajadores.json');
-                if (!response.ok) {
-                    throw new Error('No se pudieron cargar los datos');
-                }
-                const data = await response.json();
-                setWorkers(data.workers);
-            } catch (error) {
-                console.error('Error al cargar los datos de trabajadores:', error);
-            }
-            try {
-                const response = await fetch('/data/cotizaciones.json');
-                if (!response.ok) {
-                    throw new Error('No se pudieron cargar los datos');
-                }
-                const data = await response.json();
-                setSells(data.sells);
-            } catch (error) {
-                console.error('Error al cargar los datos de trabajadores:', error);
-            }
+            await getClients();
+            await getProducts();
+            await getWorkers();
+            await getSells();
         };
 
         fetchData();
         setLoading(false);
 
     }, []);
+
+    const getClients = async () => {
+        try {
+            const response = await fetch('http://localhost:3000/api/clients', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+            });
+            const data = await response.json();
+            console.log(data)
+            //si data esta vacio o no existe, entonces data = []
+            if (data === undefined || data.length == 0) {
+                setClients([]);
+            }
+            else {
+                setClients(data);
+            }
+
+        } catch (error) {
+            console.error('Error al cargar los datos de clientes:', error);
+        } finally {
+        }
+    }
+
+    const getProducts = async () => {
+        try {
+            const response = await fetch('http://localhost:3000/api/products', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+            });
+            const data = await response.json();
+            if (data === undefined || data.length == 0) {
+                setProducts([]);
+            }
+            else {
+                setProducts(data);
+            }
+        } catch (error) {
+            console.error('Error al cargar los datos de productos:', error);
+        } finally {
+        }
+    }
+
+    const getWorkers = async () => {
+        try {
+            const response = await fetch('http://localhost:3000/api/workers', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+            });
+            const data = await response.json();
+            if (data === undefined || data.length == 0) {
+                setWorkers([]);
+            }
+            else {
+                setWorkers(data);
+            }
+
+        } catch (error) {
+            console.error('Error al cargar los datos de trabajadores:', error);
+        } finally {
+        }
+    }
+
+    const getSells = async () => {
+        try {
+            const response = await fetch('http://localhost:3000/api/sells', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+            });
+            const data = await response.json();
+            if (data === undefined || data.length == 0) {
+                setSells([]);
+            }
+            else {
+                setSells(data);
+            }
+
+        } catch (error) {
+            console.error('Error al cargar los datos de cotizaciones:', error);
+        } finally {
+        }
+    }
+
+
+    const handleCallBack = (childData) => {
+        if (childData && childData.state) {
+            getSells();
+        }
+    }
+
+
 
     return (
         <Layout>
@@ -85,6 +148,7 @@ const adminSells = () => {
                     clients={clients}
                     products={products}
                     workers={workers}
+                    parentCallback={handleCallBack}
                 />
                 {/* barra de busqueda */}
                 <div className=' mt-10'>
@@ -107,6 +171,7 @@ const adminSells = () => {
                                 products={products}
                                 workers={workers}
                                 sell={sell}
+                                parentCallback={handleCallBack}
                             />
                         ))}
                         <div className='pb-[10px]' />

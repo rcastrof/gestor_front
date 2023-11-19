@@ -31,10 +31,23 @@ const ModalEditClient = (props) => {
         email: email,
       }
 
-      console.log(data)
-      setSaveForm(true)
-      console.log('Modifacando datos del id', id)
-      onClose();
+      try {
+        const Options = {
+          method: 'POST',
+          body: JSON.stringify({
+            data,
+            id
+          }),
+
+        };
+        const response = await fetch('http://localhost:3000/api/clients/edit', Options);
+        console.log(response)
+        setSaveForm(true)
+        closeModal();
+        props.parentCallback({ state: true, status: response.status });
+      } catch (error) {
+        console.error('Error al cargar los datos de trabajadores:', error);
+      }
     }
 
 

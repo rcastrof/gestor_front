@@ -32,7 +32,12 @@ const adminProducts = () => {
                 },
             });
             const data = await response.json();
-            setProducts(data);
+            if (data === undefined || data.length == 0) {
+                setProducts([]);
+            }
+            else {
+                setProducts(data);
+            }            
         } catch (error) {
             console.error('Error al cargar los datos de productos:', error);
         } finally {

@@ -59,10 +59,23 @@ const ModalEditSell = (props) => {
                 selectedProducts
             }
 
-            console.log(data)
-            setSaveForm(true)
-            console.log("creando")
-            onClose();
+            try {
+                const Options = {
+                    method: 'POST',
+                    body: JSON.stringify({
+                        data,
+                        id
+                    }),
+
+                };
+                const response = await fetch('http://localhost:3000/api/sells/edit', Options);
+                console.log(response)
+                setSaveForm(true)
+                closeModal();
+                props.parentCallback({ state: true, status: response.status });
+            } catch (error) {
+                console.error('Error al cargar los datos de trabajadores:', error);
+            }
         }
     }
 
@@ -200,7 +213,7 @@ const ModalEditSell = (props) => {
                                                 required: { value: true, message: "* Campo Requerido" },
                                             })}
                                             name='client'
-                                            list='clients'                                            
+                                            list='clients'
                                             selected={selectedEditClient}
                                             className='h-[48px] w-[279px] border-[2px] border-white/[0.20] bg-transparent rounded-[10px] ml-[24px] mt-[8px] text-[16px] leading-[22px] tracking-[-1px] text-white'
                                         >
