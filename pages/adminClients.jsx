@@ -2,32 +2,62 @@ import ClientsCard from '@components/Admin/Clients/ClientsCard';
 import ModalCreateClient from '@components/Admin/Clients/ModalCreateClient';
 import Layout from '@components/Layout/Layout'
 import React, { useEffect, useState } from 'react'
+import { Bars } from 'react-loader-spinner';
 
 const adminClients = () => {
     const [clients, setClients] = useState([])
     const [loading, setLoading] = useState(false);
     const [showModalCreate, setShowModalCreate] = useState(false);
+    const [searchTerm, setSearchTerm] = useState("");
+
 
     useEffect(() => {
         const fetchData = async () => {
-            try {
-                setLoading(true);
-                const response = await fetch('/data/clientes.json');
-                if (!response.ok) {
-                    throw new Error('No se pudieron cargar los datos');
-                }
-                const data = await response.json();
-                setClients(data.clients);
-                console.log(data.clients)
-            } catch (error) {
-                console.error('Error al cargar los datos de trabajadores:', error);
-            }
+
+            await getClients();
+
         };
 
         fetchData();
-        setLoading(false);
 
     }, []);
+
+    const getClients = async () => {
+        try {
+            setLoading(true);
+            const response = await fetch('http://localhost:3000/api/clients', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+            });
+            const data = await response.json();
+            console.log(data)
+            //si data esta vacio o no existe, entonces data = []
+            if (data === undefined || data.length == 0 ) {
+                setClients([]);
+            }
+            else {
+                setClients(data);
+            }
+
+        } catch (error) {
+            console.error('Error al cargar los datos de clientes:', error);
+        } finally {
+            setLoading(false);
+        }
+    }
+
+    const handleCallBack = (childData) => {
+        if (childData && childData.state) {
+            getClients();
+        }
+    }
+
+    const filteredClients = clients.filter((client) =>
+        client.name.toLowerCase().includes(searchTerm.toLowerCase())
+    );
+
 
     return (
 
@@ -37,7 +67,7 @@ const adminClients = () => {
                 <div className='text-white text-3xl font-bold italic mt-8'>
                     <h1>Clientes</h1>
                 </div>
-                {/* boton para agregar productos */}
+                {/* boton para agregar cliente */}
                 <div
                     onClick={() => setShowModalCreate(true)}
                     className='flex  mt-8 mr-10'>
@@ -46,17 +76,24 @@ const adminClients = () => {
                 <ModalCreateClient
                     show={showModalCreate}
                     onClose={() => setShowModalCreate(false)}
+                    parentCallback={handleCallBack}
                 />
                 {/* barra de busqueda */}
-                <div className=' mt-10'>
-                    <input className="bg-white/20 rounded-[10px] h-[45px] w-full px-10 text-white" type="text" placeholder="Buscar" />
+                <div className='mt-10'>
+                    <input
+                        className="bg-white/20 rounded-[10px] h-[45px] w-full px-10 text-white"
+                        type="text"
+                        placeholder="Buscar"
+                        value={searchTerm}
+                        onChange={(e) => setSearchTerm(e.target.value)}
+                    />
                 </div>
 
-                {/* tarjeta de productos */}
+                {/* tarjeta de cliente */}
 
                 {!loading && (
                     <div className='m:flex m:flex-wrap m:ml-[24px] mt-5 gap-4 self-center'>
-                        {clients.map((client, index) => (
+                        {filteredClients.map((client, index) => (
                             <ClientsCard
                                 key={index}
                                 name={client.name}
@@ -65,11 +102,12 @@ const adminClients = () => {
                                 email={client.email}
                                 contact={client.contact}
                                 id={client.id}
+                                parentCallback={handleCallBack}
 
                             />
                         ))}
                         <div className='pb-[10px]' />
-                        {clients && clients.length === 0 && (
+                        {filteredClients && filteredClients.length === 0 && (
                             <div className='text-white text-2xl font-bold italic mt-8'>
                                 <h1>No hay clientes</h1>
                             </div>

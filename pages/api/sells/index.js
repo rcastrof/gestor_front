@@ -1,8 +1,6 @@
-process.env.NODE_TLS_REJECT_UNAUTHORIZED = '0'; // Disable SSL/TLS verification (not recommended)
-
 export default async function handler(req, res) {
     try {
-        const response = await fetch('https://localhost:7233/v1/personal/all', {
+        const response = await fetch('https://localhost:7233/v1/cotizacion/all', {
             method: 'GET',
             headers: {
                 'Content-Type': 'application/json',

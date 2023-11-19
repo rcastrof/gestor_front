@@ -103,6 +103,7 @@ const ClientsCard = (props) => {
                     onClose={() => setShowModalContacts(false)}
                     parentCallback={handleCallback}
                     contact={contact}
+                    name={name}
                     showModalDelete={changeToDelete}
                 />
                 <ModalDeleteContact

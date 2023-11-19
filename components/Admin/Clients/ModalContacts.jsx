@@ -8,7 +8,7 @@ import { BsCheck, BsTrashFill } from 'react-icons/bs';
 
 const ModalContacts = (props) => {
 
-    const { show, onClose, contact } = props
+    const { show, onClose, contact, name } = props
     const cancelButtonRef = useRef(null);
     const [saveForm, setSaveForm] = useState(true)
 
@@ -97,7 +97,7 @@ const ModalContacts = (props) => {
                         leaveFrom="opacity-100 translate-y-0 "
                         leaveTo="opacity-0 translate-y-4 "
                     >
-                        <div className="inline-block w-[327px] align-bottom bg-gradient-to-b from-[#333333] to-[#000000] text-left overflow-hidden shadow-xl transform transition-all my-[2.5rem] m:my-[2rem] rounded-[1.875rem]">
+                        <div className="inline-block w-[327px] align-bottom bg-[#033739] text-left overflow-hidden shadow-xl transform transition-all my-[2.5rem] m:my-[2rem] rounded-[1.875rem]">
                             {/*Header modal */}
                             <div className="px-4 pt-5 justify-end">
                                 <div className="flex flex-col">
@@ -107,11 +107,11 @@ const ModalContacts = (props) => {
                                         </div>
                                     </div>
                                     <div className="ml-[0.5rem] flex">
-                                        <div className="h-[32px] w-[32px] mr-[8px] bg-[#232323] rounded-full flex">
+                                        <div className="h-[32px] w-[32px] mr-[8px] bg-[#D6E1E7]/25 rounded-full flex">
                                             <FaUserCircle className=' h-[20px] w-[20px] ml-[6px] text-white self-center' />
                                         </div>
                                         <Dialog.Title as="h3" className="text-[20px] font-bold leading-[27px] text-white tracking-[-3%] whitespace-nowrap mb-[29px] mt-[4px]">
-                                            Contactos de <br /> {name}
+                                            Contacto de <br /> {name}
                                         </Dialog.Title>
                                     </div>
                                 </div>

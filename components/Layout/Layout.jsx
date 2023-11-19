@@ -10,7 +10,7 @@ const Layout = (props) => {
     const [burgerMenuOpen, setBurgerMenuOpen] = useState(false)
     const logostyle = {
         maxWidth: '100px',
-        height: 'auto',     
+        height: 'auto',
         marginRight: '10px'
     }
 
@@ -20,28 +20,28 @@ const Layout = (props) => {
 
     return (
         <>
-            <div className="bg-gradient-to-b from-[#000000] to-[#202020] h-28 flex items-center justify-between px-4">
-                <img src="/src/Logo.png" alt="Logo" style={logostyle}/>
-                {/*<div className="text-[#ffffff] text-2xl font-bold">Logo</div>*/}
+            <div className="h-28 flex items-center justify-between px-4 bg-[#ebfefc]">
 
-                <div className='hidden m:flex gap-6 '>
+                <img src="/src/Logo.png" alt="Logo" style={logostyle} />
+
+                <div className='hidden m:flex gap-6 text-[#033739] '>
 
                     <div
                         onClick={() => navigate('/adminSells')}
-                        className="text-[#ffffff] text-2xl font-bold cursor-pointer">Cotizaciones</div>
+                        className=" text-2xl font-bold cursor-pointer">Cotizaciones</div>
 
                     <div
                         onClick={() => navigate('/adminProducts')}
-                        className="text-[#ffffff] text-2xl font-bold cursor-pointer">Productos</div>
+                        className=" text-2xl font-bold cursor-pointer">Productos</div>
 
 
                     <div
                         onClick={() => navigate('/adminClients')}
-                        className="text-[#ffffff] text-2xl font-bold cursor-pointer">Clientes</div>
+                        className=" text-2xl font-bold cursor-pointer">Clientes</div>
 
                     <div
                         onClick={() => navigate('/adminWorkers')}
-                        className="text-[#ffffff] text-2xl font-bold cursor-pointer">Empleados</div>
+                        className=" text-2xl font-bold cursor-pointer">Personal</div>
 
                 </div>
 
@@ -54,34 +54,35 @@ const Layout = (props) => {
 
                 <div
                     onClick={() => setBurgerMenuOpen(!burgerMenuOpen)}
-                    className="text-[#ffffff] text-2xl font-bold m:hidden"><GiHamburgerMenu /></div>
+                    className="text-black text-2xl font-bold m:hidden"><GiHamburgerMenu /></div>
 
                 {burgerMenuOpen && (
-                    <div className="bg-gradient-to-b from-[#000000] to-[#202020] h-screen w-60 m:w-80 fixed top-0 right-0">
-                        <div className="flex flex-col gap-6 p-6">
+                    <div className="bg-[#749494] h-screen w-60 m:w-80 fixed top-0 right-0  flex-col">
+                        <div className="flex flex-col gap-6 p-6 text-[#033739]">
                             <div
                                 onClick={() => navigate('/adminSells')}
-                                className="text-[#ffffff] text-2xl font-bold cursor-pointer">Cotizaciones
+                                className=" text-2xl font-bold cursor-pointer">Cotizaciones
                             </div>
                             <div
                                 onClick={() => navigate('/adminProducts')}
-                                className="text-[#ffffff] text-2xl font-bold cursor-pointer">Productos
+                                className=" text-2xl font-bold cursor-pointer">Productos
                             </div>
                             <div
                                 onClick={() => navigate('/adminClients')}
-                                className="text-[#ffffff] text-2xl font-bold cursor-pointer">Clientes
+                                className=" text-2xl font-bold cursor-pointer">Clientes
                             </div>
                             <div
                                 onClick={() => navigate('/adminWorkers')}
-                                className="text-[#ffffff] text-2xl font-bold cursor-pointer">Empleados
+                                className="text-2xl font-bold cursor-pointer">Personal
                             </div>
                         </div>
+                        
                     </div>
                 )}
 
             </div>
             {/* contenido */}
-            <div className="bg-gradient-to-b from-[#333333] to-[#000000] min-h-screen">
+            <div className="bg-[#749494] min-h-screen">
                 <div className='flex flex-col mx-10 m:mx-20 '>
                     {children}
                 </div>
