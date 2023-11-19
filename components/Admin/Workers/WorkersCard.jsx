@@ -5,12 +5,18 @@ import ModalDeleteWorker from './ModalDeleteWorker';
 
 const WorkersCard = (props) => {
 
-    const { name, profession, phone, address, email, id,  salary } = props
+    const { name, profession, phone, address, email, id,  salary , lastname} = props
 
     const [showModalEdit, setShowModalEdit] = useState(false);
     const [showModalDelete, setShowModalDelete] = useState(false);
 
-
+    const handleCallback = (childData) => {
+        if (childData && childData.state) {
+    
+          props.parentCallback(childData);
+        }
+      }
+    
     return (
         <div className='bg-white/5 w-60 h-[300px] rounded-[10px] flex flex-col mb-2 '>
             {/* All data from workers */}
@@ -24,10 +30,11 @@ const WorkersCard = (props) => {
                 onClose = {() => setShowModalDelete(false)}
                 name = {name}
                 id = {id}
+                parentCallback = {handleCallback}
 
             />
             <div className='flex flex-col mx-5 h-[180px]'>
-                <p className='text-white text-xl font-bold'>{name} </p>
+                <p className='text-white text-xl font-bold'>{name} {lastname} </p>
                 <p className='text-white mt-2'>Cargo: {profession}</p>
                 <p className='text-white mt-2'>Fono: {phone}</p>
                 <p className='text-white mt-2'>Mail: {email}</p>
@@ -53,6 +60,8 @@ const WorkersCard = (props) => {
                     email={email}
                     id={id}
                     salary={salary}
+                    lastname={lastname}
+                    parentCallback={handleCallback}
                 />
 
             </div>

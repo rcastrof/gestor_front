@@ -4,7 +4,7 @@ import { Dialog, Transition } from '@headlessui/react'
 import { RiCloseFill } from 'react-icons/ri'
 import { BsCheck } from 'react-icons/bs'
 import { FaEdit } from "react-icons/fa";
-import { useForm } from 'react-hook-form'
+import {  useForm } from 'react-hook-form'
 
 
 const ModalCreateWorker = (props) => {
@@ -22,6 +22,7 @@ const ModalCreateWorker = (props) => {
             setSaveForm(false)
 
             const name = event.name
+            const lastname = event.lastname
             const profession = event.profession
             const phone = event.phone
             const address = event.address
@@ -30,24 +31,38 @@ const ModalCreateWorker = (props) => {
 
 
             const data = {
-                name: name,
-                profession: profession,
-                phone: phone,
-                address: address,
-                email: email,
-                salary: salary
+                name,
+                lastname,
+                profession,
+                phone,
+                address,
+                email,
+                salary
             }
 
-            console.log(data)
-            setSaveForm(true)
-            console.log("creando")
-            onClose();
+            try {
+                const Options = {
+                    method: 'POST',
+                    body: JSON.stringify({ data })
+                };
+                const response = await fetch(`http://localhost:3000/api/workers/create`, Options);
+                console.log(response)
+                setSaveForm(true)
+                closeModal();
+                props.parentCallback({ state: true, status: response.status });
+            }
+            catch (error) {
+                console.error('Error al crear el producto:', error);
+            }
+
+
         }
     }
 
     const closeModal = () => {
 
         setValue('name', '')
+        setValue('lastname', "")
         setValue('profession', "")
         setValue('phone', "")
         setValue('address', "")
@@ -99,7 +114,7 @@ const ModalCreateWorker = (props) => {
                                             <FaEdit className=' h-[20px] w-[20px] ml-[6px] text-white self-center' />
                                         </div>
                                         <Dialog.Title as="h3" className="text-[20px] font-bold leading-[27px] text-white tracking-[-3%] whitespace-nowrap mb-[29px] mt-[4px]">
-                                            Crear personal<br/>
+                                            Crear personal<br />
                                         </Dialog.Title>
                                     </div>
                                 </div>
@@ -122,6 +137,18 @@ const ModalCreateWorker = (props) => {
                                             className='h-[48px] w-[279px] border-[2px] border-white/[0.20] bg-transparent rounded-[10px] ml-[24px] mt-[8px] text-[16px] leading-[22px] tracking-[-1px] text-white'
                                         />
                                         {errors.name && <span className='text-[#FF5757] text-[12px] ml-[24px]'>{errors.name.message}</span>}
+
+                                        <label className='text-white text-[14px] font-bold ml-[24px] mt-[24px]'>Apellidos</label>
+                                        <input
+                                            {...register('lastname', {
+                                                required: { value: true, message: "* Campo Requerido" },
+                                            })}
+                                            type='text'
+                                            name='lastname'
+                                            autoComplete='off'
+                                            className='h-[48px] w-[279px] border-[2px] border-white/[0.20] bg-transparent rounded-[10px] ml-[24px] mt-[8px] text-[16px] leading-[22px] tracking-[-1px] text-white'
+                                        />
+                                        {errors.lastname && <span className='text-[#FF5757] text-[12px] ml-[24px]'>{errors.lastname.message}</span>}
 
                                         <label className='text-white text-[14px] font-bold ml-[24px] mt-[24px]'>Cargo</label>
                                         <input
@@ -146,7 +173,7 @@ const ModalCreateWorker = (props) => {
                                             className='h-[48px] w-[279px] border-[2px] border-white/[0.20] bg-transparent rounded-[10px] ml-[24px] mt-[8px] text-[16px] leading-[22px] tracking-[-1px] text-white'
                                         />
                                         {errors.salary && <span className='text-[#FF5757] text-[12px] ml-[24px]'>{errors.salary.message}</span>}
-                                        
+
                                         <label className='text-white text-[14px] font-bold ml-[24px] mt-[24px]'>Fono</label>
                                         <input
                                             {...register('phone', {

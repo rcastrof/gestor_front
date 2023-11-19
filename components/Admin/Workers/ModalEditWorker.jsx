@@ -8,7 +8,7 @@ import { useForm } from 'react-hook-form'
 
 const ModalEditWorker = (props) => {
 
-    const { show, onClose, name, profession, phone, address, email, id ,  salary} = props
+    const { show, onClose, name, profession, phone, address, email, id, lastname, salary } = props
     const cancelButtonRef = useRef(null);
     const [saveForm, setSaveForm] = useState(true)
 
@@ -20,6 +20,7 @@ const ModalEditWorker = (props) => {
             setSaveForm(false)
 
             const name = event.name
+            const lastname = event.lastname
             const profession = event.profession
             const phone = event.phone
             const address = event.address
@@ -27,23 +28,39 @@ const ModalEditWorker = (props) => {
             const salary = event.salary
 
             const data = {
-                name: name,
-                profession: profession,
-                phone: phone,
-                address: address,
-                email: email,                
-                salary: salary
+                name,
+                lastname,
+                profession,
+                phone,
+                address,
+                email,
+                salary
             }
 
-            console.log(data)
-            setSaveForm(true)
-            console.log('Modifacando datos del id', id)
-            onClose();
+            try {
+                const Options = {
+                    method: 'POST',
+                    body: JSON.stringify({
+                        data,
+                        id
+                    }),
+                    
+                };
+                const response = await fetch('http://localhost:3000/api/workers/edit', Options);
+                console.log(response)
+                setSaveForm(true)
+                closeModal();
+                props.parentCallback({ state: true, status: response.status });
+            } catch (error) {
+                console.error('Error al cargar los datos de trabajadores:', error);
+            }
         }
     }
+
     const closeModal = () => {
 
         setValue('name', name)
+        setValue('lastname', lastname)
         setValue('profession', profession)
         setValue('phone', phone)
         setValue('address', address)
@@ -105,7 +122,7 @@ const ModalEditWorker = (props) => {
 
 
                                     <div className='h-fit flex flex-col'>
-                                        <label className='text-white text-[14px] font-bold ml-[24px] mt-[24px]'>Nombre completo</label>
+                                        <label className='text-white text-[14px] font-bold ml-[24px] mt-[24px]'>Nombres</label>
                                         <input
                                             {...register('name', {
                                                 required: { value: true, message: "* Campo Requerido" },
@@ -117,6 +134,19 @@ const ModalEditWorker = (props) => {
                                             className='h-[48px] w-[279px] border-[2px] border-white/[0.20] bg-transparent rounded-[10px] ml-[24px] mt-[8px] text-[16px] leading-[22px] tracking-[-1px] text-white'
                                         />
                                         {errors.name && <span className='text-[#FF5757] text-[12px] ml-[24px]'>{errors.name.message}</span>}
+
+                                        <label className='text-white text-[14px] font-bold ml-[24px] mt-[24px]'>Apellido</label>
+                                        <input
+                                            {...register('lastname', {
+                                                required: { value: true, message: "* Campo Requerido" },
+                                            })}
+                                            type='text'
+                                            name='lastname'
+                                            autoComplete='off'
+                                            defaultValue={lastname}
+                                            className='h-[48px] w-[279px] border-[2px] border-white/[0.20] bg-transparent rounded-[10px] ml-[24px] mt-[8px] text-[16px] leading-[22px] tracking-[-1px] text-white'
+                                        />
+                                        {errors.lastname && <span className='text-[#FF5757] text-[12px] ml-[24px]'>{errors.lastname.message}</span>}
 
                                         <label className='text-white text-[14px] font-bold ml-[24px] mt-[24px]'>Cargo</label>
                                         <input

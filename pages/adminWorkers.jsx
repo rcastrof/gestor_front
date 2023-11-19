@@ -3,7 +3,6 @@ import WorkersCard from '@components/Admin/Workers/WorkersCard'
 import Layout from '@components/Layout/Layout'
 import React, { useEffect, useState } from 'react'
 import { Bars } from 'react-loader-spinner';
-import axios from 'axios';
 
 
 const adminWorkers = () => {
@@ -25,33 +24,25 @@ const adminWorkers = () => {
     const getWorkers = async () => {
         try {
             setLoading(true);
-
-            const response = await new Promise((resolve, reject) => {
-                axios.get(`${process.env.REACT_APP_API_URL}personal/all`, {
-                    withCredentials: true,
-                    headers: {
-                        'Access-Control-Allow-Origin': '*',
-                        'Content-Type': 'application/json',
-                    },
-                })
-                    .then(response => {
-                        resolve(response.data);
-                    })
-                    .catch(error => {
-                        reject(error);
-                    });
+            const response = await fetch('http://localhost:3000/api/workers', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
             });
-
-            if (!response) {
-                throw new Error('No se pudieron cargar los datos');
-            }
-
-            setWorkers(response.workers);
-            console.log(response.workers);
+            const data = await response.json();
+            setWorkers(data);
+            console.log(data);
         } catch (error) {
             console.error('Error al cargar los datos de trabajadores:', error);
         } finally {
             setLoading(false);
+        }
+    }
+
+    const handleCallBack = (childData) => {
+        if (childData && childData.state) {
+            getWorkers();
         }
     }
 
@@ -66,12 +57,13 @@ const adminWorkers = () => {
                 {/* boton para agregar productos */}
                 <div
                     onClick={() => setShowModalCreate(true)}
-                    className='flex  mt-8 mr-10'>
+                    className='flex  mt-8 mr-10 w-fit'>
                     <button className='bg-gray-200 text-[#000000] rounded-[10px] h-[45px] w-[160px] font-bold'>Agregar Empleado</button>
                 </div>
                 <ModalCreateWorker
                     show={showModalCreate}
                     onClose={() => setShowModalCreate(false)}
+                    parentCallback={handleCallBack}
                 />
                 {/* barra de busqueda */}
                 <div className=' mt-10'>
@@ -86,12 +78,14 @@ const adminWorkers = () => {
                             <WorkersCard
                                 key={index}
                                 name={worker.name}
+                                lastname={worker.lastname}
                                 profession={worker.profession}
                                 phone={worker.phone}
                                 address={worker.address}
                                 email={worker.email}
                                 salary={worker.salary}
-                                id={worker.id}
+                                id={worker.iD_Personal}
+                                parentCallback={handleCallBack}
                             />
                         ))}
                         <div className='pb-[10px]' />

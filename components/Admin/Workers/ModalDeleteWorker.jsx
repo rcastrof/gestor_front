@@ -16,10 +16,31 @@ const ModalDeleteWorker = (props) => {
     }
 
     const handleDelete = async () => {
-        console.log('borrando' + id)
-        closeModal();
+
+        try {
+            const Options = {
+                method: 'POST',
+                body: JSON.stringify({
+                    id
+                }),
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                
+            };
+            const response = await fetch(`http://localhost:3000/api/workers/delete`, Options);
+            console.log(response)
+            props.parentCallback({state: true, status: response.status});
+
+            closeModal();
+        } catch (error) {
+            console.error('Error al borrar el producto:', error);
+        } 
+
 
     }
+
+
 
     return (
         <Transition.Root show={show} as={Fragment}>
