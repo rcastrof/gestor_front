@@ -16,7 +16,8 @@ const Layout = (props) => {
     return (
         <>
             <div className="bg-gradient-to-b from-[#000000] to-[#202020] h-28 flex items-center justify-between px-4">
-                <div className="text-[#ffffff] text-2xl font-bold">Logo</div>
+                <img src="/src/Logo.png" alt="Logo"/>
+                {/*<div className="text-[#ffffff] text-2xl font-bold">Logo</div>*/}
 
                 <div className='hidden m:flex gap-6 '>
 
