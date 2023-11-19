@@ -8,6 +8,11 @@ const Layout = (props) => {
     const { children } = props
     const { push } = useRouter();
     const [burgerMenuOpen, setBurgerMenuOpen] = useState(false)
+    const logostyle = {
+        maxWidth: '100px',
+        height: 'auto',     
+        marginRight: '10px'
+    }
 
     const navigate = (url) => {
         push(url);
@@ -16,7 +21,7 @@ const Layout = (props) => {
     return (
         <>
             <div className="bg-gradient-to-b from-[#000000] to-[#202020] h-28 flex items-center justify-between px-4">
-                <img src="/src/Logo.png" alt="Logo"/>
+                <img src="/src/Logo.png" alt="Logo" style={logostyle}/>
                 {/*<div className="text-[#ffffff] text-2xl font-bold">Logo</div>*/}
 
                 <div className='hidden m:flex gap-6 '>
