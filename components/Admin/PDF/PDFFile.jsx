@@ -1,4 +1,5 @@
-import React from 'react';
+import React, { useState } from 'react';
+import cotizacionesData from '@public/data/cotizaciones.json';
 import { Page, Text, View, Document, StyleSheet } from '@react-pdf/renderer';
 
 const styles = StyleSheet.create({
@@ -83,7 +84,7 @@ const styles = StyleSheet.create({
     width: '25%',  // Ancho de la celda
   },
   tableContainerWorkers: {
-    marginBottom: 10,
+    marginBottom: 20,
   },
   tableWorkers: {
     display: 'table',
@@ -105,102 +106,127 @@ const styles = StyleSheet.create({
     textAlign: 'center',
     width: '50%',  // Ancho de la celda
   },
+  totalGeneral: {
+    fontSize: 14,
+    fontWeight: 'bold',
+    marginTop: 10,
+  },
+  //Numero Cotizacion
+  mainTable: {
+    display: 'table',
+    width: '100%',
+  },
+  mainTableRow: {
+    display: 'table-row',
+  },
+  mainTableCell: {
+    display: 'table-cell',
+  },
+  mainTableCell2: {
+    display: 'table-cell',
+    alignItems: 'center',
+  },
 });
 
 const PDFFile = (props) => {
-  const { sell, workers, products } = props;
+    const { sell, workers, products } = props;
 
-  // Calcular el total general de productos
-  const totalProductos = products.reduce((total, product) => {
-    const productTotal = product.price * product.quantity;
-    return total + productTotal;
-  }, 0);
+    const cotizaciones = cotizacionesData.sells;
 
-  // Calcular el total general de salarios de los trabajadores
-  const totalSalarios = workers.reduce((total, worker) => {
-    // Asegurarse de que `months` sea un número antes de multiplicar
-    const months = typeof worker.months === 'number' ? worker.months : 0;
-    const salarioTotal = worker.salary * months;
-    return total + salarioTotal;
-  }, 0);
+    // Obtener el número de cotizaciones
+    const numeroCotizaciones = cotizaciones.length;
 
-  // Calcular el total general considerando los productos y salarios
-  const totalGeneral = totalProductos + totalSalarios;
 
-  // Formatear el total general a un string con 2 decimales
-  //const totalGeneralFormateado = new Intl.NumberFormat('es-CL', {
-  //  style: 'currency',
-  //  currency: 'CLP',
-  //}).format(totalGeneral);
+    // Calcular el total de productos y salarios
+    const totalProducts = products.reduce((acc, product) => acc + product.price * product.quantity, 0);
+    const totalSalaries = workers.reduce((acc, worker) => acc + worker.salary, 0);
+    const grandTotal = totalProducts + totalSalaries;
 
-  return (
-    <Document>
-      <Page size="A4" style={styles.page}>
-        <View style={styles.section}>
-          <Text style={styles.title}>Informe de Venta</Text>
+    return (
+        <Document>
+            <Page size="A4" style={styles.page}>
+                <View style={styles.container}>
 
-          {/* Información del Cliente */}
-          <View>
-            <Text style={styles.subTitle1}>Cliente:</Text>
-            <Text style={styles.content}>{sell.client.name}</Text>
-          </View>
+                  {/* Numero de Cotizacion */}
+                    <View style={styles.mainTable}>
+                      <View style={styles.mainTableRow}>
+                      <Text style={styles.mainTableCell}>N° Cotizaciones:</Text>
+                      <Text style={styles.mainTableCell2}>{numeroCotizaciones}</Text>
+                      </View>
+                  </View>
 
-          {/* Tabla de Productos */}
-          <View style={styles.tableContainer}>
-            <Text style={styles.subTitle2}>Productos:</Text>
-            <View style={styles.table}>
-              <View style={styles.tableRow}>
-                <Text style={styles.tableCell}>Producto</Text>
-                <Text style={styles.tableCell}>Precio</Text>
-                <Text style={styles.tableCell}>Cantidad</Text>
-                <Text style={styles.tableCell}>Total</Text>
-              </View>
-              {products.map((product, index) => (
-                <View key={index} style={styles.tableRow}>
-                  <Text style={styles.tableCell}>{product.name}</Text>
-                  <Text style={styles.tableCell}>{new Intl.NumberFormat('es-CL', {
-                    style: 'currency',
-                    currency: 'CLP',
-                  }).format(product.price)}</Text>
+                  <Text style={styles.title}>Cotización</Text>
+                  {/* Informacion del CLiente */ }
+                    <Text>Cliente: {sell.client.name}</Text>
 
-                  <Text style={styles.tableCell2}>{product.quantity}</Text>
-                  <Text style={styles.tableCell3}>{new Intl.NumberFormat('es-CL', {
-                    style: 'currency',
-                    currency: 'CLP',
-                  }).format(product.price * product.quantity)}</Text>
+                    {/* Tabla de Productos */}
+                    <View style={styles.tableContainer}>
+                        <Text style={styles.subTitle2}>Productos:</Text>
+                        <View style={styles.table}>
+                          <View style={styles.tableRow}>
+                          <Text style={styles.tableCell}>Producto</Text>
+                            <Text style={styles.tableCell}>Precio</Text>
+                            <Text style={styles.tableCell}>Cantidad</Text>
+                            <Text style={styles.tableCell}>Valor</Text>
+                          </View>
+                        </View>
+                    </View>
+                    {products.map((product, index) => (
+                        <View key={index} style={styles.tableRow}>
+                            <Text style={styles.tableCell}>{product.name}</Text>
+                            <Text style={styles.tableCell}>{new Intl.NumberFormat('es-CL', {
+                              style: 'currency',
+                              currency: 'CLP',
+                            }).format(product.price)}</Text>
+                            <Text style={styles.tableCell}>{product.quantity}</Text>
+                            <Text style={styles.tableCell}>{new Intl.NumberFormat('es-Cl', {
+                              style: 'currency',
+                              currency: 'CLP'
+                            }).format(product.price * product.quantity)}</Text>
+                        </View>
+                    ))}
+
+                    {/* Tabla de Trabajadores */}
+                    <View style={styles.tableContainerWorkers}>
+                      <Text style={styles.subTitle4}>Trabajadores:</Text>
+                    <View style={styles.tableWorkers}>
+                    <View style={styles.tableRowWorkers}>
+                      <Text style={styles.tableCellWorkers}>Profesión</Text>
+                      <Text style={styles.tableCellWorkers}>Salario</Text>
+                  </View>
+                    {workers.map((worker, index) => (
+                        <View key={index} style={styles.tableRow}>
+                            <Text style={styles.tableCell}>{worker.profession}</Text>
+                            <Text style={styles.tableCell}>{new Intl.NumberFormat('es-CL', {
+                              style: 'currency',
+                              currency: 'CLP',
+                            }).format(worker.salary)}</Text>
+                        </View>
+                    ))}
+                    </View>
+                    </View>
+
+                    {/* Totales */}
+                    <View style={styles.totalRow}>
+                        <Text>Total Productos: {new Intl.NumberFormat('es-CL', {
+                            style: 'currency',
+                            currency: 'CLP',
+                            }).format(totalProducts)}</Text>
+                        <Text>Total Salarios: {new Intl.NumberFormat('es-CL', {
+                            style: 'currency',
+                            currency: 'CLP',
+                            }).format(totalSalaries)}</Text>
+                    </View>
+                    <View style={styles.totalRow}>
+                        <Text>Gran Total: {new Intl.NumberFormat('es-CL', {
+                            style: 'currency',
+                            currency: 'CLP',
+                            }).format(grandTotal)}</Text>
+                    </View>
                 </View>
-              ))}
-            </View>
-          </View>
-
-          {/* Tabla de Trabajadores */}
-          <View style={styles.tableContainerWorkers}>
-            <Text style={styles.subTitle4}>Trabajadores:</Text>
-            <View style={styles.tableWorkers}>
-              <View style={styles.tableRowWorkers}>
-                <Text style={styles.tableCellWorkers}>Profesión</Text>
-                <Text style={styles.tableCellWorkers}>Salario</Text>
-              </View>
-              {workers.map((worker, index) => (
-                <View key={index} style={styles.tableRowWorkers}>
-                  <Text style={styles.tableCellWorkers}>{worker.profession}</Text>
-                  <Text style={styles.tableCellWorkers}>{new Intl.NumberFormat('es-CL', {
-                    style: 'currency',
-                    currency: 'CLP',
-                  }).format(worker.salary)}</Text>
-                </View>
-              ))}
-            </View>
-          </View>
-
-          {/* Total General */}
-          <View>
-          <Text style={styles.totalGeneral}>Total General: {totalGeneral}</Text>
-          </View>
-        </View>
-      </Page>
-    </Document>
-  );
+            </Page>
+        </Document>
+    );
 };
 
 export default PDFFile;
