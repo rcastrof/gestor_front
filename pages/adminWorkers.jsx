@@ -33,7 +33,6 @@ const adminWorkers = () => {
             });
             const data = await response.json();
             setWorkers(data);
-            console.log(data);
         } catch (error) {
             console.error('Error al cargar los datos de trabajadores:', error);
         } finally {
@@ -46,6 +45,7 @@ const adminWorkers = () => {
             getWorkers();
         }
     }
+    
     const filteredWorkers = workers.filter((worker) =>
         worker.name.toLowerCase().includes(searchTerm.toLowerCase()) ||
         worker.lastname.toLowerCase().includes(searchTerm.toLowerCase())
@@ -59,13 +59,13 @@ const adminWorkers = () => {
 
             <div className='flex flex-col h-full '>
                 <div className='text-white text-3xl font-bold italic mt-8'>
-                    <h1>Empleados</h1>
+                    <h1>Personal</h1>
                 </div>
                 {/* boton para agregar productos */}
                 <div
                     onClick={() => setShowModalCreate(true)}
                     className='flex  mt-8 mr-10 w-fit'>
-                    <button className='bg-gray-200 text-[#000000] rounded-[10px] h-[45px] w-[160px] font-bold'>Agregar Empleado</button>
+                    <button className='bg-gray-200 text-[#000000] rounded-[10px] h-[45px] w-[160px] font-bold'>Agregar Personal</button>
                 </div>
                 <ModalCreateWorker
                     show={showModalCreate}

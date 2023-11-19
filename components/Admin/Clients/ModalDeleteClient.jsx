@@ -45,7 +45,7 @@ const ModalDeleteClient = (props) => {
                         leaveFrom="opacity-100 translate-y-0 "
                         leaveTo="opacity-0 translate-y-4 "
                     >
-                        <div className="inline-block w-[327px] h-[246px] align-bottom bg-gradient-to-b from-[#333333] to-[#000000] text-left  shadow-xl transform transition-all my-[6rem] m:my-[15rem] rounded-[1.875rem]">
+                        <div className="inline-block w-[327px] h-[246px] align-bottom bg-[#033739] text-left  shadow-xl transform transition-all my-[6rem] m:my-[15rem] rounded-[1.875rem]">
                             {/*Header modal */}
                             <div className="px-4 pt-5 justify-end">
                                 <div className="flex flex-col">
@@ -67,7 +67,7 @@ const ModalDeleteClient = (props) => {
 
                             <div className='flex mt-[1rem]'>
                                 <button
-                                    className="h-[48px] w-[136px] bg-[#232323] rounded-[10px] ml-[24px] font-bold text-[16px] leading-[22px] tracking-[-1px] "
+                                    className="h-[48px] w-[136px] bg-[#D6E1E7]/25 rounded-[10px] ml-[24px] font-bold text-[16px] leading-[22px] tracking-[-1px] "
                                     onClick={() => handleDelete()}>
                                     <div className='flex'>
                                         <div className='text-white self-center ml-[auto] mr-[auto]'>Si, eliminar</div>

@@ -63,7 +63,7 @@ const ModalDeleteContact = (props) => {
                         leaveFrom="opacity-100 translate-y-0 "
                         leaveTo="opacity-0 translate-y-4 "
                     >
-            <div className="inline-block w-[327px] align-bottom bg-gradient-to-b from-[#333333] to-[#000000] text-left overflow-hidden shadow-xl transform transition-all my-[2.5rem] m:my-[2rem] rounded-[1.875rem]">
+            <div className="inline-block w-[327px] align-bottom bg-[#033739] text-left overflow-hidden shadow-xl transform transition-all my-[2.5rem] m:my-[2rem] rounded-[1.875rem]">
                             {/*Header modal */}
                             <div className="px-4 pt-5 justify-end">
                                 <div className="flex flex-col">
@@ -88,14 +88,14 @@ const ModalDeleteContact = (props) => {
                             <div className='flex mt-[1rem] mb-5'>
 
                                 <button
-                                    className="h-[48px] w-[136px] bg-[#232323] rounded-[10px] ml-[24px] font-bold text-[16px] leading-[22px] tracking-[-1px] "
+                                    className="h-[48px] w-[136px] bg-[#D6E1E7]/25 rounded-[10px] ml-[24px] font-bold text-[16px] leading-[22px] tracking-[-1px] "
                                     onClick={() => handleDelete()}>
                                     <div className='flex'>
                                         <div className='text-white self-center ml-[auto] mr-[auto]'>Si, eliminar</div>
                                     </div>
                                 </button>
                                 <div
-                                    className="flex h-[48px] w-[136px] border-[2px] border-white/[0.20] bg-transparent rounded-[10px] mr-[24px] ml-[9px] text-[16px]  
+                                    className="flex h-[48px] w-[136px] border-[2px] border-white/[0.20] bg-[#D6E1E7]/25 rounded-[10px] mr-[24px] ml-[9px] text-[16px]  
                                     cursor-pointer leading-[22px] tracking-[-1px]"
                                     onClick={() => closeModal()}
                                 >
