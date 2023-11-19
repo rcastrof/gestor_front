@@ -9,6 +9,7 @@ const adminWorkers = () => {
     const [workers, setWorkers] = useState([])
     const [loading, setLoading] = useState(false);
     const [showModalCreate, setShowModalCreate] = useState(false);
+    const [searchTerm, setSearchTerm] = useState("");
 
     useEffect(() => {
         async function fetchData() {
@@ -45,6 +46,12 @@ const adminWorkers = () => {
             getWorkers();
         }
     }
+    const filteredWorkers = workers.filter((worker) =>
+        worker.name.toLowerCase().includes(searchTerm.toLowerCase()) ||
+        worker.lastname.toLowerCase().includes(searchTerm.toLowerCase())
+    );
+
+
 
 
     return (
@@ -66,15 +73,21 @@ const adminWorkers = () => {
                     parentCallback={handleCallBack}
                 />
                 {/* barra de busqueda */}
-                <div className=' mt-10'>
-                    <input className="bg-white/20 rounded-[10px] h-[45px] w-full px-10 text-white" type="text" placeholder="Buscar" />
+                <div className='mt-10'>
+                    <input
+                        className="bg-white/20 rounded-[10px] h-[45px] w-full px-10 text-white"
+                        type="text"
+                        placeholder="Buscar"
+                        value={searchTerm}
+                        onChange={(e) => setSearchTerm(e.target.value)}
+                    />
                 </div>
 
                 {/* tarjeta de productos */}
 
                 {!loading && (
                     <div className='m:flex m:flex-wrap m:ml-[24px] mt-5 gap-4 self-center'>
-                        {workers.map((worker, index) => (
+                        {filteredWorkers.map((worker, index) => (
                             <WorkersCard
                                 key={index}
                                 name={worker.name}
@@ -89,7 +102,7 @@ const adminWorkers = () => {
                             />
                         ))}
                         <div className='pb-[10px]' />
-                        {workers && workers.length === 0 && (
+                        {filteredWorkers && filteredWorkers.length === 0 && (
                             <div className='text-white text-2xl font-bold italic mt-8'>
                                 <h1>No hay trabajadores</h1>
                             </div>
