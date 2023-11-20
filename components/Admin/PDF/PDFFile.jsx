@@ -136,7 +136,7 @@ const PDFFile = (props) => {
     const cotizaciones = cotizacionesData.sells;
 
     // Obtener el número de cotizaciones
-    const numeroCotizaciones = cotizaciones.length;
+    //const numeroCotizaciones = cotizaciones.length;
 
 
     // Calcular el total de productos y salarios
@@ -155,12 +155,12 @@ const PDFFile = (props) => {
                     </View>
 
                   {/* Numero de Cotizacion */}
-                 {/* <View style={{left: 400, width: 150, height: 100, backgroundColor: 'white', marginTop: 10}}> */}
+                 {/* <View style={{left: 400, width: 150, height: 100, backgroundColor: 'white', borderColor: 'black', borderWidth: 1}}> */}
                    <View style={styles.boleta}>
-                        <Text style={styles.letratizacion}>N° Cotización:</Text>
-                        <Text style={styles.numero}>{numeroCotizaciones}</Text>
-                  
+                        <Text style={{fontSize: 14, flexDirection: 'row', justifyContent: 'flex-end', marginBottom: 10}}>N° Cotización:</Text>
+                        <Text style={styles.numero}>{sell.id}</Text>
                   </View>
+
 
                   <Text style={styles.title}>Cotización</Text>
 
@@ -216,22 +216,30 @@ const PDFFile = (props) => {
 
                     {/* Totales */}
                     <View style={styles.totalRow}>
+                        
+                        {/* Quotation Date */}
+                          <View style={{ marginBottom: 10 }}>
+                            <Text style={{fontSize: 14, left: 400}}>Fecha de Cotización:</Text>
+                            <Text style={{fontSize: 14, left: 400}}>{sell.created}</Text>
+                          </View>
                         <Text>Total Productos: {new Intl.NumberFormat('es-CL', {
                             style: 'currency',
                             currency: 'CLP',
                             }).format(totalProducts)}</Text>
-                        <Text>Total Salarios: {new Intl.NumberFormat('es-CL', {
+                        <Text style={{marginTop: 5}}>Total Salarios: {new Intl.NumberFormat('es-CL', {
                             style: 'currency',
                             currency: 'CLP',
                             }).format(totalSalaries)}</Text>
                     </View>
                     <View style={styles.totalRow}>
-                        <Text>Gran Total: {new Intl.NumberFormat('es-CL', {
+                        <Text style={{marginTop: 5}}>Gran Total: {new Intl.NumberFormat('es-CL', {
                             style: 'currency',
                             currency: 'CLP',
                             }).format(grandTotal)}</Text>
                     </View>
                 </View>
+
+                
             </Page>
         </Document>
     );
