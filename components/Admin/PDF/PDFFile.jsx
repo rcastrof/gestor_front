@@ -18,6 +18,7 @@ const styles = StyleSheet.create({
     fontWeight: 'bold',
     marginBottom: 10,
     textDecoration: 'underline',
+    marginTop: 100,
   },
   subTitle1: {
     fontSize: 14,
@@ -107,25 +108,26 @@ const styles = StyleSheet.create({
     width: '50%',  // Ancho de la celda
   },
   totalGeneral: {
-    fontSize: 14,
+    fontSize: 15,
     fontWeight: 'bold',
     marginTop: 10,
   },
-  //Numero Cotizacion
-  mainTable: {
-    display: 'table',
-    width: '100%',
+  boleta: {
+    flexDirection: 'row', 
+    justifyContent: 'flex-end', 
+    marginBottom: 10,
   },
-  mainTableRow: {
-    display: 'table-row',
+  letracotizacion: {
+    fontSize: 12,
+    flexDirection: 'row', 
+    justifyContent: 'flex-end', 
+    marginBottom: 10,
   },
-  mainTableCell: {
-    display: 'table-cell',
-  },
-  mainTableCell2: {
-    display: 'table-cell',
-    alignItems: 'center',
-  },
+  numero: {
+    fontSize: 14, 
+    marginTop: 18, 
+    right: 52,
+  }
 });
 
 const PDFFile = (props) => {
@@ -147,17 +149,21 @@ const PDFFile = (props) => {
             <Page size="A4" style={styles.page}>
                 <View style={styles.Container}>
 
-                  {/* Logo Empresa */}
-                  <View style={{ maxWidth: 100, height: 50, marginRight: 10 }}>
-                    <Image source={require('/public/src/Logo.png')} style={{ flex: 1, width: null, height: null, resizeMode: 'contain' }} />
-                  </View>
+                   {/* Logo Empresa */}
+                   <View style={{maxWidth: 100, height: 'auto', marginRight: 10}}>
+                        {<Image source="/src/Logo.png" style={{position: 'absolute', left: 1, top: 10, width: 100, height: 'auto', marginRight: 10}}/> }
+                    </View>
+
                   {/* Numero de Cotizacion */}
-                    <View style={{flexDirection: 'row', justifyContent: 'flex-end', marginBottom: 10 }}>
-                      <Text style={{fontSize: 14, fontWeight: 'bold', marginLeft: 'auto'}}>N° Cotizaciones:</Text>
-                      <Text style={{fontSize: 14}}>{numeroCotizaciones}</Text>
+                 {/* <View style={{left: 400, width: 150, height: 100, backgroundColor: 'white', marginTop: 10}}> */}
+                   <View style={styles.boleta}>
+                        <Text style={styles.letratizacion}>N° Cotización:</Text>
+                        <Text style={styles.numero}>{numeroCotizaciones}</Text>
+                  
                   </View>
 
                   <Text style={styles.title}>Cotización</Text>
+
                   {/* Informacion del CLiente */ }
                     <Text>Cliente: {sell.client.name}</Text>
 
