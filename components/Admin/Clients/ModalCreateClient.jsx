@@ -30,6 +30,10 @@ const ModalCreateClient = (props) => {
         phone: phone,
         address: address,
         email: email,
+        contactoName: "",
+        contactoLastname: "",
+        contactoEmail: "",
+        contactoPhone: ""
       }
 
       try {

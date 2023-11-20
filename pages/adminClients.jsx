@@ -9,14 +9,12 @@ const adminClients = () => {
     const [loading, setLoading] = useState(false);
     const [showModalCreate, setShowModalCreate] = useState(false);
     const [searchTerm, setSearchTerm] = useState("");
-    const [contacts, setContacts] = useState([])
 
     useEffect(() => {
         const fetchData = async () => {
 
             await getClients();
-            await getContacts();
-            await fetchContacts();
+           
 
         };
 
@@ -52,64 +50,7 @@ const adminClients = () => {
         }
     }
 
-    const getContacts = async () => {
-        try {
-            setLoading(true);
-            const response = await fetch('http://localhost:3000/api/contacts', {
-                method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json',
-                },
-            });
-            const data = await response.json();
-            console.log(data)
-            //si data esta vacio o no existe, entonces data = []
-            if (data === undefined || data.length == 0) {
-                setContacts([]);
-            }
-            else {
-                setContacts(data);
-            }
-            console.log(contacts)
-        } catch (error) {
-            console.error('Error al cargar los datos de contactos:', error);
-        } finally {
-            setLoading(false);
-        }
-    }
-
-    const fetchContacts = async () => {
-        try {
-            setLoading(true);
-    
-            // Obtener los clientes y contactos
-            await getClients();
-            await getContacts();
-    
-            // Verificar si hay clientes y contactos antes de continuar
-            if (clients.length === 0 || contacts.length === 0) {
-                console.warn('No hay clientes o contactos para asignar.');
-                return;
-            }
-    
-            // Iterar sobre los contactos y asignarlos a los clientes correspondientes
-            const updatedClients = clients.map((client) => {
-                const clientContacts = contacts.filter(
-                    (contact) => contact.iD_Cliente === client.iD_Cliente
-                );
-                return { ...client, contacts: clientContacts };
-            });
-    
-            // Actualizar el estado de clients con los contactos asignados
-            setClients(updatedClients);
-            console.log(updatedClients)
-    
-        } catch (error) {
-            console.error('Error al asignar contactos a clientes:', error);
-        } finally {
-            setLoading(false);
-        }
-    };
+  
     
     const handleCallBack = (childData) => {
         if (childData && childData.state) {
@@ -164,7 +105,8 @@ const adminClients = () => {
                                 address={client.address}
                                 email={client.email}
                                 contact={client.contacto}
-                                id={client.iD_cliente}
+                                id={client.iD_Cliente}
+
                                 parentCallback={handleCallBack}
 
                             />

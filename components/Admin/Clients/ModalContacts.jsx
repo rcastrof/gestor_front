@@ -8,7 +8,7 @@ import { BsCheck, BsTrashFill } from 'react-icons/bs';
 
 const ModalContacts = (props) => {
 
-    const { show, onClose, contact, name } = props
+    const { show, onClose, contact, name, phone, address, email, id } = props
     const cancelButtonRef = useRef(null);
     const [saveForm, setSaveForm] = useState(true)
 
@@ -18,35 +18,63 @@ const ModalContacts = (props) => {
 
         if (saveForm && (contact.id == null || contact.id == undefined)) {
             setSaveForm(false);
-            const name = event.contact_name;
-            const phone = event.contact_phone;
-            const email = event.contact_email;
+            const contactoName = event.contact_name;
+            const contactoLastname = event.contact_lastname;
+            const contactoPhone = event.contact_phone;
+            const contactoEmail = event.contact_email;
 
             const data = {
                 name,
                 phone,
+                address,
                 email,
+                contactoName,
+                contactoPhone,
+                contactoLastname,
+                contactoEmail,
+
             }
 
-            console.log(data)
+            try {
+                const Options = {
+                    method: 'POST',
+                    body: JSON.stringify({
+                        data,
+                        id
+                    }),
 
-            reset({ contact_name: "", contact_phone: "", contact_email: "" });
-            setSaveForm(true);
-            onClose();
+                };
+                const response = await fetch('http://localhost:3000/api/clients/edit', Options);
+                reset({ contact_name: "", contact_phone: "", contact_email: "", contact_lastname: "" });
+                setSaveForm(true);
+                onClose();
+                props.parentCallback({ state: true, status: response.status });
+            } catch (error) {
+                console.error('Error al cargar los datos de trabajadores:', error);
+            }
+
+
         }
         else {
             if (saveForm) {
 
                 // UPDATE
                 setSaveForm(false);
-                const name = contact.name;
-                const phone = event.contact_phone;
-                const email = event.contact_email;
+                const contactoName = event.contact_name;
+                const contactoLastname = event.contact_lastname;
+                const contactoPhone = event.contact_phone;
+                const contactoEmail = event.contact_email;
 
                 const data = {
                     name,
                     phone,
+                    address,
                     email,
+                    contactoName,
+                    contactoPhone,
+                    contactoLastname,
+                    contactoEmail,
+
                 }
 
                 console.log(data)
@@ -63,6 +91,7 @@ const ModalContacts = (props) => {
     const closeModal = () => {
 
         setValue('contact_name', contact.name, { shouldDirty: true })
+        setValue('contact_lastname', contact.lastname, { shouldDirty: true })
         setValue('contact_phone', contact.phone, { shouldDirty: true })
         setValue('contact_email', contact.email, { shouldDirty: true })
 
@@ -121,21 +150,29 @@ const ModalContacts = (props) => {
                                 <form onSubmit={handleSubmit(onSubmit)} id="createContact">
                                     <label className='text-black text-sm flex flex-col'>
                                         <div className='mb-[8px] ml-[24px] font-bold leading-[19.07px] tracking-[-5%] text-[14px]  mt-[18px]  text-white'>Nombre</div>
-                                        {contact.name ? <input
-                                            name='contact_name' type="text"
-                                            className="ml-[24px] border-[2px] border-white/[0.20] text-[#FAFAFA] rounded-[9px] w-[279px] h-[40px] pl-[16px] focus:outline-none focus-visible:ring-1 focus-visible:ring-white"
-                                            autoComplete='off'
-                                            defaultValue={contact.name}
-                                            disabled /> : <input
+                                        <input
                                             {...register("contact_name", {
                                                 required: { value: true, message: "* Campo Requerido" },
                                             })}
                                             name='contact_name' type="text"
+                                            defaultValue={contact.contactoName}
                                             className="ml-[24px] border-[2px] border-white/[0.20] bg-transparent rounded-[9px] w-[279px] h-[40px] pl-[16px] focus:outline-none focus-visible:ring-1 focus-visible:ring-white text-[#FAFAFA]"
                                             autoComplete='off'
                                         />
-                                        }
+
                                         {errors.contact_name && <span className='text-xs text-[#FFFFFF] ml-[24px]'>{errors.contact_name.message}</span>}
+
+                                        <div className='mb-[8px] ml-[24px] font-bold leading-[19.07px] tracking-[-5%] text-[14px] mt-[18px] text-white'>Apellido</div>
+                                        <input
+                                            {...register("contact_lastname", {
+                                                required: { value: true, message: "* Campo Requerido" },
+                                            })} name='contact_lastname' type="text"
+                                            className="ml-[24px] border-[2px] border-white/[0.20] bg-transparent rounded-[9px] w-[279px] h-[40px] pl-[16px] focus:outline-none focus-visible:ring-1 focus-visible:ring-white text-[#FAFAFA]"
+                                            defaultValue={contact.contactoLastname}
+                                            autoComplete='off' />
+                                        {errors.contact_lastname && <span className='text-xs text-[#FFFFFF] ml-[24px]'>{errors.contact_lastname.message}</span>}
+
+
 
                                         <div className='mb-[8px] ml-[24px] font-bold leading-[19.07px] tracking-[-5%] text-[14px] mt-[18px] text-white'>Teléfono</div>
                                         <input
@@ -143,7 +180,7 @@ const ModalContacts = (props) => {
                                                 required: { value: true, message: "* Campo Requerido" },
                                             })} name='contact_phone' type="text"
                                             className="ml-[24px] border-[2px] border-white/[0.20] bg-transparent rounded-[9px] w-[279px] h-[40px] pl-[16px] focus:outline-none focus-visible:ring-1 focus-visible:ring-white text-[#FAFAFA]"
-                                            defaultValue={contact.phone}
+                                            defaultValue={contact.contactoPhone}
                                             autoComplete='off' />
                                         {errors.contact_phone && <span className='text-xs text-[#FFFFFF] ml-[24px]'>{errors.contact_phone.message}</span>}
 
@@ -153,7 +190,7 @@ const ModalContacts = (props) => {
                                                 required: { value: true, message: "* Campo Requerido" },
                                             })} name='contact_email' type="text"
                                             className="ml-[24px] border-[2px] border-white/[0.20] bg-transparent rounded-[9px] w-[279px] h-[40px] pl-[16px] focus:outline-none focus-visible:ring-1 focus-visible:ring-white text-[#FAFAFA]"
-                                            defaultValue={contact.email}
+                                            defaultValue={contact.contactoEmail}
                                             autoComplete='off' />
                                         {errors.contact_email && <span className='text-xs text-[#FFFFFF] ml-[24px]'>{errors.contact_email.message}</span>}
 

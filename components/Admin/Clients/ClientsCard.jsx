@@ -64,6 +64,7 @@ const ClientsCard = (props) => {
                     phone={phone}
                     address={address}
                     email={email}
+                    contact={contact}
                     id={id}
                 />
             </div>
@@ -102,8 +103,12 @@ const ClientsCard = (props) => {
                     show={showModalContacts}
                     onClose={() => setShowModalContacts(false)}
                     parentCallback={handleCallback}
-                    contact={contact}
                     name={name}
+                    phone={phone}
+                    address={address}
+                    email={email}
+                    contact={contact}
+                    id={id}
                     showModalDelete={changeToDelete}
                 />
                 <ModalDeleteContact

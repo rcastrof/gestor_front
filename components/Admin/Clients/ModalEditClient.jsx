@@ -7,7 +7,7 @@ import { FaEdit } from "react-icons/fa";
 import { useForm } from 'react-hook-form'
 
 const ModalEditClient = (props) => {
-  const { show, onClose, name, phone, address, email, id } = props
+  const { show, onClose, name, phone, address, email, id, contact } = props
   const cancelButtonRef = useRef(null);
   const [saveForm, setSaveForm] = useState(true)
 
@@ -23,12 +23,15 @@ const ModalEditClient = (props) => {
       const address = event.address
       const email = event.email
 
-
       const data = {
-        name: name,
-        phone: phone,
-        address: address,
-        email: email,
+        name,
+        phone,
+        address,
+        email,
+        contactoName: contact.contactoName,
+        contactoLastname: contact.contactoLastname,
+        contactoEmail: contact.contactoEmail,
+        contactoPhone: contact.contactoPhone
       }
 
       try {
