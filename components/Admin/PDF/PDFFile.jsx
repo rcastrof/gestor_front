@@ -126,12 +126,6 @@ const styles = StyleSheet.create({
     display: 'table-cell',
     alignItems: 'center',
   },
-  // Logo
-  Logocontainer: {
-    maxWidth: 100,
-    height: 'auto',
-    marginRight: 10,
-  },
 });
 
 const PDFFile = (props) => {
@@ -154,12 +148,9 @@ const PDFFile = (props) => {
                 <View style={styles.Container}>
 
                   {/* Logo Empresa */}
-                  <View style={styles.Logocontainer}>
-                        {/* Agrega aquí tu componente o imagen del logo */}
-                        {<Image source="/src/Logo.png" style={styles.logo} /> }
-                        <Text style={styles.logoText}>LOGO</Text>
-                    </View>
-
+                  <View style={{ maxWidth: 100, height: 50, marginRight: 10 }}>
+                    <Image source={require('/public/src/Logo.png')} style={{ flex: 1, width: null, height: null, resizeMode: 'contain' }} />
+                  </View>
                   {/* Numero de Cotizacion */}
                     <View style={{flexDirection: 'row', justifyContent: 'flex-end', marginBottom: 10 }}>
                       <Text style={{fontSize: 14, fontWeight: 'bold', marginLeft: 'auto'}}>N° Cotizaciones:</Text>
