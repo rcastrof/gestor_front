@@ -1,4 +1,3 @@
-
 import 'tailwindcss/tailwind.css'; // Importa el archivo CSS de Tailwind, hay que cambiarlo mas adelante.
 import { GiHamburgerMenu } from "react-icons/gi";
 import { useState } from 'react';
