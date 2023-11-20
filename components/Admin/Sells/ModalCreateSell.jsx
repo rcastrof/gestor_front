@@ -71,7 +71,6 @@ const ModalCreateSell = (props) => {
 
         event.preventDefault()
 
-
         if (selectedWorkerId) {
             console.log(JSON.parse(selectedWorkerId))
 
@@ -87,7 +86,7 @@ const ModalCreateSell = (props) => {
     }
 
     const removeWorker = (index) => {
-        
+
         console.log("removiendo trabajador")
 
         const updatedWorkers = selectedWorkers.filter((_, i) => i !== index)

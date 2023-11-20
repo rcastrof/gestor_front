@@ -140,8 +140,8 @@ const PDFFile = (props) => {
 
 
     // Calcular el total de productos y salarios
-    const totalProducts = products.reduce((acc, product) => acc + product.price * product.quantity, 0);
-    const totalSalaries = workers.reduce((acc, worker) => acc + worker.salary, 0);
+    const totalProducts = products?.reduce((acc, product) => acc + product.price * product.quantity, 0);
+    const totalSalaries = workers?.reduce((acc, worker) => acc + worker.salary, 0);
     const grandTotal = totalProducts + totalSalaries;
 
     return (
@@ -165,7 +165,7 @@ const PDFFile = (props) => {
                   <Text style={styles.title}>Cotización</Text>
 
                   {/* Informacion del CLiente */ }
-                    <Text>Cliente: {sell.client.name}</Text>
+                    <Text>Cliente: {sell?.client?.name}</Text>
 
                     {/* Tabla de Productos */}
                     <View style={styles.tableContainer}>
@@ -179,7 +179,7 @@ const PDFFile = (props) => {
                           </View>
                         </View>
                     </View>
-                    {products.map((product, index) => (
+                    {products?.map((product, index) => (
                         <View key={index} style={styles.tableRow}>
                             <Text style={styles.tableCell}>{product.name}</Text>
                             <Text style={styles.tableCell}>{new Intl.NumberFormat('es-CL', {
@@ -202,7 +202,7 @@ const PDFFile = (props) => {
                       <Text style={styles.tableCellWorkers}>Profesión</Text>
                       <Text style={styles.tableCellWorkers}>Salario</Text>
                   </View>
-                    {workers.map((worker, index) => (
+                    {workers?.map((worker, index) => (
                         <View key={index} style={styles.tableRow}>
                             <Text style={styles.tableCell}>{worker.profession}</Text>
                             <Text style={styles.tableCell}>{new Intl.NumberFormat('es-CL', {
