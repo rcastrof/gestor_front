@@ -18,6 +18,7 @@ const styles = StyleSheet.create({
     fontWeight: 'bold',
     marginBottom: 10,
     textDecoration: 'underline',
+    marginTop: 100,
   },
   subTitle1: {
     fontSize: 14,
@@ -107,31 +108,26 @@ const styles = StyleSheet.create({
     width: '50%',  // Ancho de la celda
   },
   totalGeneral: {
-    fontSize: 14,
+    fontSize: 15,
     fontWeight: 'bold',
     marginTop: 10,
   },
-  //Numero Cotizacion
-  mainTable: {
-    display: 'table',
-    width: '100%',
+  boleta: {
+    flexDirection: 'row', 
+    justifyContent: 'flex-end', 
+    marginBottom: 10,
   },
-  mainTableRow: {
-    display: 'table-row',
+  letracotizacion: {
+    fontSize: 12,
+    flexDirection: 'row', 
+    justifyContent: 'flex-end', 
+    marginBottom: 10,
   },
-  mainTableCell: {
-    display: 'table-cell',
-  },
-  mainTableCell2: {
-    display: 'table-cell',
-    alignItems: 'center',
-  },
-  // Logo
-  Logocontainer: {
-    maxWidth: 100,
-    height: 'auto',
-    marginRight: 10,
-  },
+  numero: {
+    fontSize: 14, 
+    marginTop: 18, 
+    right: 52,
+  }
 });
 
 const PDFFile = (props) => {
@@ -140,7 +136,7 @@ const PDFFile = (props) => {
     const cotizaciones = cotizacionesData.sells;
 
     // Obtener el número de cotizaciones
-    const numeroCotizaciones = cotizaciones.length;
+    //const numeroCotizaciones = cotizaciones.length;
 
 
     // Calcular el total de productos y salarios
@@ -153,20 +149,21 @@ const PDFFile = (props) => {
             <Page size="A4" style={styles.page}>
                 <View style={styles.Container}>
 
-                  {/* Logo Empresa */}
-                  <View style={styles.Logocontainer}>
-                        {/* Agrega aquí tu componente o imagen del logo */}
-                        {<Image source="/src/Logo.png" style={styles.logo} /> }
-                        <Text style={styles.logoText}>LOGO</Text>
+                   {/* Logo Empresa */}
+                   <View style={{maxWidth: 100, height: 'auto', marginRight: 10}}>
+                        {<Image source="/src/Logo.png" style={{position: 'absolute', left: 1, top: 10, width: 100, height: 'auto', marginRight: 10}}/> }
                     </View>
 
                   {/* Numero de Cotizacion */}
-                    <View style={{flexDirection: 'row', justifyContent: 'flex-end', marginBottom: 10 }}>
-                      <Text style={{fontSize: 14, fontWeight: 'bold', marginLeft: 'auto'}}>N° Cotizaciones:</Text>
-                      <Text style={{fontSize: 14}}>{numeroCotizaciones}</Text>
+                 {/* <View style={{left: 400, width: 150, height: 100, backgroundColor: 'white', borderColor: 'black', borderWidth: 1}}> */}
+                   <View style={styles.boleta}>
+                        <Text style={{fontSize: 14, flexDirection: 'row', justifyContent: 'flex-end', marginBottom: 10}}>N° Cotización:</Text>
+                        <Text style={styles.numero}>{sell.id}</Text>
                   </View>
 
+
                   <Text style={styles.title}>Cotización</Text>
+
                   {/* Informacion del CLiente */ }
                     <Text>Cliente: {sell.client.name}</Text>
 
@@ -219,22 +216,30 @@ const PDFFile = (props) => {
 
                     {/* Totales */}
                     <View style={styles.totalRow}>
+                        
+                        {/* Quotation Date */}
+                          <View style={{ marginBottom: 10 }}>
+                            <Text style={{fontSize: 14, left: 400}}>Fecha de Cotización:</Text>
+                            <Text style={{fontSize: 14, left: 400}}>{sell.created}</Text>
+                          </View>
                         <Text>Total Productos: {new Intl.NumberFormat('es-CL', {
                             style: 'currency',
                             currency: 'CLP',
                             }).format(totalProducts)}</Text>
-                        <Text>Total Salarios: {new Intl.NumberFormat('es-CL', {
+                        <Text style={{marginTop: 5}}>Total Salarios: {new Intl.NumberFormat('es-CL', {
                             style: 'currency',
                             currency: 'CLP',
                             }).format(totalSalaries)}</Text>
                     </View>
                     <View style={styles.totalRow}>
-                        <Text>Gran Total: {new Intl.NumberFormat('es-CL', {
+                        <Text style={{marginTop: 5}}>Gran Total: {new Intl.NumberFormat('es-CL', {
                             style: 'currency',
                             currency: 'CLP',
                             }).format(grandTotal)}</Text>
                     </View>
                 </View>
+
+                
             </Page>
         </Document>
     );

@@ -49,11 +49,12 @@ export default function Home(props) {
   return (
 
     <>
-      <div className="bg-gradient-to-b from-[#333333] to-[#000000] h-screen">
+      <div className="bg-[#749494] h-screen">
 
         <div className="mx-auto my-auto w2 min-h-screen flex items-center justify-center">
 
           <div className="bg-white/20 w-80 h-[30rem] backdrop-opacity-20 rounded-[10px] flex flex-col font-body items-center">
+
 
             <h1 className="text-4xl text-white mt-10">Inicia sesión</h1>
             <p className="text-xs text-white opacity-80 mt-2">Ingresa tus datos o solicita tu cuenta al admin </p>
@@ -93,11 +94,16 @@ export default function Home(props) {
               {loginError && <p className="text-red-500 text-xs">{loginError}</p>}
 
 
+
               <button
                 type="submit"
-                className="bg-[#FFD600] rounded-[10px] h-[2rem] mt-5 font-semibold text-sm"
+                className="bg-[#083c3c] rounded-[10px] h-[2rem] mt-5 font-semibold text-sm text-white"
 
               >Iniciar sesión</button>
+
+              <button onClick={() => router.push('/register')} className="mt-4 text-white">
+                ¿No tienes cuenta? Regístrate aquí
+              </button>
 
             </form>
 

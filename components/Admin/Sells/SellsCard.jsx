@@ -70,7 +70,7 @@ const SellsCard = (props) => {
             <div className='flex justify-center mt-8 '>
                 <div
                     onClick={() => setShowModalEdit(true)}
-                    className='bg-[#232323] text-gray-300 cursor-pointer rounded-[10px] h-[40px] w-[80px] font-bold border-2 border-opacity-10 border-black '>
+                    className='bg-[#083c3c] text-gray-300 cursor-pointer rounded-[10px] h-[40px] w-[80px] font-bold border-2 border-opacity-10 border-black '>
                     <div className='flex p-1.5'>
                         <FaEdit className='self-center h-4 w-6' /> Editar
                     </div>

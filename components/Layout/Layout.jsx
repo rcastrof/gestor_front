@@ -1,4 +1,3 @@
-
 import 'tailwindcss/tailwind.css'; // Importa el archivo CSS de Tailwind, hay que cambiarlo mas adelante.
 import { GiHamburgerMenu } from "react-icons/gi";
 import { useState } from 'react';
@@ -22,7 +21,10 @@ const Layout = (props) => {
         <>
             <div className="h-28 flex items-center justify-between px-4 bg-[#ebfefc]">
 
-                <img src="/src/Logo.png" alt="Logo" style={logostyle} />
+                <div onClick={() => navigate('/adminSells')} className='cursor-pointer'>
+
+                <img src="/src/Logo.png" alt="Logo" style={logostyle} /> 
+                </div>
 
                 <div className='hidden m:flex gap-6 text-[#033739] '>
 

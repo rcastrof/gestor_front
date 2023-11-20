@@ -79,7 +79,7 @@ const ClientsCard = (props) => {
             <div className='flex justify-center gap-2 mt-6'>
                 <div
                     onClick={() => setShowModalHistory(true)}
-                    className='bg-[#232323] text-gray-300 cursor-pointer rounded-[10px] h-[40px] w-[105px] font-bold border-2 border-opacity-10 border-black '>
+                    className='bg-[#083c3c] text-gray-300 cursor-pointer rounded-[10px] h-[40px] w-[105px] font-bold border-2 border-opacity-10 border-black '>
                     <div className='flex justify-center p-1.5'>
                         <FaFileInvoiceDollar className='self-center h-4 w-6' /> Historial
                     </div>
@@ -114,7 +114,7 @@ const ClientsCard = (props) => {
                 <ModalDeleteContact
                     show={showModalDeleteContact}
                     onClose={() => setShowModalDeleteContact(false)}
-                    contactId={contact.iD_Contactos}
+                    contactId={contact.id}
                     parentCallback={handleCallback}
                 />
 
