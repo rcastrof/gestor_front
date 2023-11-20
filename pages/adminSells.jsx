@@ -163,7 +163,7 @@ const adminSells = () => {
                             <SellsCard
                                 key={index}
                                 name={sell.name}
-                                id={sell.id}
+                                id={sell.iD_cotizacion}
                                 created={sell.created}
                                 client={sell.client}
 
