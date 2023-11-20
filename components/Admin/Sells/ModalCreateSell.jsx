@@ -164,7 +164,7 @@ const ModalCreateSell = (props) => {
                                             <FaEdit className=' h-[20px] w-[20px] ml-[6px] text-white self-center' />
                                         </div>
                                         <Dialog.Title as="h3" className="text-[20px] font-bold leading-[27px] text-white tracking-[-3%] whitespace-nowrap mb-[29px] mt-[4px]">
-                                            Crear producto<br />
+                                            Crear Cotización<br />
                                         </Dialog.Title>
                                     </div>
                                 </div>
@@ -198,7 +198,7 @@ const ModalCreateSell = (props) => {
                                             list='clients'
                                             className='h-[48px] w-[279px] border-[2px] border-white/[0.20] bg-transparent rounded-[10px] ml-[24px] mt-[8px] text-[16px] leading-[22px] tracking-[-1px]'
                                         >
-                                            <option value='' className='text-3xl'>Selecciona un cliente</option>
+                                            <option value='' className='text'>Selecciona un cliente</option>
                                             {clients.map((client, index) => (
                                                 <option key={index} value={client.name}>{client.name}</option>
                                             ))}
@@ -268,7 +268,7 @@ const ModalCreateSell = (props) => {
                                                 autoComplete='off'
                                                 type='text'
                                                 onChange={(event) => setSelectedProductId(event.target.value)}
-                                                className='h-[48px] w-[279px] border-[2px] border-white/[0.20] bg-transparent rounded-[10px] ml-[24px] mt-[8px] text-[16px] leading-[22px] tracking-[-1px] text-white'
+                                                className='h-[48px] w-[279px] border-[2px] border-white/[0.20] bg-transparent rounded-[10px] ml-[24px] mt-[8px] text-[16px] leading-[22px] tracking-[-1px]'
                                             >
                                                 <option value=''>Selecciona un producto</option>
                                                 {products.map((product, index) => (
@@ -341,7 +341,7 @@ const ModalCreateSell = (props) => {
                                     </div>
                                     <button
                                         type="submit"
-                                        className="h-[48px] w-[135px] bg-[#232323] rounded-[10px] mr-[24px] text-[16px] leading-[22px] tracking-[-1px]">
+                                        className="h-[48px] w-[135px] bg-[#D6E1E7]/25 rounded-[10px] mr-[24px] text-[16px] leading-[22px] tracking-[-1px]">
                                         <div className='flex ml-[20px]'>
                                             <div className="flex justify-center items-center w-[24px] h-[24px] rounded-full bg-[#D6E1E7]/25">
                                                 <BsCheck className='w-[20px] h-[20px] text-white' aria-hidden="true" />

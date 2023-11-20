@@ -163,7 +163,7 @@ const adminClients = () => {
                                 phone={client.phone}
                                 address={client.address}
                                 email={client.email}
-                                contact={client.contact}
+                                contact={client.contacto}
                                 id={client.iD_cliente}
                                 parentCallback={handleCallBack}
 
