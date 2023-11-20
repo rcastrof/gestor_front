@@ -94,11 +94,16 @@ export default function Home(props) {
               {loginError && <p className="text-red-500 text-xs">{loginError}</p>}
 
 
+
               <button
                 type="submit"
                 className="bg-[#083c3c] rounded-[10px] h-[2rem] mt-5 font-semibold text-sm text-white"
 
               >Iniciar sesión</button>
+
+              <button onClick={() => router.push('/register')} className="mt-4 text-white">
+                ¿No tienes cuenta? Regístrate aquí
+              </button>
 
             </form>
 
