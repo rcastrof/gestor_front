@@ -256,12 +256,12 @@ const ModalEditSell = (props) => {
                                         </div>
                                         <div className={`flex ml-[24px] mr-[24px] flex-wrap h-fit mt-[15px] ${HideWorkers ? 'hidden' : ''}`}>
                                             {/* Contenido del div */}
-                                            {selectedWorkers.length === 0 ? (
+                                            {selectedWorkers?.length === 0 ? (
                                                 <div className=' mx-auto my-auto text-white'>
                                                     <p>Sin Trabajadores</p>
                                                 </div>
                                             ) : (
-                                                selectedWorkers.map((worker, index) => (
+                                                selectedWorkers?.map((worker, index) => (
                                                     <div key={index} className='flex h-[48px] rounded-[10px] bg-[#FAFAFA] bg-opacity-10 mr-[16px] mb-[8px]'>
                                                         <div className='ml-[14px] text-[#FAFAFA] mr-[10px] my-[10px] text-[14px] font-bold self-center'>
                                                             {worker.name}
@@ -307,12 +307,12 @@ const ModalEditSell = (props) => {
 
                                         <div className={`flex ml-[24px] mr-[24px] flex-wrap h-fit mt-[15px] ${HideProducts ? 'hidden' : ''}`}>
                                             {/* Contenido del div */}
-                                            {selectedProducts.length === 0 ? (
+                                            {selectedProducts?.length === 0 ? (
                                                 <div className=' mx-auto my-auto text-white'>
                                                     <p>Sin Productos</p>
                                                 </div>
                                             ) : (
-                                                selectedProducts.map((product, index) => (
+                                                selectedProducts?.map((product, index) => (
                                                     <div key={index} className='flex h-[48px] rounded-[10px] bg-[#FAFAFA] bg-opacity-10 mr-[16px] mb-[8px]'>
                                                         <div className='flex'>
                                                             <div className='ml-[14px] text-[#FAFAFA] mr-[10px] my-[10px] text-[14px] font-bold self-center'>

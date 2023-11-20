@@ -40,7 +40,6 @@ const adminSells = () => {
                 },
             });
             const data = await response.json();
-            console.log(data)
             //si data esta vacio o no existe, entonces data = []
             if (data === undefined || data.length == 0) {
                 setClients([]);
@@ -112,6 +111,7 @@ const adminSells = () => {
             }
             else {
                 setSells(data);
+                console.log(data)
             }
 
         } catch (error) {
@@ -163,9 +163,9 @@ const adminSells = () => {
                             <SellsCard
                                 key={index}
                                 name={sell.name}
-                                id={sell.iD_cotizacion}
+                                id={sell.iD_Cotizacion}
                                 created={sell.created}
-                                client={sell.client}
+                                client={sell.cliente}
 
                                 clients={clients}
                                 products={products}

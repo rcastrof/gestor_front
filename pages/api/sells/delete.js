@@ -5,7 +5,7 @@ export default async function handler(req, res) {
     console.log(id);
 
     try {
-        const response = await fetch(`https://localhost:7233/v1/cliente/cotizacion/${id}`, {
+        const response = await fetch(`https://localhost:7233/v1/cotizacion/delete/${id}`, {
             method: 'DELETE',
             body: JSON.stringify({ id }),
             headers: {

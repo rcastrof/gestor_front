@@ -20,11 +20,11 @@ const SellsCard = (props) => {
         let totalWorkers = 0;
         const allproducts = sell.selectedProducts
         const allworkers = sell.selectedWorkers
-        allproducts.forEach(product => {
+        allproducts?.forEach(product => {
             total += product.price * product.quantity
         });
 
-        allworkers.forEach(worker => {
+        allworkers?.forEach(worker => {
             totalWorkers += worker.salary
         }
         );
@@ -57,7 +57,7 @@ const SellsCard = (props) => {
             />
             <div className='flex flex-col mx-5 h-[80px]'>
                 <p className='text-white text-xl font-bold'>{name}</p>
-                <p className='text-white text-sm italic font-semibold mt-1'>Cliente: {client.name}</p>
+                <p className='text-white text-sm italic font-semibold mt-1'>Cliente: {client?.name}</p>
                 {/* total */}
                 <div className='flex mt-auto mb-1'>
                     <p className='text-white text-2xl italic font-semibold ml-2 '>Total: ${total}</p>

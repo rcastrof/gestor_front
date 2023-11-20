@@ -14,6 +14,7 @@ const ModalDeleteSell = (props) => {
         onClose();
     }
 
+
     const handleDelete = async () => {
         try {
             const Options = {

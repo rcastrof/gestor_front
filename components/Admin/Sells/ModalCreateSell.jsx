@@ -15,7 +15,8 @@ const ModalCreateSell = (props) => {
     const [saveForm, setSaveForm] = useState(true)
 
     const [selectedWorkers, setSelectedWorkers] = useState([])
-    const [selectedWorkerId, setSelectedWorkerId] = useState('')
+    const [selectedWorkerId, setSelectedWorkerId] = useState([])
+    const [selectedIdFromWorker, setSelectedIdFromWorker] = useState([])
 
     const [HideWorkers, setHideWorkers] = useState(false)
 
@@ -43,22 +44,26 @@ const ModalCreateSell = (props) => {
                 name,
                 client,
                 selectedWorkers,
-                selectedProducts
+                selectedProducts,
+                quantityofproduct: "",
+                PersonalIds: "",
+                ProductIds: ""
+
             }
 
             try {
                 const Options = {
-                  method: 'POST',
-                  body: JSON.stringify({ data })
+                    method: 'POST',
+                    body: JSON.stringify({ data })
                 };
                 const response = await fetch(`http://localhost:3000/api/sells/create`, Options);
                 setSaveForm(true)
                 closeModal();
                 props.parentCallback({ state: true, status: response.status });
-              }
-              catch (error) {
+            }
+            catch (error) {
                 console.error('Error al crear el producto:', error);
-              }
+            }
         }
     }
 
@@ -68,21 +73,32 @@ const ModalCreateSell = (props) => {
 
 
         if (selectedWorkerId) {
-            console.log(selectedWorkerId)
+            console.log(JSON.parse(selectedWorkerId))
 
-            const selectedWorker = workers.find((worker) => worker.name === selectedWorkerId)
+            const selectedWorker = workers.find((worker) => worker.name === JSON.parse(selectedWorkerId).name)
             if (selectedWorker) {
                 setSelectedWorkers([...selectedWorkers, selectedWorker])
-                setSelectedWorkerId(''); // reset the input
+                console.log(selectedWorkers)
+                setSelectedIdFromWorker([...selectedIdFromWorker, selectedWorker.iD_Personal]); // Agrega el id al array
+                setSelectedWorkerId([]); // reset the input
             }
 
         }
     }
 
     const removeWorker = (index) => {
+        
         console.log("removiendo trabajador")
+
         const updatedWorkers = selectedWorkers.filter((_, i) => i !== index)
+
+        console.log(updatedWorkers)
+
         setSelectedWorkers(updatedWorkers)
+        const updatedIds = selectedIdFromWorker.filter(id => id !== updatedWorkers.iD_Personal);
+        setSelectedIdFromWorker(updatedIds);
+
+        console.log(updatedIds, 'asdasddas')
     }
 
     const addProduct = (event) => {
@@ -90,6 +106,7 @@ const ModalCreateSell = (props) => {
         event.preventDefault()
 
         if (selectedProductId) {
+
             console.log(selectedProductId)
 
             const selectedProduct = products.find((product) => product.name === selectedProductId)
@@ -200,7 +217,7 @@ const ModalCreateSell = (props) => {
                                         >
                                             <option value='' className='text'>Selecciona un cliente</option>
                                             {clients.map((client, index) => (
-                                                <option key={index} value={client.name}>{client.name}</option>
+                                                <option key={index} value={client.iD_Cliente}>{client.name}</option>
                                             ))}
                                         </select>
                                         {errors.client && <span className='text-[#FF5757] text-[12px] ml-[24px]'>{errors.client.message}</span>}
@@ -222,7 +239,7 @@ const ModalCreateSell = (props) => {
                                             >
                                                 <option value=''>Selecciona un trabajador</option>
                                                 {workers.map((worker, index) => (
-                                                    <option key={index} value={worker.name}>{worker.name} </option>
+                                                    <option key={index} value={JSON.stringify(worker)}>{worker.name} {worker.lastname} </option>
                                                 ))}
                                             </select>
                                             <div onClick={addWorker} className='flex cursor-pointer self-center ml-2'>
@@ -245,7 +262,7 @@ const ModalCreateSell = (props) => {
                                                 selectedWorkers.map((worker, index) => (
                                                     <div key={index} className='flex h-[48px] rounded-[10px] bg-[#FAFAFA] bg-opacity-10 mr-[16px] mb-[8px]'>
                                                         <div className='ml-[14px] text-[#FAFAFA] mr-[10px] my-[10px] text-[14px] font-bold self-center'>
-                                                            {worker.name}
+                                                            {worker.name} {worker.lastname}
                                                         </div>
                                                         <IoMdCloseCircle
                                                             onClick={() => removeWorker(index)}
