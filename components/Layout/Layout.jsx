@@ -22,7 +22,7 @@ const Layout = (props) => {
         <>
             <div className="h-28 flex items-center justify-between px-4 bg-[#ebfefc]">
 
-                <div onClick={() => navigate('/adminIndex')} className='cursor-pointer'>
+                <div onClick={() => navigate('/adminSells')} className='cursor-pointer'>
 
                 <img src="/src/Logo.png" alt="Logo" style={logostyle} /> 
                 </div>
