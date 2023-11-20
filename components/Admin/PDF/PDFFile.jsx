@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import cotizacionesData from '@public/data/cotizaciones.json';
-import { Page, Text, View, Document, StyleSheet } from '@react-pdf/renderer';
+import { Page, Text, View, Document, StyleSheet, Image } from '@react-pdf/renderer';
 
 const styles = StyleSheet.create({
   page: {
@@ -126,6 +126,12 @@ const styles = StyleSheet.create({
     display: 'table-cell',
     alignItems: 'center',
   },
+  // Logo
+  Logocontainer: {
+    maxWidth: 100,
+    height: 'auto',
+    marginRight: 10,
+  },
 });
 
 const PDFFile = (props) => {
@@ -145,14 +151,19 @@ const PDFFile = (props) => {
     return (
         <Document>
             <Page size="A4" style={styles.page}>
-                <View style={styles.container}>
+                <View style={styles.Container}>
+
+                  {/* Logo Empresa */}
+                  <View style={styles.Logocontainer}>
+                        {/* Agrega aquí tu componente o imagen del logo */}
+                        {<Image source="/src/Logo.png" style={styles.logo} /> }
+                        <Text style={styles.logoText}>LOGO</Text>
+                    </View>
 
                   {/* Numero de Cotizacion */}
-                    <View style={styles.mainTable}>
-                      <View style={styles.mainTableRow}>
-                      <Text style={styles.mainTableCell}>N° Cotizaciones:</Text>
-                      <Text style={styles.mainTableCell2}>{numeroCotizaciones}</Text>
-                      </View>
+                    <View style={{flexDirection: 'row', justifyContent: 'flex-end', marginBottom: 10 }}>
+                      <Text style={{fontSize: 14, fontWeight: 'bold', marginLeft: 'auto'}}>N° Cotizaciones:</Text>
+                      <Text style={{fontSize: 14}}>{numeroCotizaciones}</Text>
                   </View>
 
                   <Text style={styles.title}>Cotización</Text>
