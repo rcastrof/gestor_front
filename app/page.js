@@ -24,18 +24,19 @@ export default function Home(props) {
 
 
     setLoginError(null)
+
     const autenticar = await signIn('credentials', {
       redirect: false,
       email: email,
       password: pass,
 
     });
+
     if (autenticar && autenticar.ok) {
 
       router.push("/adminIndex")
 
-
-    } else if (autenticar.error) {
+    } else if (autenticar?.error) {
 
 
       setLoginError("Usuario o Contraseña Incorrectos")

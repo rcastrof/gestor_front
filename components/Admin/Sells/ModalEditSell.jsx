@@ -17,30 +17,97 @@ const ModalEditSell = (props) => {
     const [saveForm, setSaveForm] = useState(true)
 
     const [selectedWorkers, setSelectedWorkers] = useState([])
-    const [selectedWorkerId, setSelectedWorkerId] = useState('')
+    const [selectedWorkerId, setSelectedWorkerId] = useState([])
+    const [selectedIdFromWorker, setSelectedIdFromWorker] = useState([])
+    const [firstId, setFirstId] = useState([])
 
     const [HideWorkers, setHideWorkers] = useState(false)
 
     const [selectedProducts, setSelectedProducts] = useState([])
-    const [selectedProductId, setSelectedProductId] = useState('')
+    const [selectedProductId, setSelectedProductId] = useState([])
+    const [selectedIdFromProduct, setSelectedIdFromProduct] = useState([])
+
 
     const [HideProducts, setHideProducts] = useState(false)
 
-    const [selectedEditClient, setSelectedEditClient] = useState('')
+    const [selectedEditClient, setSelectedEditClient] = useState([])
 
+    const [thisIDSell, setThisIDSell] = useState(sell.iD_Cotizacion)
 
+    const [defaultSellName, setDefaultSellName] = useState('')
+    let { register, handleSubmit, formState: { errors }, clearErrors, reset, setValue } = useForm();
 
     useEffect(() => {
-        setSelectedWorkers(sell.selectedWorkers)
-        setSelectedProducts(sell.selectedProducts)
-        setSelectedEditClient(sell.client)
-        console.log(sell.client)
+        setSelectedEditClient(sell.iD_Cliente)
+        setDefaultSellName(sell.name)
+        console.log(defaultSellName)
     }, [sell])
 
+    useEffect(() => {
+        async function fetchWorkersFromSells() {
+            await fetchWorkersFromSell()
+        }
+        fetchWorkersFromSells()
+    }, [sell, workers])
 
+    useEffect(() => {
+        async function fetchProductsFromSells() {
+            await fetchProductsAndQuantityFromSell()
+        }
+        fetchProductsFromSells()
+    }, [sell, products])
 
+  
 
-    let { register, handleSubmit, formState: { errors }, clearErrors, reset, setValue } = useForm();
+    const fetchProductsAndQuantityFromSell = async () => {
+        try {
+            // Verificar si sell.productosIds es un objeto
+            if (typeof sell.productosIds === 'object' && sell.productosIds !== null) {
+                const selectedProducts = Object.entries(sell.productosIds).map(([productID, quantity]) => {
+                    // Buscar el producto en el array de productos
+                    const product = products.find(product => product.iD_Productos === parseInt(productID));
+
+                    // Verificar si se encontró el producto
+                    if (product) {
+                        return {
+                            ...product,
+                            cantidad: parseInt(quantity), // Añadir la cantidad al objeto del producto
+                        };
+                    }
+
+                    return null; // Retorna null si el producto no se encuentra
+                }).filter(product => product !== null); // Filtrar productos que no se encontraron
+
+                // Establecer los productos seleccionados
+                setSelectedProducts(selectedProducts);
+
+            } else {
+                console.error('Error: sell.productosIds no es un objeto');
+            }
+        } catch (error) {
+            console.error('Error al obtener los productos desde las ventas:', error);
+        }
+    };
+
+    const fetchWorkersFromSell = async () => {
+        try {
+            // Obtener los trabajadores cuyos iD_Personal están en el array sell.personalIds
+            const selectedWorkers = workers.filter(worker => sell.personalIds.includes(worker.iD_Personal));
+
+            // Obtener las IDs de los trabajadores seleccionados
+            const selectedWorkerIds = selectedWorkers.map(worker => worker.iD_Personal);
+
+            // Establecer los trabajadores seleccionados
+            setSelectedWorkers(selectedWorkers);
+            setFirstId(JSON.stringify(selectedWorkers[0]));
+
+            // Establecer las IDs de los trabajadores seleccionados
+            setSelectedIdFromWorker(selectedWorkerIds);
+
+        } catch (error) {
+            console.error('Error al obtener los trabajadores desde las ventas:', error);
+        }
+    };
 
     const onSubmit = async (event) => {
 
@@ -48,33 +115,40 @@ const ModalEditSell = (props) => {
             setSaveForm(false)
 
             const name = event.name
-            const client = event.client
+            const iD_Cliente = event.client
+            const personalIds = selectedIdFromWorker
+            const productosIds = selectedIdFromProduct
 
-
+            console.log(defaultSellName)
 
             const data = {
-                name,
-                client,
-                selectedWorkers,
-                selectedProducts
+                name ,
+                iD_Cliente,
+                personalIds,
+                productosIds,
+                quantityofproduct: "",
             }
 
+            console.log(data)
             try {
                 const Options = {
                     method: 'POST',
                     body: JSON.stringify({
                         data,
-                        id
+                        thisIDSell
                     }),
+
 
                 };
                 const response = await fetch('http://localhost:3000/api/sells/edit', Options);
+
                 console.log(response)
+
                 setSaveForm(true)
                 closeModal();
                 props.parentCallback({ state: true, status: response.status });
             } catch (error) {
-                console.error('Error al cargar los datos de trabajadores:', error);
+                console.error(error);
             }
         }
     }
@@ -83,23 +157,27 @@ const ModalEditSell = (props) => {
 
         event.preventDefault()
 
+        if (JSON.parse(selectedWorkerId) !== "") {
 
-        if (selectedWorkerId) {
-            console.log(selectedWorkerId)
-
-            const selectedWorker = workers.find((worker) => worker.name === selectedWorkerId)
+            const selectedWorker = workers.find((worker) => worker.name === JSON.parse(selectedWorkerId).name)
             if (selectedWorker) {
                 setSelectedWorkers([...selectedWorkers, selectedWorker])
-                setSelectedWorkerId(''); // reset the input
+                console.log(selectedWorkers)
+                setSelectedIdFromWorker([...selectedIdFromWorker, selectedWorker.iD_Personal]); // Agrega el id al array
+                setSelectedWorkerId([]); // reset the input
             }
 
         }
     }
 
-    const removeWorker = (index) => {
-        console.log("removiendo trabajador")
+    const removeWorker = (index, worker) => {
+
         const updatedWorkers = selectedWorkers.filter((_, i) => i !== index)
         setSelectedWorkers(updatedWorkers)
+
+        const updatedIds = selectedIdFromWorker.filter(id => id !== worker.iD_Personal);
+        setSelectedIdFromWorker(updatedIds);
+
     }
 
     const addProduct = (event) => {
@@ -107,34 +185,49 @@ const ModalEditSell = (props) => {
         event.preventDefault()
 
         if (selectedProductId) {
-            console.log(selectedProductId)
 
             const selectedProduct = products.find((product) => product.name === selectedProductId)
             if (selectedProduct) {
+                setSelectedIdFromProduct({
+                    ...selectedIdFromProduct,
+                    [selectedProduct.iD_Productos]: 0, // Inicializar la cantidad en 0
+                });
+                console.log(selectedIdFromProduct)
                 setSelectedProducts([...selectedProducts, selectedProduct])
+                console.log(selectedProducts, 'selected')
                 setSelectedProductId(''); // reset the input
             }
-
         }
     }
 
-    const removeProduct = (index) => {
-        console.log("removiendo producto")
+    const removeProduct = (index, product) => {
         const updatedProducts = selectedProducts.filter((_, i) => i !== index)
         setSelectedProducts(updatedProducts)
+
+        const updatedIds = { ...selectedIdFromProduct };
+        delete updatedIds[product.iD_Productos];
+        setSelectedIdFromProduct(updatedIds);
+
+        console.log(selectedIdFromProduct, 'selectedIdFromProduct')
     }
 
-    const updateQuantity = (index, newQuantity) => {
+    const updateQuantity = (index, newQuantity, product) => {
+
         const updatedProducts = [...selectedProducts];
         updatedProducts[index].quantity = newQuantity;
+
+        const updatedIds = { ...selectedIdFromProduct };
+        updatedIds[product.iD_Productos] = newQuantity;
+        setSelectedIdFromProduct(updatedIds);
+
+        console.log(selectedIdFromProduct, 'selectedIdFromProduct')
+
         setSelectedProducts(updatedProducts);
     };
 
-
     const closeModal = () => {
 
-        setValue('name', '')
-        setValue('price', '')
+        
 
 
         clearErrors()
@@ -181,7 +274,7 @@ const ModalEditSell = (props) => {
                                             <FaEdit className=' h-[20px] w-[20px] ml-[6px] text-white self-center' />
                                         </div>
                                         <Dialog.Title as="h3" className="text-[20px] font-bold leading-[27px] text-white tracking-[-3%] whitespace-nowrap mb-[29px] mt-[4px]">
-                                            Crear producto<br />
+                                            Editar producto<br />
                                         </Dialog.Title>
                                     </div>
                                 </div>
@@ -202,6 +295,7 @@ const ModalEditSell = (props) => {
                                             name='name'
                                             defaultValue={sell.name}
                                             autoComplete='off'
+                                            
                                             className='h-[48px] w-[279px] border-[2px] border-white/[0.20] bg-transparent rounded-[10px] ml-[24px] mt-[8px] text-[16px] leading-[22px] tracking-[-1px] text-white'
                                         />
                                         {errors.name && <span className='text-[#FF5757] text-[12px] ml-[24px]'>{errors.name.message}</span>}
@@ -214,12 +308,12 @@ const ModalEditSell = (props) => {
                                             })}
                                             name='client'
                                             list='clients'
-                                            selected={selectedEditClient}
-                                            className='h-[48px] w-[279px] border-[2px] border-white/[0.20] bg-transparent rounded-[10px] ml-[24px] mt-[8px] text-[16px] leading-[22px] tracking-[-1px] text-white'
+                                            defaultValue={selectedEditClient}
+                                            className='h-[48px] w-[279px] border-[2px] border-white/[0.20] bg-transparent rounded-[10px] ml-[24px] mt-[8px] text-[16px] leading-[22px] tracking-[-1px] '
                                         >
                                             <option value=''>Selecciona un cliente</option>
                                             {clients.map((client, index) => (
-                                                <option key={index} value={client.name}>{client.name}</option>
+                                                <option key={index} value={client.iD_Cliente}>{client.name}</option>
                                             ))}
                                         </select>
                                         {errors.client && <span className='text-[#FF5757] text-[12px] ml-[24px]'>{errors.client.message}</span>}
@@ -236,12 +330,13 @@ const ModalEditSell = (props) => {
                                                 list='workers'
                                                 autoComplete='off'
                                                 type='text'
+                                                defaultValue={firstId}
                                                 onChange={(event) => setSelectedWorkerId(event.target.value)}
-                                                className='h-[48px] w-[279px] border-[2px] border-white/[0.20] bg-transparent rounded-[10px] ml-[24px] mt-[8px] text-[16px] leading-[22px] tracking-[-1px] text-white'
+                                                className='h-[48px] w-[279px] border-[2px] border-white/[0.20] bg-transparent rounded-[10px] ml-[24px] mt-[8px] text-[16px] leading-[22px] tracking-[-1px] '
                                             >
                                                 <option value=''>Selecciona un trabajador</option>
                                                 {workers.map((worker, index) => (
-                                                    <option key={index} value={worker.name}>{worker.name} </option>
+                                                    <option key={index} value={JSON.stringify(worker)}>{worker.name} {worker.lastname}  </option>
                                                 ))}
                                             </select>
                                             <div onClick={addWorker} className='flex cursor-pointer self-center ml-2'>
@@ -264,10 +359,10 @@ const ModalEditSell = (props) => {
                                                 selectedWorkers?.map((worker, index) => (
                                                     <div key={index} className='flex h-[48px] rounded-[10px] bg-[#FAFAFA] bg-opacity-10 mr-[16px] mb-[8px]'>
                                                         <div className='ml-[14px] text-[#FAFAFA] mr-[10px] my-[10px] text-[14px] font-bold self-center'>
-                                                            {worker.name}
+                                                            {worker.name} {worker.lastname}
                                                         </div>
                                                         <IoMdCloseCircle
-                                                            onClick={() => removeWorker(index)}
+                                                            onClick={() => removeWorker(index, worker)}
                                                             className='self-center font-[#424040] h-[16px] w-[16px] mr-[10px] cursor-pointer'
                                                         />
                                                     </div>
@@ -287,7 +382,7 @@ const ModalEditSell = (props) => {
                                                 autoComplete='off'
                                                 type='text'
                                                 onChange={(event) => setSelectedProductId(event.target.value)}
-                                                className='h-[48px] w-[279px] border-[2px] border-white/[0.20] bg-transparent rounded-[10px] ml-[24px] mt-[8px] text-[16px] leading-[22px] tracking-[-1px] text-white'
+                                                className='h-[48px] w-[279px] border-[2px] border-white/[0.20] bg-transparent rounded-[10px] ml-[24px] mt-[8px] text-[16px] leading-[22px] tracking-[-1px]'
                                             >
                                                 <option value=''>Selecciona un producto</option>
                                                 {products.map((product, index) => (
@@ -326,7 +421,7 @@ const ModalEditSell = (props) => {
                                                                     })}
                                                                     defaultValue={product.quantity || ''}
                                                                     type='number'
-                                                                    onChange={(e) => updateQuantity(index, e.target.value)}
+                                                                    onChange={(e) => updateQuantity(index, e.target.value, product)}
                                                                     name='quantity'
                                                                     autoComplete='off'
                                                                     className='h-[40px] mb-1.5 w-[60px] border-[2px] border-white/[0.20] bg-transparent rounded-[10px] ml-[24px] mt-[8px] text-[16px] leading-[22px] tracking-[-1px] text-white'
@@ -335,7 +430,7 @@ const ModalEditSell = (props) => {
                                                                 {errors.quantity && <span className='text-[#FF5757] text-[12px] ml-[24px]'>{errors.quantity.message}</span>}
                                                             </div>
                                                             <IoMdCloseCircle
-                                                                onClick={() => removeProduct(index)}
+                                                                onClick={() => removeProduct(index, product)}
                                                                 className='self-center font-[#424040] h-[16px] w-[16px] mr-[10px] cursor-pointer'
                                                             />
                                                         </div>

@@ -15,17 +15,17 @@ const adminSells = () => {
     const [loading, setLoading] = useState(false);
     const [searchTerm, setSearchTerm] = useState("");
 
+
     const [showModalCreate, setShowModalCreate] = useState(false);
 
     useEffect(() => {
         const fetchData = async () => {
             setLoading(true);
+            await getSells();
             await getClients();
             await getProducts();
             await getWorkers();
-            await getSells();
         };
-
         fetchData();
         setLoading(false);
 
@@ -33,26 +33,28 @@ const adminSells = () => {
 
     const getClients = async () => {
         try {
+            // Obtener clientes
             const response = await fetch('http://localhost:3000/api/clients', {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',
                 },
             });
+
             const data = await response.json();
-            //si data esta vacio o no existe, entonces data = []
-            if (data === undefined || data.length == 0) {
+
+            // Si data está vacío o no existe, entonces data = []
+            if (!data || data.length === 0) {
                 setClients([]);
-            }
-            else {
+            } else {
                 setClients(data);
             }
 
         } catch (error) {
             console.error('Error al cargar los datos de clientes:', error);
-        } finally {
         }
-    }
+    };
+
 
     const getProducts = async () => {
         try {
@@ -111,12 +113,10 @@ const adminSells = () => {
             }
             else {
                 setSells(data);
-                console.log(data)
             }
 
         } catch (error) {
             console.error('Error al cargar los datos de cotizaciones:', error);
-        } finally {
         }
     }
 
@@ -128,11 +128,10 @@ const adminSells = () => {
     }
 
 
-
     return (
         <Layout>
-
             <div className='flex flex-col h-full '>
+
                 <div className='text-white text-3xl font-bold italic mt-8'>
                     <h1>Cotizaciones</h1>
                 </div>
@@ -164,13 +163,13 @@ const adminSells = () => {
                                 key={index}
                                 name={sell.name}
                                 id={sell.iD_Cotizacion}
-                                created={sell.created}
-                                client={sell.cliente}
 
                                 clients={clients}
                                 products={products}
                                 workers={workers}
+
                                 sell={sell}
+
                                 parentCallback={handleCallBack}
                             />
                         ))}

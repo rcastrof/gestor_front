@@ -21,34 +21,30 @@ const ModalCreateSell = (props) => {
     const [HideWorkers, setHideWorkers] = useState(false)
 
     const [selectedProducts, setSelectedProducts] = useState([])
-    const [selectedProductId, setSelectedProductId] = useState('')
+    const [selectedProductId, setSelectedProductId] = useState([])
+    const [selectedIdFromProduct, setSelectedIdFromProduct] = useState([])
 
     const [HideProducts, setHideProducts] = useState(false)
-
-
-
 
     let { register, handleSubmit, formState: { errors }, clearErrors, reset, setValue } = useForm();
 
     const onSubmit = async (event) => {
 
         if (saveForm) {
+
             setSaveForm(false)
 
             const name = event.name
-            const client = event.client
-
-
+            const iD_Cliente = event.client
+            const personalIds = selectedIdFromWorker
+            const productosIds = selectedIdFromProduct
 
             const data = {
                 name,
-                client,
-                selectedWorkers,
-                selectedProducts,
+                iD_Cliente,
+                personalIds,
+                productosIds,
                 quantityofproduct: "",
-                PersonalIds: "",
-                ProductIds: ""
-
             }
 
             try {
@@ -71,8 +67,7 @@ const ModalCreateSell = (props) => {
 
         event.preventDefault()
 
-        if (selectedWorkerId) {
-            console.log(JSON.parse(selectedWorkerId))
+        if (JSON.parse(selectedWorkerId) !== "") {
 
             const selectedWorker = workers.find((worker) => worker.name === JSON.parse(selectedWorkerId).name)
             if (selectedWorker) {
@@ -85,19 +80,14 @@ const ModalCreateSell = (props) => {
         }
     }
 
-    const removeWorker = (index) => {
-
-        console.log("removiendo trabajador")
+    const removeWorker = (index, worker) => {
 
         const updatedWorkers = selectedWorkers.filter((_, i) => i !== index)
-
-        console.log(updatedWorkers)
-
         setSelectedWorkers(updatedWorkers)
-        const updatedIds = selectedIdFromWorker.filter(id => id !== updatedWorkers.iD_Personal);
+
+        const updatedIds = selectedIdFromWorker.filter(id => id !== worker.iD_Personal);
         setSelectedIdFromWorker(updatedIds);
 
-        console.log(updatedIds, 'asdasddas')
     }
 
     const addProduct = (event) => {
@@ -106,26 +96,42 @@ const ModalCreateSell = (props) => {
 
         if (selectedProductId) {
 
-            console.log(selectedProductId)
-
             const selectedProduct = products.find((product) => product.name === selectedProductId)
             if (selectedProduct) {
+                setSelectedIdFromProduct({
+                    ...selectedIdFromProduct,
+                    [selectedProduct.iD_Productos]: 0, // Inicializar la cantidad en 0
+                });
+                console.log(selectedIdFromProduct)
                 setSelectedProducts([...selectedProducts, selectedProduct])
+                console.log(selectedProducts, 'selected')
                 setSelectedProductId(''); // reset the input
             }
-
         }
     }
 
-    const removeProduct = (index) => {
-        console.log("removiendo producto")
+    const removeProduct = (index, product) => {
         const updatedProducts = selectedProducts.filter((_, i) => i !== index)
         setSelectedProducts(updatedProducts)
+
+        const updatedIds = { ...selectedIdFromProduct };
+        delete updatedIds[product.iD_Productos];
+        setSelectedIdFromProduct(updatedIds);
+
+        console.log(selectedIdFromProduct, 'selectedIdFromProduct')
     }
 
-    const updateQuantity = (index, newQuantity) => {
+    const updateQuantity = (index, newQuantity, product) => {
+
         const updatedProducts = [...selectedProducts];
         updatedProducts[index].quantity = newQuantity;
+
+        const updatedIds = { ...selectedIdFromProduct };
+        updatedIds[product.iD_Productos] = newQuantity;
+        setSelectedIdFromProduct(updatedIds);
+
+        console.log(selectedIdFromProduct, 'selectedIdFromProduct')
+
         setSelectedProducts(updatedProducts);
     };
 
@@ -264,7 +270,7 @@ const ModalCreateSell = (props) => {
                                                             {worker.name} {worker.lastname}
                                                         </div>
                                                         <IoMdCloseCircle
-                                                            onClick={() => removeWorker(index)}
+                                                            onClick={() => removeWorker(index, worker)}
                                                             className='self-center font-[#424040] h-[16px] w-[16px] mr-[10px] cursor-pointer'
                                                         />
                                                     </div>
@@ -323,7 +329,7 @@ const ModalCreateSell = (props) => {
                                                                     })}
                                                                     value={product.quantity || ''}
                                                                     type='number'
-                                                                    onChange={(e) => updateQuantity(index, e.target.value)}
+                                                                    onChange={(e) => updateQuantity(index, e.target.value, product)}
                                                                     name='quantity'
                                                                     autoComplete='off'
                                                                     className='h-[40px] mb-1.5 w-[60px] border-[2px] border-white/[0.20] bg-transparent rounded-[10px] ml-[24px] mt-[8px] text-[16px] leading-[22px] tracking-[-1px] text-white'
@@ -331,7 +337,7 @@ const ModalCreateSell = (props) => {
                                                                 {errors.quantity && <span className='text-[#FF5757] text-[12px] ml-[24px]'>{errors.quantity.message}</span>}
                                                             </div>
                                                             <IoMdCloseCircle
-                                                                onClick={() => removeProduct(index)}
+                                                                onClick={() => removeProduct(index, product)}
                                                                 className='self-center font-[#424040] h-[16px] w-[16px] mr-[10px] cursor-pointer'
                                                             />
                                                         </div>

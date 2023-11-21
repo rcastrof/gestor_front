@@ -7,11 +7,12 @@ import ModalEditSell from './ModalEditSell';
 
 
 const SellsCard = (props) => {
-    const { name, id, created, products, workers, client, sell, clients } = props
+    const { name, id, products, workers, sell, clients } = props
 
     const [showModalEdit, setShowModalEdit] = useState(false);
     const [showModalDelete, setShowModalDelete] = useState(false);
     const [total, setTotal] = useState(0);
+    const [ownClient, setOwnClient] = useState([]);
 
     //usefect para sumar todo dentro de products y workers
 
@@ -29,9 +30,16 @@ const SellsCard = (props) => {
         }
         );
         setTotal(total + totalWorkers)
-        
+
 
     }, [products, workers])
+
+    useEffect(() => {
+        async function fetchClientFromSells() {
+            await fetchClientFromSell()
+        }
+        fetchClientFromSells()
+    }, [sell, clients])
 
     const handleCallback = (childData) => {
         if (childData && childData.state) {
@@ -39,7 +47,14 @@ const SellsCard = (props) => {
             props.parentCallback(childData);
         }
     }
-    
+
+    const fetchClientFromSell = async () => {
+
+        const client = clients.find(client => client.iD_Cliente === sell.iD_Cliente)
+        setOwnClient(client)
+    }
+
+
     return (
         <div className='bg-white/5 w-60 h-[220px] rounded-[10px] flex flex-col mb-2 '>
             {/* All data from workers */}
@@ -57,7 +72,7 @@ const SellsCard = (props) => {
             />
             <div className='flex flex-col mx-5 h-[80px]'>
                 <p className='text-white text-xl font-bold'>{name}</p>
-                <p className='text-white text-sm italic font-semibold mt-1'>Cliente: {client?.name}</p>
+                <p className='text-white text-sm italic font-semibold mt-1'>Cliente: {ownClient?.name}</p>
                 {/* total */}
                 <div className='flex mt-auto mb-1'>
                     <p className='text-white text-2xl italic font-semibold ml-2 '>Total: ${total}</p>
@@ -100,9 +115,9 @@ const SellsCard = (props) => {
                 </div>
                 {/* modal edit */}
             </div>
-            <div className=' flex mt-auto mb-1'>
+           {/*  <div className=' flex mt-auto mb-1'>
                 <p className='text-white text-sm italic font-semibold ml-2 '>Fecha: {created}</p>
-            </div>
+            </div> */}
 
 
         </div>)

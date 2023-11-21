@@ -3,13 +3,13 @@ process.env.NODE_TLS_REJECT_UNAUTHORIZED = '0'; // Disable SSL/TLS verification 
 export default async function handler(req, res) {
 
     const { data } = JSON.parse(req.body)
-    const { id } = JSON.parse(req.body);
+    const { thisIDSell } = JSON.parse(req.body);
 
-    console.log(id);
+    console.log(thisIDSell);
     console.log(data)
 
     try {
-        const response = await fetch(`https://localhost:7233/v1/cotizacion/update/${id}`, {
+        const response = await fetch(`https://localhost:7233/v1/cotizacion/update/${thisIDSell}`, {
             method: 'PUT',
             body: JSON.stringify(data),
             headers: {
