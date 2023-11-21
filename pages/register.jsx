@@ -32,14 +32,14 @@ export default function Register() {
 
     return (
         <>
-            <div className="bg-gradient-to-b from-[#0b3f3e] to-[#7c8c84] h-screen">
+            <div className="bg-gradient-to-b from-[#7ac68d] to-[#7c8c84] h-screen">
                 <div className="mx-auto my-auto w-full min-h-screen flex items-center justify-center">
 
-                <img src="/src/Logo.png" alt="Logo" style={{marginRight: 250, width: 800, height: 800, marginBottom: 50}}/> 
+                <img src="/src/Logo.png" alt="Logo" style={{marginRight: 200, width: 800, height: 800, marginBottom: 50}}/> 
 
-                    <div className="bg-white/20 w-80 h-[40rem] backdrop-opacity-20 rounded-[10px] flex flex-col font-body items-center">
-                        <h1 className="text-4xl text-white mt-10">Registro</h1>
-                        <p className="text-xs text-white opacity-80 mt-2">Crea tu cuenta</p>
+                    <div className="bg-black/50 w-80 h-[40rem] backdrop-opacity-20 rounded-[10px] flex flex-col font-body items-center" style={{ marginRight: 300}}>
+                        <h1 className="text-5xl text-white mt-10 ">Registro</h1>
+                        <p className="text-xl text-white opacity-80 mt-2">Crea tu cuenta</p>
 
                         <div className="w-4/5 h-[1px] bg-white/20 mt-8"></div>
 
