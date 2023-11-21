@@ -7,9 +7,6 @@ import { useForm } from 'react-hook-form'
 import { IoMdAddCircle, IoMdCloseCircle } from 'react-icons/io'
 import { FaEye, FaEyeSlash, FaEdit } from 'react-icons/fa';
 
-
-
-
 const ModalEditSell = (props) => {
 
     const { show, onClose, clients, products, workers, sell } = props
@@ -40,7 +37,6 @@ const ModalEditSell = (props) => {
     useEffect(() => {
         setSelectedEditClient(sell.iD_Cliente)
         setDefaultSellName(sell.name)
-        console.log(defaultSellName)
     }, [sell])
 
     useEffect(() => {
@@ -57,7 +53,6 @@ const ModalEditSell = (props) => {
         fetchProductsFromSells()
     }, [sell, products])
 
-  
 
     const fetchProductsAndQuantityFromSell = async () => {
         try {
@@ -119,17 +114,15 @@ const ModalEditSell = (props) => {
             const personalIds = selectedIdFromWorker
             const productosIds = selectedIdFromProduct
 
-            console.log(defaultSellName)
 
             const data = {
-                name ,
+                name,
                 iD_Cliente,
                 personalIds,
                 productosIds,
                 quantityofproduct: "",
             }
 
-            console.log(data)
             try {
                 const Options = {
                     method: 'POST',
@@ -142,7 +135,6 @@ const ModalEditSell = (props) => {
                 };
                 const response = await fetch('http://localhost:3000/api/sells/edit', Options);
 
-                console.log(response)
 
                 setSaveForm(true)
                 closeModal();
@@ -162,7 +154,6 @@ const ModalEditSell = (props) => {
             const selectedWorker = workers.find((worker) => worker.name === JSON.parse(selectedWorkerId).name)
             if (selectedWorker) {
                 setSelectedWorkers([...selectedWorkers, selectedWorker])
-                console.log(selectedWorkers)
                 setSelectedIdFromWorker([...selectedIdFromWorker, selectedWorker.iD_Personal]); // Agrega el id al array
                 setSelectedWorkerId([]); // reset the input
             }
@@ -192,9 +183,7 @@ const ModalEditSell = (props) => {
                     ...selectedIdFromProduct,
                     [selectedProduct.iD_Productos]: 0, // Inicializar la cantidad en 0
                 });
-                console.log(selectedIdFromProduct)
                 setSelectedProducts([...selectedProducts, selectedProduct])
-                console.log(selectedProducts, 'selected')
                 setSelectedProductId(''); // reset the input
             }
         }
@@ -208,7 +197,6 @@ const ModalEditSell = (props) => {
         delete updatedIds[product.iD_Productos];
         setSelectedIdFromProduct(updatedIds);
 
-        console.log(selectedIdFromProduct, 'selectedIdFromProduct')
     }
 
     const updateQuantity = (index, newQuantity, product) => {
@@ -220,14 +208,12 @@ const ModalEditSell = (props) => {
         updatedIds[product.iD_Productos] = newQuantity;
         setSelectedIdFromProduct(updatedIds);
 
-        console.log(selectedIdFromProduct, 'selectedIdFromProduct')
-
         setSelectedProducts(updatedProducts);
     };
 
     const closeModal = () => {
 
-        
+
 
 
         clearErrors()
@@ -295,7 +281,7 @@ const ModalEditSell = (props) => {
                                             name='name'
                                             defaultValue={sell.name}
                                             autoComplete='off'
-                                            
+
                                             className='h-[48px] w-[279px] border-[2px] border-white/[0.20] bg-transparent rounded-[10px] ml-[24px] mt-[8px] text-[16px] leading-[22px] tracking-[-1px] text-white'
                                         />
                                         {errors.name && <span className='text-[#FF5757] text-[12px] ml-[24px]'>{errors.name.message}</span>}
@@ -417,9 +403,8 @@ const ModalEditSell = (props) => {
                                                             <div className='ml-[14px] text-[#FAFAFA] mr-[10px] my-[10px] text-[14px] font-bold self-center'>
                                                                 <input
                                                                     {...register(`quantity-${index}`, {
-                                                                        required: { value: true, message: "* Campo Requerido" },
                                                                     })}
-                                                                    defaultValue={product.quantity || ''}
+                                                                    defaultValue={product.cantidad}
                                                                     type='number'
                                                                     onChange={(e) => updateQuantity(index, e.target.value, product)}
                                                                     name='quantity'

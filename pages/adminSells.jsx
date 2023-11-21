@@ -4,6 +4,7 @@ import Layout from '@components/Layout/Layout'
 import React, { useEffect, useState } from 'react'
 import { Bars } from 'react-loader-spinner'
 import { getSession } from "next-auth/react";
+import { set } from 'react-hook-form'
 
 export async function getServerSideProps(context) {
     const session = await getSession({ req: context.req });
@@ -143,9 +144,20 @@ const adminSells = ({ session }) => {
 
     const handleCallBack = (childData) => {
         if (childData && childData.state) {
+            setLoading(true);
             getSells();
+            getClients();
+            getProducts();
+            getWorkers();
+            setLoading(false);
         }
+
     }
+
+    const filteredSells = sells.filter((sell) =>    
+        sell.name.toLowerCase().includes(searchTerm.toLowerCase()) 
+      
+    );
 
 
     return (
@@ -170,15 +182,21 @@ const adminSells = ({ session }) => {
                     parentCallback={handleCallBack}
                 />
                 {/* barra de busqueda */}
-                <div className=' mt-10'>
-                    <input className="bg-white/20 rounded-[10px] h-[45px] w-full px-10 text-white" type="text" placeholder="Buscar" />
+                <div className='mt-10'>
+                    <input
+                        className="bg-white/20 rounded-[10px] h-[45px] w-full px-10 text-white"
+                        type="text"
+                        placeholder="Buscar"
+                        value={searchTerm}
+                        onChange={(e) => setSearchTerm(e.target.value)}
+                    />
                 </div>
 
                 {/* tarjeta de productos */}
 
                 {!loading && (
                     <div className='m:flex m:flex-wrap m:ml-[24px] mt-5 gap-4 self-center'>
-                        {sells.map((sell, index) => (
+                        {filteredSells.map((sell, index) => (
                             <SellsCard
                                 key={index}
                                 name={sell.name}
@@ -194,7 +212,7 @@ const adminSells = ({ session }) => {
                             />
                         ))}
                         <div className='pb-[10px]' />
-                        {sells && sells.length === 0 && (
+                        {filteredSells && filteredSells.length === 0 && (
                             <div className='text-white text-2xl font-bold italic mt-8'>
                                 <h1>No hay cotizaciones</h1>
                             </div>

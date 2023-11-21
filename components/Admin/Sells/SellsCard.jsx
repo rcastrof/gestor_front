@@ -13,16 +13,33 @@ const SellsCard = (props) => {
     const [showModalDelete, setShowModalDelete] = useState(false);
     const [total, setTotal] = useState(0);
     const [ownClient, setOwnClient] = useState([]);
+    const [thisDate , setThisDate] = useState('');
+
+    const [selectedProducts, setSelectedProducts] = useState([])
+    const [selectedWorkers, setSelectedWorkers] = useState([])
 
     //usefect para sumar todo dentro de products y workers
 
     useEffect(() => {
+        const getFormattedDate = () => {
+            const today = new Date();
+            const dd = String(today.getDate()).padStart(2, '0');
+            const mm = String(today.getMonth() + 1).padStart(2, '0'); // Enero es 0
+            const yyyy = today.getFullYear();
+            return `${dd}/${mm}/${yyyy}`;
+        };
+        const date = getFormattedDate();
+        setThisDate(date)
+    }, [])
+
+
+    useEffect(() => {
         let total = 0;
         let totalWorkers = 0;
-        const allproducts = sell.selectedProducts
-        const allworkers = sell.selectedWorkers
+        const allproducts = selectedProducts
+        const allworkers = selectedWorkers
         allproducts?.forEach(product => {
-            total += product.price * product.quantity
+            total += product.price * product.cantidad
         });
 
         allworkers?.forEach(worker => {
@@ -33,6 +50,67 @@ const SellsCard = (props) => {
 
 
     }, [products, workers])
+
+    useEffect(() => {
+        async function fetchWorkersFromSells() {
+            await fetchWorkersFromSell()
+        }
+        fetchWorkersFromSells()
+
+        console.log(selectedWorkers)
+    }, [sell, workers])
+
+    useEffect(() => {
+        async function fetchProductsFromSells() {
+            await fetchProductsAndQuantityFromSell()
+        }
+        fetchProductsFromSells()
+        console.log(selectedProducts)
+    }, [sell, products])
+
+
+    const fetchProductsAndQuantityFromSell = async () => {
+        try {
+            // Verificar si sell.productosIds es un objeto
+            if (typeof sell.productosIds === 'object' && sell.productosIds !== null) {
+                const selectedProducts = Object.entries(sell.productosIds).map(([productID, quantity]) => {
+                    // Buscar el producto en el array de productos
+                    const product = products.find(product => product.iD_Productos === parseInt(productID));
+
+                    // Verificar si se encontró el producto
+                    if (product) {
+                        return {
+                            ...product,
+                            cantidad: parseInt(quantity), // Añadir la cantidad al objeto del producto
+                        };
+                    }
+
+                    return null; // Retorna null si el producto no se encuentra
+                }).filter(product => product !== null); // Filtrar productos que no se encontraron
+
+                // Establecer los productos seleccionados
+                setSelectedProducts(selectedProducts);
+
+            } else {
+                console.error('Error: sell.productosIds no es un objeto');
+            }
+        } catch (error) {
+            console.error('Error al obtener los productos desde las ventas:', error);
+        }
+    };
+
+    const fetchWorkersFromSell = async () => {
+        try {
+            // Obtener los trabajadores cuyos iD_Personal están en el array sell.personalIds
+            const selectedWorkers = workers.filter(worker => sell.personalIds.includes(worker.iD_Personal));
+
+            // Establecer los trabajadores seleccionados
+            setSelectedWorkers(selectedWorkers);
+
+        } catch (error) {
+            console.error('Error al obtener los trabajadores desde las ventas:', error);
+        }
+    };
 
     useEffect(() => {
         async function fetchClientFromSells() {
@@ -105,7 +183,7 @@ const SellsCard = (props) => {
                     className='bg-gray-200 text-black cursor-pointer rounded-[10px] h-[40px] w-[80px] font-bold border-2 border-opacity-10 border-black ml-2'
                 >
                     <PDFDownloadLink
-                        document={<PDFFile sell={sell} products={sell.selectedProducts} workers={sell.selectedWorkers} />}
+                        document={<PDFFile sell={sell} products={selectedProducts} workers={selectedWorkers} date={thisDate}  clientname={ ownClient?.name }/>}
                         fileName="Cotizacion" >
                         {({ loading }) => (loading ? 'Loading document...' : <div className='flex p-1.5'>
                             <FaFilePdf className='self-center h-4 w-6' /> PDF
@@ -115,7 +193,7 @@ const SellsCard = (props) => {
                 </div>
                 {/* modal edit */}
             </div>
-           {/*  <div className=' flex mt-auto mb-1'>
+            {/*  <div className=' flex mt-auto mb-1'>
                 <p className='text-white text-sm italic font-semibold ml-2 '>Fecha: {created}</p>
             </div> */}
 

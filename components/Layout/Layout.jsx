@@ -48,7 +48,17 @@ const Layout = ({ children }) => {
 
                 </div>
 
-                <div onClick={() => setBurgerMenuOpen(!burgerMenuOpen)} className="text-black text-2xl font-bold md:hidden"><GiHamburgerMenu /></div>
+                <div
+                    onClick={() => setBurgerMenuOpen(!burgerMenuOpen)}
+                    className={`${!burgerMenuOpen && 'hidden'}
+                bg-gray-600/50 min-h-screen w-full fixed top-0 right-0 backdrop-blur-sm`}>
+                </div>
+
+
+                <div
+                    onClick={() => setBurgerMenuOpen(!burgerMenuOpen)}
+                    className="text-black text-2xl font-bold md:hidden">
+                    <GiHamburgerMenu /></div>
 
                 {burgerMenuOpen && (
                     <div className="bg-[#749494] h-screen w-60 md:w-80 fixed top-0 right-0 flex-col">

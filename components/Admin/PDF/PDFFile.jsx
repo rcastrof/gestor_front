@@ -131,7 +131,7 @@ const styles = StyleSheet.create({
 });
 
 const PDFFile = (props) => {
-    const { sell, workers, products } = props;
+    const { sell, workers, products, date, clientname } = props;
 
     const cotizaciones = cotizacionesData.sells;
 
@@ -140,7 +140,7 @@ const PDFFile = (props) => {
 
 
     // Calcular el total de productos y salarios
-    const totalProducts = products?.reduce((acc, product) => acc + product.price * product.quantity, 0);
+    const totalProducts = products?.reduce((acc, product) => acc + product.price * product.cantidad, 0);
     const totalSalaries = workers?.reduce((acc, worker) => acc + worker.salary, 0);
     const grandTotal = totalProducts + totalSalaries;
 
@@ -158,14 +158,14 @@ const PDFFile = (props) => {
                  {/* <View style={{left: 400, width: 150, height: 100, backgroundColor: 'white', borderColor: 'black', borderWidth: 1}}> */}
                    <View style={styles.boleta}>
                         <Text style={{fontSize: 14, flexDirection: 'row', justifyContent: 'flex-end', marginBottom: 10}}>N° Cotización:</Text>
-                        <Text style={styles.numero}>{sell.id}</Text>
+                        <Text style={styles.numero}>{sell.iD_Cotizacion}</Text>
                   </View>
 
 
                   <Text style={styles.title}>Cotización</Text>
 
                   {/* Informacion del CLiente */ }
-                    <Text>Cliente: {sell?.client?.name}</Text>
+                    <Text>Cliente: {clientname}</Text>
 
                     {/* Tabla de Productos */}
                     <View style={styles.tableContainer}>
@@ -186,11 +186,11 @@ const PDFFile = (props) => {
                               style: 'currency',
                               currency: 'CLP',
                             }).format(product.price)}</Text>
-                            <Text style={styles.tableCell}>{product.quantity}</Text>
+                            <Text style={styles.tableCell}>{product.cantidad}</Text>
                             <Text style={styles.tableCell}>{new Intl.NumberFormat('es-Cl', {
                               style: 'currency',
                               currency: 'CLP'
-                            }).format(product.price * product.quantity)}</Text>
+                            }).format(product.price * product.cantidad)}</Text>
                         </View>
                     ))}
 
@@ -219,8 +219,8 @@ const PDFFile = (props) => {
                         
                         {/* Quotation Date */}
                           <View style={{ marginBottom: 10 }}>
-                            <Text style={{fontSize: 14, left: 400}}>Fecha de Cotización:</Text>
-                            <Text style={{fontSize: 14, left: 400}}>{sell.created}</Text>
+                            <Text style={{fontSize: 14, left: 400}}>Fecha de Cotización :</Text>
+                            <Text style={{fontSize: 14, left: 400}}>{date} </Text>
                           </View>
                         <Text>Total Productos: {new Intl.NumberFormat('es-CL', {
                             style: 'currency',
