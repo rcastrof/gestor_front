@@ -1,21 +1,43 @@
-import Layout from '@components/Layout/Layout'
-import React from 'react'
+import Layout from '@components/Layout/Layout';
+import React from 'react';
+import { getSession } from "next-auth/react";
 
-const adminIndex = () => {
-  return (
-    <Layout>
+export async function getServerSideProps(context) {
+  const session = await getSession({ req: context.req });
 
-      <div className='flex flex-col  h-full'>
-        {/* barra de busqueda */}
-        <div className='mx-10 mt-10'>
-          <input className="bg-white/20 rounded-[10px] h-[45px] w-full px-10 text-white" type="text" placeholder="Buscar" />
-        </div>
+  if (!session) {
+    return {
+      redirect: {
+        destination: '/',
+        permanent: false,
+      },
+    };
+  }
 
-      </div>
+  // Aquí puedes hacer la carga inicial de datos si es necesario
+  // ...
 
-    </Layout>
-
-  )
+  return {
+    props: { session },
+  };
 }
 
-export default adminIndex
+const AdminIndex = ({ session }) => {
+  // Contenido de la página...
+  return (
+    <Layout>
+      <div className='flex flex-col items-center justify-center h-screen'>
+        <div className="text-center" style={{marginBottom: 140}}>
+          <h1 className="text-6xl text-white font-bold">
+            Sistema de Gestión Interna
+          </h1>
+          <h2 className="text-4xl text-white font-semibold mt-4">
+            CONSTRUCTORA LOS ALERCES SPA
+          </h2>
+        </div>
+      </div>
+    </Layout>
+  );
+};
+
+export default AdminIndex;
