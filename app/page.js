@@ -3,7 +3,6 @@ import { useForm } from 'react-hook-form'
 import { signIn } from "next-auth/react";
 import { useState } from 'react';
 import { useRouter } from 'next/navigation'
-import { data } from 'autoprefixer';
 
 
 export default function Home(props) {
@@ -21,9 +20,6 @@ export default function Home(props) {
     const email = event.email;
     const pass = event.password;
 
-
-
-
     setLoginError(null)
 
     const autenticar = await signIn('credentials', {
@@ -32,15 +28,21 @@ export default function Home(props) {
       password: pass,
 
     });
+    
 
     if (autenticar && autenticar.ok) {
 
+      console.log(autenticar)
+
       router.push("/adminIndex")
 
-    } else if (autenticar?.error) {
+    } else if (autenticar.error) {
 
 
       setLoginError("Usuario o Contraseña Incorrectos")
+
+      console.log(autenticar)
+
       setLoading(false);
 
 
@@ -52,15 +54,13 @@ export default function Home(props) {
 
     <>
       <div className="bg-gradient-to-b from-[#7ac68d] to-[#7c8c84] h-screen">
+        <div className="mx-auto my-auto w2 min-h-screen flex items-center justify-center border">
+          <div className="bg-black/50 w-80 h-[37rem] backdrop-opacity-20 rounded-[10px] flex flex-col font-body items-center" >
+            <div className='flex w-[150px] h-[150px]  '>
+              <img src="/src/Logo.png" alt="Logo" style={{ width: 400, height: 150 }} />
+            </div>
 
-        <div className="mx-auto my-auto w2 min-h-screen flex items-center justify-center">
-
-          <img src="/src/Logo.png" alt="Logo" style={{ marginRight: 200, width: 800, height: 800, marginBottom: 100 }} />
-
-          <div className="bg-black/50 w-80 h-[30rem] backdrop-opacity-20 rounded-[10px] flex flex-col font-body items-center" style={{ marginRight: 300, marginBottom: 120 }}>
-
-
-            <h1 className="text-4xl text-white mt-10">Inicia sesión</h1>
+            <h1 className="text-4xl text-white ">Inicia sesión</h1>
             <p className="text-xs text-white opacity-80 mt-2">Ingresa tus datos o solicita tu cuenta al admin </p>
 
             <div className="w-4/5 h-[1px] bg-white/20 mt-8"></div>
@@ -115,10 +115,7 @@ export default function Home(props) {
             <p className="text-xs text-white opacity-80 mt-10">© 2023 Todos los derechos reservados. </p>
 
           </div>
-
         </div>
-
-
       </div>
     </>
   )

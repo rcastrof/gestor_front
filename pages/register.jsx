@@ -16,7 +16,7 @@ export default function Register() {
 
         try {
             const response = await axios.post('https://localhost:7013/v1/login/register', data);
-        
+
             if (response.status === 200) {
                 router.push('/');
             } else {
@@ -28,15 +28,15 @@ export default function Register() {
             setRegisterError(error.response?.data?.message || "Error en el registro. Inténtalo de nuevo.");
         }
     };
-
+0
     return (
         <>
             <div className="bg-gradient-to-b from-[#7ac68d] to-[#7c8c84] h-screen">
                 <div className="mx-auto my-auto w-full min-h-screen flex items-center justify-center">
 
-                <img src="/src/Logo.png" alt="Logo" style={{marginRight: 200, width: 800, height: 800, marginBottom: 100}}/> 
+                    <img src="/src/Logo.png" alt="Logo" style={{ marginRight: 200, width: 800, height: 800, marginBottom: 100 }} />
 
-                    <div className="bg-black/50 w-80 h-[40rem] backdrop-opacity-20 rounded-[10px] flex flex-col font-body items-center" style={{ marginRight: 300}}>
+                    <div className="bg-black/50 w-80 h-[40rem] backdrop-opacity-20 rounded-[10px] flex flex-col font-body items-center" style={{ marginRight: 300 }}>
                         <h1 className="text-5xl text-white mt-10 ">Registro</h1>
                         <p className="text-xl text-white opacity-80 mt-2">Crea tu cuenta</p>
 

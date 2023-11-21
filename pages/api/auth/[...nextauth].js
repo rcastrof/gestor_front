@@ -1,3 +1,5 @@
+process.env.NODE_TLS_REJECT_UNAUTHORIZED = '0'; // Disable SSL/TLS verification (not recommended)
+
 import NextAuth from "next-auth"
 import CredentialsProvider from "next-auth/providers/credentials";
 import axios from "axios";
@@ -8,44 +10,33 @@ const nextAuthOptions = (req, res) => {
             CredentialsProvider({
                 async authorize(credentials) {
                     try {
+
                         const { email, password } = credentials;
                         const a = await axios.post(
                             'https://localhost:7013/v1/login/login',
                             { email, password },
-                            { withCredentials: true }
 
-                        );
+                            { withCredentials: true })
+
+                            .then(response => {
+                                return response;
+                            }).catch(error => {
+                                console.log(error)
+                                return { error: new Error(error.response.data.err.message) };
+                            });
+
                         console.log(a)
-
-                        if (!a) {
-                            console.log(a.data.message)
-
-                            throw new Error('Empty response from server');
-                        }
-                        if (a.data.message) {
-                            // Handle error responses from the server
-
-                            console.log(a.data.message)
-                            return {
-                                status: 'error',
-                                message: a.error, // Assuming error message is in 'error' field
-                            };
+                        if (a.error) {
+                            return a
                         } else {
-                            console.log(a.data.message)
-                            // Assuming a successful response contains data
-                            const cookies = a.headers['set-cookie'];
-                            res.setHeader('Set-Cookie', cookies);
-
 
                             return a.data;
+
                         }
+
                     } catch (error) {
-                        console.log(a.data.message)
-                        console.error(error);
-                        return {
-                            status: 'error',
-                            message: 'An unexpected error occurred',
-                        };
+                        console.log(error)
+
                     }
                 },
             }),
