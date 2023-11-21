@@ -16,17 +16,16 @@ export default function Register() {
 
         try {
             const response = await axios.post('https://localhost:7013/v1/login/register', data);
-
+        
             if (response.status === 200) {
                 router.push('/');
             } else {
-                setRegisterError("Error en el registro. Inténtalo de nuevo.");
-                setLoading(false); 
+                // Aquí podrías manejar diferentes tipos de errores
+                setRegisterError(response.data.message || "Error en el registro. Inténtalo de nuevo.");
             }
         } catch (error) {
             console.error('Error en el registro:', error);
-            setRegisterError("Error en el registro. Inténtalo de nuevo.");
-            setLoading(false);
+            setRegisterError(error.response?.data?.message || "Error en el registro. Inténtalo de nuevo.");
         }
     };
 
