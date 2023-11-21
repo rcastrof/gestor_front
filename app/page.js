@@ -49,11 +49,13 @@ export default function Home(props) {
   return (
 
     <>
-      <div className="bg-[#749494] h-screen">
+      <div className="bg-gradient-to-b from-[#7ac68d] to-[#7c8c84] h-screen">
 
         <div className="mx-auto my-auto w2 min-h-screen flex items-center justify-center">
 
-          <div className="bg-white/20 w-80 h-[30rem] backdrop-opacity-20 rounded-[10px] flex flex-col font-body items-center">
+        <img src="/src/Logo.png" alt="Logo" style={{marginRight: 200, width: 800, height: 800, marginBottom: 50}}/> 
+
+          <div className="bg-black/50 w-80 h-[30rem] backdrop-opacity-20 rounded-[10px] flex flex-col font-body items-center" style={{ marginRight: 300, marginBottom: 120}}>
 
 
             <h1 className="text-4xl text-white mt-10">Inicia sesión</h1>
@@ -75,7 +77,7 @@ export default function Home(props) {
                 placeholder="Email"
                 type='text'
                 autoComplete='off'
-                className="bg-white/20 rounded-[10px] h-[2rem] px-2 text-white" />
+                className="bg-black/20 rounded-[10px] h-[2rem] px-2 text-white" />
               {errors.email && <p className="text-red-500 text-xs">{errors.email.message}</p>}
 
 
@@ -88,7 +90,7 @@ export default function Home(props) {
                 })}
                 name="password"
                 type="password"
-                className="bg-white/20 rounded-[10px] h-[2rem] px-2 text-white"
+                className="bg-black/20 rounded-[10px] h-[2rem] px-2 text-white"
                 placeholder="Contraseña" />
               {errors.password && <p className="text-red-500 text-xs">{errors.password.message}</p>}
               {loginError && <p className="text-red-500 text-xs">{loginError}</p>}
