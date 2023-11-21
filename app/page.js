@@ -53,7 +53,7 @@ export default function Home(props) {
 
         <div className="mx-auto my-auto w2 min-h-screen flex items-center justify-center">
 
-        <img src="/src/Logo.png" alt="Logo" style={{marginRight: 200, width: 800, height: 800, marginBottom: 50}}/> 
+        <img src="/src/Logo.png" alt="Logo" style={{marginRight: 200, width: 800, height: 800, marginBottom: 100}}/> 
 
           <div className="bg-black/50 w-80 h-[30rem] backdrop-opacity-20 rounded-[10px] flex flex-col font-body items-center" style={{ marginRight: 300, marginBottom: 120}}>
 
