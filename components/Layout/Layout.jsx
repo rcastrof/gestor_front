@@ -18,34 +18,54 @@ const Layout = (props) => {
     }
 
     return (
-        
+
         <>
             <div className="h-28 flex items-center justify-between px-4 bg-[#ebfefc]">
 
                 <div onClick={() => navigate('/adminSells')} className='cursor-pointer'>
 
-                <img src="/src/Logo_NoLetter.png" alt="Logo" style={logostyle} /> 
+                    <img src="/src/Logo_NoLetter.png" alt="Logo" style={logostyle} />
                 </div>
 
-                <div className='hidden m:flex gap-6 text-[#033739] '>
+                <div className='hidden md:flex gap-6 mx-auto ' style={{ marginLeft: 10 }}>
 
-                    <div
+                    <button
                         onClick={() => navigate('/adminSells')}
-                        className=" text-2xl font-bold cursor-pointer">Cotizaciones</div>
+                        className="text-2xl font-bold cursor-pointer hover:bg-green-200 px-4 py-2 rounded transition-colors"
+                        style={{ fontFamily: '"Fantasy", sans-serif' }}
+                    >
+                        COTIZACIONES
+                    </button>
 
-                    <div
+                    <button
                         onClick={() => navigate('/adminProducts')}
-                        className=" text-2xl font-bold cursor-pointer">Productos</div>
+                        className="text-2xl font-bold cursor-pointer hover:bg-green-200 px-4 py-2 rounded transition-colors"
+                        style={{ fontFamily: '"Fantasy", sans-serif' }}
+                    >
+                        PRODUCTOS
+                    </button>
 
-
-                    <div
+                    <button
                         onClick={() => navigate('/adminClients')}
-                        className=" text-2xl font-bold cursor-pointer">Clientes</div>
+                        className="text-2xl font-bold cursor-pointer hover:bg-green-200 px-4 py-2 rounded transition-colors"
+                        style={{ fontFamily: '"Fantasy", sans-serif' }}
+                    >
+                        CLIENTES
+                    </button>
 
-                    <div
+                    <button
                         onClick={() => navigate('/adminWorkers')}
-                        className=" text-2xl font-bold cursor-pointer">Personal</div>
+                        className="text-2xl font-bold cursor-pointer hover:bg-green-200 px-4 py-2 rounded transition-colors"
+                        style={{ fontFamily: '"Fantasy", sans-serif' }}
+                    >
+                        PERSONAL
+                    </button>
 
+                </div>
+
+                <div className="flex items-center">
+                    <img src="/src/LogoLogin.png" alt="Login Logo" className="h-8 mr-3" />
+                    <span className="text-xl font-semibold">Hola, José Sepúlveda</span>
                 </div>
 
 
@@ -79,7 +99,7 @@ const Layout = (props) => {
                                 className="text-2xl font-bold cursor-pointer">Personal
                             </div>
                         </div>
-                        
+
                     </div>
                 )}
 
