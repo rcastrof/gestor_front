@@ -140,7 +140,7 @@ const adminSells = () => {
                 <div
                     onClick={() => setShowModalCreate(true)}
                     className='flex  mt-8 mr-10'>
-                    <button className='bg-gray-200 text-[#000000] rounded-[10px] h-[45px] w-[160px] font-bold'>Agregar Cotizacion</button>
+                    <button className='bg-black/20 text-[#fff] rounded-[10px] h-[45px] w-[160px] font-bold'>Agregar Cotizacion</button>
                 </div>
                 <ModalCreateSell
                     show={showModalCreate}

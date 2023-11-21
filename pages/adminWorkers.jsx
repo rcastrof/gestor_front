@@ -71,7 +71,7 @@ const adminWorkers = () => {
                 <div
                     onClick={() => setShowModalCreate(true)}
                     className='flex  mt-8 mr-10 w-fit'>
-                    <button className='bg-gray-200 text-[#000000] rounded-[10px] h-[45px] w-[160px] font-bold'>Agregar Personal</button>
+                    <button className='bg-black/20 text-[#fff] rounded-[10px] h-[45px] w-[160px] font-bold'>Agregar Personal</button>
                 </div>
                 <ModalCreateWorker
                     show={showModalCreate}
