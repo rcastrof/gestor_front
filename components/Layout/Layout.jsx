@@ -31,34 +31,30 @@ const Layout = (props) => {
 
                     <button
                         onClick={() => navigate('/adminSells')}
-                        className="text-2xl font-bold cursor-pointer hover:bg-green-200 px-4 py-2 rounded transition-colors"
-                        style={{ fontFamily: '"Fantasy", sans-serif' }}
+                        className="text-2xl font-bold cursor-pointer hover:bg-green-200 px-4 py-2 rounded transition-colors border border-gray-300 bg-gray-100"
                     >
-                        COTIZACIONES
+                        Cotizaciones
                     </button>
 
                     <button
                         onClick={() => navigate('/adminProducts')}
-                        className="text-2xl font-bold cursor-pointer hover:bg-green-200 px-4 py-2 rounded transition-colors"
-                        style={{ fontFamily: '"Fantasy", sans-serif' }}
+                        className="text-2xl font-bold cursor-pointer hover:bg-green-200 px-4 py-2 rounded transition-colors border border-gray-300 bg-gray-100"
                     >
-                        PRODUCTOS
+                        Productos
                     </button>
 
                     <button
                         onClick={() => navigate('/adminClients')}
-                        className="text-2xl font-bold cursor-pointer hover:bg-green-200 px-4 py-2 rounded transition-colors"
-                        style={{ fontFamily: '"Fantasy", sans-serif' }}
+                        className="text-2xl font-bold cursor-pointer hover:bg-green-200 px-4 py-2 rounded transition-colors border border-gray-300 bg-gray-100"
                     >
-                        CLIENTES
+                        Clientes
                     </button>
 
                     <button
                         onClick={() => navigate('/adminWorkers')}
-                        className="text-2xl font-bold cursor-pointer hover:bg-green-200 px-4 py-2 rounded transition-colors"
-                        style={{ fontFamily: '"Fantasy", sans-serif' }}
+                        className="text-2xl font-bold cursor-pointer hover:bg-green-200 px-4 py-2 rounded transition-colors border border-gray-300 bg-gray-100"
                     >
-                        PERSONAL
+                        Personal
                     </button>
 
                 </div>
