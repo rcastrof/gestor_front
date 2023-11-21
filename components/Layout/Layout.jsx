@@ -2,7 +2,6 @@ import 'tailwindcss/tailwind.css'; // Importa el archivo CSS de Tailwind, hay qu
 import { GiHamburgerMenu } from "react-icons/gi";
 import { useState } from 'react';
 import { useRouter } from 'next/router';
-
 const Layout = (props) => {
     const { children } = props
     const { push } = useRouter();
