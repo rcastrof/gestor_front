@@ -3,7 +3,27 @@ import WorkersCard from '@components/Admin/Workers/WorkersCard'
 import Layout from '@components/Layout/Layout'
 import React, { useEffect, useState } from 'react'
 import { Bars } from 'react-loader-spinner';
+import { getSession } from "next-auth/react";
 
+export async function getServerSideProps(context) {
+    const session = await getSession({ req: context.req });
+  
+    if (!session) {
+      return {
+        redirect: {
+          destination: '/',
+          permanent: false,
+        },
+      };
+    }
+  
+    // Aquí puedes hacer la carga inicial de datos si es necesario
+    // ...
+  
+    return {
+      props: { session },
+    };
+  }
 
 const adminWorkers = () => {
     const [workers, setWorkers] = useState([])
@@ -71,7 +91,7 @@ const adminWorkers = () => {
                 <div
                     onClick={() => setShowModalCreate(true)}
                     className='flex  mt-8 mr-10 w-fit'>
-                    <button className='bg-gray-200 text-[#000000] rounded-[10px] h-[45px] w-[160px] font-bold'>Agregar Personal</button>
+                    <button className='bg-black/20 text-[#fff] rounded-[10px] h-[45px] w-[160px] font-bold'>Agregar Personal</button>
                 </div>
                 <ModalCreateWorker
                     show={showModalCreate}

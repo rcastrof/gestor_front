@@ -18,7 +18,7 @@ const WorkersCard = (props) => {
     }
 
     return (
-        <div className='bg-white/5 w-60 h-[300px] rounded-[10px] flex flex-col mb-2 '>
+        <div className='bg-black/20 w-60 h-[300px] rounded-[10px] flex flex-col mb-2 '>
             {/* All data from workers */}
             <div className='flex justify-end'>
 

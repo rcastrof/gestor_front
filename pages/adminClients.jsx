@@ -3,8 +3,29 @@ import ModalCreateClient from '@components/Admin/Clients/ModalCreateClient';
 import Layout from '@components/Layout/Layout'
 import React, { useEffect, useState } from 'react'
 import { Bars } from 'react-loader-spinner';
+import { getSession } from "next-auth/react";
 
-const adminClients = () => {
+export async function getServerSideProps(context) {
+    const session = await getSession({ req: context.req });
+  
+    if (!session) {
+      return {
+        redirect: {
+          destination: '/',
+          permanent: false,
+        },
+      };
+    }
+  
+    // Aquí puedes hacer la carga inicial de datos si es necesario
+    // ...
+  
+    return {
+      props: { session },
+    };
+  }
+
+const adminClients = ({ session }) => {
     const [clients, setClients] = useState([])
     const [loading, setLoading] = useState(false);
     const [showModalCreate, setShowModalCreate] = useState(false);
@@ -75,7 +96,7 @@ const adminClients = () => {
                 <div
                     onClick={() => setShowModalCreate(true)}
                     className='flex  mt-8 mr-10'>
-                    <button className='bg-gray-200 text-[#000000] rounded-[10px] h-[45px] w-[160px] font-bold'>Agregar Cliente</button>
+                    <button className='bg-black/20 text-[#fff] rounded-[10px] h-[45px] w-[160px] font-bold'>Agregar Cliente</button>
                 </div>
                 <ModalCreateClient
                     show={showModalCreate}
