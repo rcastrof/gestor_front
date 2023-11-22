@@ -33,6 +33,12 @@ const Layout = ({ children }) => {
                     <button onClick={() => navigate('/adminProducts')} className="text-2xl font-bold cursor-pointer hover:bg-green-200 px-4 py-2 transition-colors hover:rounded-lg" style={{ fontFamily: '"NombreDeLaFuente", sans-serif' }}>Productos</button>
                     <button onClick={() => navigate('/adminClients')} className="text-2xl font-bold cursor-pointer hover:bg-green-200 px-4 py-2 transition-colors hover:rounded-lg" style={{ fontFamily: '"NombreDeLaFuente", sans-serif' }}>Clientes</button>
                     <button onClick={() => navigate('/adminWorkers')} className="text-2xl font-bold cursor-pointer hover:bg-green-200 px-4 py-2 transition-colors hover:rounded-lg" style={{ fontFamily: '"NombreDeLaFuente", sans-serif' }}>Personal</button>
+                    <button
+                        onClick={handleSignOut}
+                        className="flex ml-[1000px] text-2xl font-bold cursor-pointer hover:bg-green-400 px-4 py-2 transition-colors hover:rounded-lg"
+                    >
+                        Cerrar Sesión
+                    </button>
                 </div>
 
 
@@ -57,13 +63,11 @@ const Layout = ({ children }) => {
                             <button onClick={() => navigate('/adminClients')} className="text-2xl font-bold cursor-pointer">Clientes</button>
                             <button onClick={() => navigate('/adminWorkers')} className="text-2xl font-bold cursor-pointer">Personal</button>
                         </div>
-                        <div className="flex items-center gap-3">
-                            <img src="/src/LogoLogin.png" alt="Login Logo" className="h-8" />
-
+                        <div className="flex items-center justify-center gap-3">
                             <span className="text-xl font-semibold"></span>
                             <button
                                 onClick={handleSignOut}
-                                className="text-sm font-semibold text-white bg-red-600 hover:bg-red-700 px-3 py-1 rounded-full transition-colors"
+                                className="text-2xl font-bold cursor-pointer mt-40"
                             >
                                 Cerrar Sesión
                             </button>

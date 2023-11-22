@@ -4,7 +4,6 @@ import Layout from '@components/Layout/Layout'
 import React, { useEffect, useState } from 'react'
 import { Bars } from 'react-loader-spinner'
 import { getSession } from "next-auth/react";
-import { set } from 'react-hook-form'
 
 export async function getServerSideProps(context) {
     const session = await getSession({ req: context.req });

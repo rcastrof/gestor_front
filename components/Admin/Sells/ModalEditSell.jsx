@@ -53,7 +53,6 @@ const ModalEditSell = (props) => {
         fetchProductsFromSells()
     }, [sell, products])
 
-
     const fetchProductsAndQuantityFromSell = async () => {
         try {
             // Verificar si sell.productosIds es un objeto
@@ -75,6 +74,14 @@ const ModalEditSell = (props) => {
 
                 // Establecer los productos seleccionados
                 setSelectedProducts(selectedProducts);
+                console.log(selectedProducts)
+
+                // Establecer las IDs de los productos seleccionados
+                const selectedProductIds = selectedProducts.map(product => product.iD_Productos);
+                setSelectedIdFromProduct(selectedProductIds);
+                console.log(selectedProductIds)
+
+
 
             } else {
                 console.error('Error: sell.productosIds no es un objeto');
@@ -122,6 +129,7 @@ const ModalEditSell = (props) => {
                 productosIds,
                 quantityofproduct: "",
             }
+            console.log(data)
 
             try {
                 const Options = {
@@ -176,13 +184,15 @@ const ModalEditSell = (props) => {
         event.preventDefault()
 
         if (selectedProductId) {
+            console.log(selectedProductId)
+            console.log(selectedIdFromProduct)
 
             const selectedProduct = products.find((product) => product.name === selectedProductId)
             if (selectedProduct) {
-                setSelectedIdFromProduct({
-                    ...selectedIdFromProduct,
-                    [selectedProduct.iD_Productos]: 0, // Inicializar la cantidad en 0
-                });
+                setSelectedIdFromProduct(
+                    [...selectedIdFromProduct, selectedProduct.iD_Productos] 
+                );
+                console.log(selectedIdFromProduct)
                 setSelectedProducts([...selectedProducts, selectedProduct])
                 setSelectedProductId(''); // reset the input
             }
@@ -212,9 +222,6 @@ const ModalEditSell = (props) => {
     };
 
     const closeModal = () => {
-
-
-
 
         clearErrors()
 
