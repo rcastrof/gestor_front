@@ -28,19 +28,26 @@ export default function Register() {
             setRegisterError(error.response?.data?.message || "Error en el registro. Inténtalo de nuevo.");
         }
     };
-0
+    0
     return (
         <>
             <div className="bg-gradient-to-b from-[#7ac68d] to-[#7c8c84] h-screen">
-                <div className="mx-auto my-auto w-full min-h-screen flex items-center justify-center">
+                <div className=" mx-auto my-auto w-full min-h-screen flex items-center justify-center">
 
-                    <img src="/src/Logo.png" alt="Logo" style={{ marginRight: 200, width: 800, height: 800, marginBottom: 100 }} />
+                    <img
+                        className='object-cover  mr-[200px] w-[800px] mb-[100px] hidden xl:flex   '
+                        src="/src/Logo.png" alt="Logo" />
 
-                    <div className="bg-black/50 w-80 h-[40rem] backdrop-opacity-20 rounded-[10px] flex flex-col font-body items-center" style={{ marginRight: 300 }}>
-                        <h1 className="text-5xl text-white mt-10 ">Registro</h1>
+                    <div className="bg-black/50 w-80 h-[700px] xl:h-[640px] backdrop-opacity-20 rounded-[10px] flex flex-col font-body items-center" style={{ marginRight: 300 }}>
+                        <div className='flex w-[150px] h-[150px]  '>
+                            <img src="/src/Logo.png" alt="Logo"
+                                className='object-cover  w-full h-full xl:hidden'
+                                style={{ width: 400, height: 150 }} />
+                        </div>
+                        <h1 className="text-5xl text-white xl:mt-10 ">Registro</h1>
                         <p className="text-xl text-white opacity-80 mt-2">Crea tu cuenta</p>
 
-                        <div className="w-4/5 h-[1px] bg-white/20 mt-8"></div>
+                        <div className="w-4/5 h-[1px] bg-white/20 "></div>
 
                         <form onSubmit={handleSubmit(onSubmit)} className="flex flex-col w-4/5 mt-6">
                             <input {...register('nombre', { required: true })} placeholder="Nombre" type="text" className="bg-black/20 rounded-[10px] h-[2rem] px-2 text-white mb-4" />
@@ -65,11 +72,13 @@ export default function Register() {
                             {registerError && <p className="text-red-500 text-xs mt-2">{registerError}</p>}
                         </form>
 
-                        <button onClick={() => router.push('/')} className="mt-4 text-white">
-                            ¿Ya tienes cuenta? Inicia sesión aquí
-                        </button>
+                        <div onClick={() => router.push('/')}
+                            className="mt-4 text-white  flex flex-col  justify-center cursor-pointer hover:text-green-600 items-center">
 
-                        <p className="text-xs text-white opacity-80 mt-10">© 2023 Todos los derechos reservados. </p>
+                            ¿Ya tienes cuenta? Inicia sesión aquí
+                        </div>
+
+                        <p className="text-xs text-white opacity-80 mt-10 mb-5">© 2023 Todos los derechos reservados. </p>
                     </div>
                 </div>
             </div>

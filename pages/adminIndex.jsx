@@ -1,6 +1,7 @@
 import Layout from '@components/Layout/Layout';
-import React from 'react';
-import { getSession } from "next-auth/react";
+import React, { useEffect } from 'react';
+import { getSession, useSession } from "next-auth/react";
+import { decode } from 'next-auth/jwt'; // Import the decode function
 
 export async function getServerSideProps(context) {
   const session = await getSession({ req: context.req });
@@ -23,6 +24,11 @@ export async function getServerSideProps(context) {
 }
 
 const AdminIndex = ({ session }) => {
+
+
+
+
+
   // Contenido de la página...
   return (
     <Layout>

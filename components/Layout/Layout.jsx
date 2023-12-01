@@ -1,12 +1,17 @@
 import 'tailwindcss/tailwind.css';
 import { GiHamburgerMenu } from "react-icons/gi";
-import { useState } from 'react';
-import { useRouter } from 'next/router';
-import { signOut } from "next-auth/react";
+import { useEffect, useState } from 'react';
+import { useRouter } from 'next/navigation';
+import { signOut, useSession } from "next-auth/react";
+import { decode } from 'next-auth/jwt';
+
 
 const Layout = ({ children }) => {
     const router = useRouter();
     const [burgerMenuOpen, setBurgerMenuOpen] = useState(false);
+    const { data } = useSession();
+
+
     const logostyle = {
         maxWidth: '100px',
         height: 'auto',
@@ -20,22 +25,46 @@ const Layout = ({ children }) => {
     const handleSignOut = () => {
         signOut({ callbackUrl: '/' });
     }
+    useEffect(() => {
+
+        async function fetchData() {
+
+            console.log(data.session)
+
+
+
+        }
+        fetchData();
+    }, [])
+
+
+
 
     return (
         <>
-            <div className="h-28 flex items-center justify-between px-4 bg-[#ebfefc]">
-                <div onClick={() => navigate('/adminSells')} className='cursor-pointer'>
+
+            {/* todo este div es el navbar */}
+            <div className="h-28 flex items-center justify-between px-4 bg-gradient-to-t from-[#7ac68d] to-[#7c8c84] p-4">
+                <div onClick={() => router.push('/adminSells')} className='cursor-pointer'>
                     <img src="/src/Logo_NoLetter.png" alt="Logo" style={logostyle} />
                 </div>
 
-                <div className='hidden md:flex gap-6 mx-auto ' style={{ marginLeft: 10 }}>
-                    <button onClick={() => navigate('/adminSells')} className="text-2xl font-bold cursor-pointer hover:bg-green-200 px-4 py-2 transition-colors hover:rounded-lg" style={{ fontFamily: '"NombreDeLaFuente", sans-serif' }}>Cotizaciones</button>
-                    <button onClick={() => navigate('/adminProducts')} className="text-2xl font-bold cursor-pointer hover:bg-green-200 px-4 py-2 transition-colors hover:rounded-lg" style={{ fontFamily: '"NombreDeLaFuente", sans-serif' }}>Productos</button>
-                    <button onClick={() => navigate('/adminClients')} className="text-2xl font-bold cursor-pointer hover:bg-green-200 px-4 py-2 transition-colors hover:rounded-lg" style={{ fontFamily: '"NombreDeLaFuente", sans-serif' }}>Clientes</button>
-                    <button onClick={() => navigate('/adminWorkers')} className="text-2xl font-bold cursor-pointer hover:bg-green-200 px-4 py-2 transition-colors hover:rounded-lg" style={{ fontFamily: '"NombreDeLaFuente", sans-serif' }}>Personal</button>
+               {/*
+               
+               para testear el token
+               <div
+                    onClick={() => console.log(data)}
+                    className='border'>
+                    clg
+                </div> */}
+                <div className='hidden md:flex gap-6 mx-auto w-full  ' style={{ marginLeft: 10 }}>
+                    <button onClick={() => router.push('/adminSells')} className="text-2xl font-bold cursor-pointer hover:bg-green-200 px-4 py-2 transition-colors hover:rounded-lg italic" >Cotizaciones</button>
+                    <button onClick={() => router.push('/adminProducts')} className="text-2xl font-bold cursor-pointer hover:bg-green-200 px-4 py-2 transition-colors hover:rounded-lg italic" >Productos</button>
+                    <button onClick={() => router.push('/adminClients')} className="text-2xl font-bold cursor-pointer hover:bg-green-200 px-4 py-2 transition-colors hover:rounded-lg italic" >Clientes</button>
+                    <button onClick={() => router.push('/adminWorkers')} className="text-2xl font-bold cursor-pointer hover:bg-green-200 px-4 py-2 transition-colors hover:rounded-lg italic" >Personal</button>
                     <button
                         onClick={handleSignOut}
-                        className="flex ml-[1000px] text-2xl font-bold cursor-pointer hover:bg-green-400 px-4 py-2 transition-colors hover:rounded-lg"
+                        className="flex ml-auto text-2xl font-bold cursor-pointer hover:bg-green-400 px-4 py-2 transition-colors hover:rounded-lg text-gray-600"
                     >
                         Cerrar Sesión
                     </button>
@@ -58,10 +87,10 @@ const Layout = ({ children }) => {
                 {burgerMenuOpen && (
                     <div className="bg-[#749494] h-screen w-60 md:w-80 fixed top-0 right-0 flex-col">
                         <div className="flex flex-col gap-6 p-6 text-[#033739]">
-                            <button onClick={() => navigate('/adminSells')} className="text-2xl font-bold cursor-pointer">Cotizaciones</button>
-                            <button onClick={() => navigate('/adminProducts')} className="text-2xl font-bold cursor-pointer">Productos</button>
-                            <button onClick={() => navigate('/adminClients')} className="text-2xl font-bold cursor-pointer">Clientes</button>
-                            <button onClick={() => navigate('/adminWorkers')} className="text-2xl font-bold cursor-pointer">Personal</button>
+                            <button onClick={() => router.push('/adminSells')} className="text-2xl font-bold cursor-pointer">Cotizaciones</button>
+                            <button onClick={() => router.push('/adminProducts')} className="text-2xl font-bold cursor-pointer">Productos</button>
+                            <button onClick={() => router.push('/adminClients')} className="text-2xl font-bold cursor-pointer">Clientes</button>
+                            <button onClick={() => router.push('/adminWorkers')} className="text-2xl font-bold cursor-pointer">Personal</button>
                         </div>
                         <div className="flex items-center justify-center gap-3">
                             <span className="text-xl font-semibold"></span>
@@ -76,7 +105,9 @@ const Layout = ({ children }) => {
                     </div>
                 )}
             </div>
-            <div className="bg-[#749494] min-h-screen">
+
+            {/* children es el contenido de la pagina */}
+            <div className="bg-gradient-to-b from-[#7ac68d] to-[#7c8c84] min-h-screen">
                 <div className='flex flex-col mx-10 md:mx-20 '>
                     {children}
                 </div>

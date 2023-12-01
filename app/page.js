@@ -28,7 +28,7 @@ export default function Home(props) {
       password: pass,
 
     });
-    
+
 
     if (autenticar && autenticar.ok) {
 
@@ -38,14 +38,8 @@ export default function Home(props) {
 
     } else if (autenticar.error) {
 
-
       setLoginError("Usuario o Contraseña Incorrectos")
-
-      console.log(autenticar)
-
       setLoading(false);
-
-
     }
 
   };
@@ -105,9 +99,11 @@ export default function Home(props) {
 
               >Iniciar sesión</button>
 
-              <button onClick={() => router.push('/register')} className="mt-4 text-white">
-                ¿No tienes cuenta? Regístrate aquí
-              </button>
+              <div onClick={() => router.push('/register')}
+                className="mt-4 text-white  flex flex-col  justify-center cursor-pointer hover:text-green-600 items-center">
+                ¿No tienes cuenta? <br/>
+                 <p className="text-xl">Regístrate aquí </p>
+              </div>
 
             </form>
 

@@ -4,6 +4,7 @@ import Layout from '@components/Layout/Layout'
 import React, { useEffect, useState } from 'react'
 import { Bars } from 'react-loader-spinner'
 import { getSession } from "next-auth/react";
+import { RiFileExcel2Line } from 'react-icons/ri'
 
 export async function getServerSideProps(context) {
     const session = await getSession({ req: context.req });
@@ -157,6 +158,46 @@ const adminSells = ({ session }) => {
         sell.name.toLowerCase().includes(searchTerm.toLowerCase()) 
       
     );
+    const dateNow = new Date().toLocaleDateString('es-ES', {
+        day: '2-digit',
+        month: '2-digit',
+        year: 'numeric',
+    }).replace(/\//g, '-');
+    
+    const exportClientes = async () => {
+        try {
+            setLoading(true);
+            const response = await fetch('http://localhost:3000/api/sells/export', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+            });
+
+            // Verificar si la respuesta es un archivo binario
+            const contentType = response.headers.get('content-type');
+            if (contentType && contentType.startsWith('application/vnd.openxmlformats-officedocument.spreadsheetml.sheet')) {
+                // Si es un archivo Excel, crear un Blob y generar una URL de descarga
+                const blob = await response.blob();
+                const url = window.URL.createObjectURL(blob);
+                const a = document.createElement('a');
+                a.href = url;
+                a.download = `"LosAlercesReporteCotizaciones${dateNow}.xlsx`;
+                document.body.appendChild(a);
+                a.click();
+                document.body.removeChild(a);
+            } else {
+                // Si no es un archivo Excel, interpretar la respuesta como JSON
+                const data = await response.json();
+                console.log(data);
+            }
+
+            setLoading(false);
+
+        } catch (error) {
+            console.error('Error al descargar:', error);
+        }
+    };
 
 
     return (
@@ -167,10 +208,18 @@ const adminSells = ({ session }) => {
                     <h1>Cotizaciones</h1>
                 </div>
                 {/* boton para agregar cotizaciones */}
-                <div
-                    onClick={() => setShowModalCreate(true)}
-                    className='flex  mt-8 mr-10'>
-                    <button className='bg-black/20 text-[#fff] rounded-[10px] h-[45px] w-[160px] font-bold'>Agregar Cotizacion</button>
+                <div className='flex  items-center  '>
+                    <div
+                        onClick={() => setShowModalCreate(true)}
+                        className='flex  mt-8 mr-5'>
+                        <button className='bg-black/20 text-[#fff] rounded-[10px] h-[45px] w-[160px] font-bold'>Agregar Cotizacion</button>
+                    </div>
+
+                    <div
+                        onClick={() => exportClientes()}
+                        className=' text-white flex items-center mt-[28px] w-[120px] justify-center h-[35px] rounded-full bg-green-500 hover:bg-green-900 select-none cursor-pointer '>
+                        <RiFileExcel2Line className='text-white' size={'25px'} /> Descargar
+                    </div>
                 </div>
                 <ModalCreateSell
                     show={showModalCreate}
